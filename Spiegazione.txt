@@ -1,0 +1,5 @@
+Il gioco in questione contiene il package:
+- adventure che è il package principale
+- adventure.type che contiene tutte le strutture dati
+- adventure.parser che contiene la logica e i controlli legati al parser 
+- adventure.games che contiene la logica del gioco

@@ -21,7 +21,7 @@ import java.util.Iterator;
  * eseguire qualsiasi gioco che estende GameDescription, in questo modo si
  * possono creare più gioci utilizzando lo stesso Engine.
  *
- * Diverse migliorie possono essere applicati: - la descrizione del gioco
+ * Diverse migliorie possono essere applicate: - la descrizione del gioco
  * potrebbe essere caricate da file o da DBMS in modo da non modificare il
  * codice sorgente - l'utilizzo di file e DBMS non è semplice poiché all'interno
  * del file o del DBMS dovrebbe anche essere codificata la logica del gioco
@@ -37,9 +37,6 @@ public class UniperfidaGame extends GameDescription {
         Command nord = new Command(CommandType.NORD, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
-        Command iventory = new Command(CommandType.INVENTORY, "inventario");
-        iventory.setAlias(new String[]{"inv", "i", "I"});
-        getCommands().add(iventory);
         Command sud = new Command(CommandType.SOUTH, "sud");
         sud.setAlias(new String[]{"s", "S", "Sud", "SUD"});
         getCommands().add(sud);
@@ -49,6 +46,9 @@ public class UniperfidaGame extends GameDescription {
         Command ovest = new Command(CommandType.WEST, "ovest");
         ovest.setAlias(new String[]{"o", "O", "Ovest", "OVEST"});
         getCommands().add(ovest);
+        Command inventory = new Command(CommandType.INVENTORY, "inventario");
+        inventory.setAlias(new String[]{"inv", "i", "I"});
+        getCommands().add(inventory);
         Command end = new Command(CommandType.END, "end");
         end.setAlias(new String[]{"end", "fine", "esci", "muori", "ammazzati", "ucciditi", "suicidati","exit"});
         getCommands().add(end);

@@ -9,7 +9,10 @@ import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import di.uniba.map.b.uniperfida.type.CommandType;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * ATTENZIONE: l'Engine è molto spartano, in realtà demanda la logica alla
@@ -22,7 +25,7 @@ public class Engine {
 
     private final GameDescription game;
 
-    private final Parser parser;
+    private Parser parser;
 
     public Engine(GameDescription game) {
         this.game = game;
@@ -31,13 +34,22 @@ public class Engine {
         } catch (Exception ex) {
             System.err.println(ex);
         }
-        parser = new Parser();
+        try {
+            Set<String> stopwords = Utils.loadFileListInSet(new File("./resources/stopwords"));
+            parser = new Parser(stopwords);
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
     }
 
-    public void run() {
+    public void execute() {
+        System.out.println("================================");
+        System.out.println("* Uniperfida v. 0.1 - 2020-2021 *");
+        System.out.println("================================");
         System.out.println(game.getCurrentRoom().getName());
-        System.out.println("================================================");
+        System.out.println();
         System.out.println(game.getCurrentRoom().getDescription());
+        System.out.println();
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine();
@@ -47,7 +59,7 @@ public class Engine {
                 break;
             } else {
                 game.nextMove(p, System.out);
-                System.out.println("================================================");
+                System.out.println();
             }
         }
     }
@@ -57,7 +69,7 @@ public class Engine {
      */
     public static void main(String[] args) {
         Engine engine = new Engine(new UniperfidaGame());
-        engine.run();
+        engine.execute();
     }
 
 }
