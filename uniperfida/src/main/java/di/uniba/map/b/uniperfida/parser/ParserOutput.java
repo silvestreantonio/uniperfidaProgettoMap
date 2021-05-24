@@ -12,6 +12,8 @@ import di.uniba.map.b.uniperfida.type.Command;
  *
  * @author pierpaolo
  */
+
+// questa classe restituisce alla classe Parser un parser del tipo COMANDO OGGETTO o solo comandi tipo OSSERVA o comandi COMANDO OGGETTO OGGETTO_INVENTARIO
 public class ParserOutput {
 
     private Command command;

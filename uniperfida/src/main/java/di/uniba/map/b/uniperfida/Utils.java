@@ -20,6 +20,7 @@ import java.util.Set;
  */
 public class Utils {
 
+    // questo metodo legge il file riga per riga e mette ogni riga del file all'interno dell'insieme di stringhe. In questo modo posso modificare il file senza utilizzare il codice
     public static Set<String> loadFileListInSet(File file) throws IOException {
         Set<String> set = new HashSet<>();
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -30,15 +31,16 @@ public class Utils {
         return set;
     }
 
+    // questo metodo fa lo split della stringa sugli spazi, cicla sul risultato di questo split, se la parola che trova non e' presente nelle stopwords la aggiunge al token e restituisce la lista di token
     public static List<String> parseString(String string, Set<String> stopwords) {
         List<String> tokens = new ArrayList<>();
-        String[] split = string.toLowerCase().split("'|\\s+");
-        for (String t : split) {
-            if (!stopwords.contains(t)) {
-                tokens.add(t);
+        String[] split = string.toLowerCase().split("'|\\s+"); // fa lo split della stringa sugli spazi e sugli apostrofi (da vedere)
+        for (String t : split) { // cicla sul risultato di questo split
+            if (!stopwords.contains(t)) { // se la parola che trova non e' presente nelle stopwords
+                tokens.add(t); // la aggiunge al token
             }
         }
-        return tokens;
+        return tokens; // restituisce la lista di token restituisce la lista di token
     }
 
 }

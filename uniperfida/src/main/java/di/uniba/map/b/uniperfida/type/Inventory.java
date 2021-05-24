@@ -12,6 +12,8 @@ import java.util.List;
  *
  * @author pierpaolo
  */
+
+// lista di oggetti
 public class Inventory {
 
     private List<AdvObject> list = new ArrayList<>();

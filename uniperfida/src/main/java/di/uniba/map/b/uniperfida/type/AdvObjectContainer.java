@@ -13,6 +13,8 @@ import java.util.Set;
  *
  * @author pierpaolo
  */
+
+// oggetto contenitore che puo contenere altri oggetti, estende AdvObject e aggiunge un attributo list che contiene oggetti
 public class AdvObjectContainer extends AdvObject {
 
     private List<AdvObject> list = new ArrayList<>();

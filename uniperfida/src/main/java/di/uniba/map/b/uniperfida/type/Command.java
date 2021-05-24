@@ -14,25 +14,30 @@ import java.util.Set;
  *
  * @author pierpaolo
  */
+
+// classe che modella il concetto di comando
 public class Command {
 
-    private final CommandType type;
+    private final CommandType type; // attributo che richiama il tipo di comando (es. OPEN)
 
-    private final String name;
+    private final String name; // attributo che associa al tipo di comando un nome (es. APRI)
 
-    private Set<String> alias;
+    private Set<String> alias; // attributo che associa al tipo di comando una serie di sinonimi (es. SCHIUDERE)
 
+    // costruttore
     public Command(CommandType type, String name) {
         this.type = type;
         this.name = name;
     }
 
+    // costruttore
     public Command(CommandType type, String name, Set<String> alias) {
         this.type = type;
         this.name = name;
         this.alias = alias;
     }
 
+    // metodi set e get
     public String getName() {
         return name;
     }

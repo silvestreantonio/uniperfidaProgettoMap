@@ -12,38 +12,45 @@ import java.util.List;
  *
  * @author pierpaolo
  */
+
+// classe che astrae il concetto di stanza
 public class Room {
 
-    private final int id;
+    private final int id; // attributo che serve ad individuare in maniera univica questa stanza
 
-    private String name;
+    private String name; // nome
 
-    private String description;
+    private String description; // descrizione stanza (es. Sei all'interno di una grotta ...)
 
-    private String look;
+    private String look; // stringa che viene visualizzata quando il giocatore preme "osserva" o "descrivi"
 
-    private boolean visible = true;
+    private boolean visible = true; // attributo che serve per nascondere la stanza (es. la segreteria)
 
-    private Room south = null;
+    private Room south = null; // attributo che memorizza la stanza in cui si puo andare se si preme "sud"
 
-    private Room north = null;
+    private Room north = null; // attributo che memorizza la stanza in cui si puo andare se si preme "nord"
 
-    private Room east = null;
+    private Room east = null; // attributo che memorizza la stanza in cui si puo andare se si preme "est"
 
-    private Room west = null;
+    private Room west = null; // attributo che memorizza la stanza in cui si puo andare se si preme "ovest"
     
-    private final List<AdvObject> objects=new ArrayList<>();
+    // nord sud est e ovest è detto concetto di aggregazione 
+    
+    private final List<AdvObject> objects=new ArrayList<>(); // la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
 
+    // costruttore
     public Room(int id) {
         this.id = id;
     }
 
+    // costruttore
     public Room(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
+    // metodi set e get
     public String getName() {
         return name;
     }
@@ -111,6 +118,7 @@ public class Room {
         return hash;
     }
 
+    // metodo equals sull'id
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

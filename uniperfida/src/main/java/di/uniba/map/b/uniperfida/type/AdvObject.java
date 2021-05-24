@@ -15,39 +15,44 @@ import java.util.Set;
  */
 public class AdvObject {
 
-    private final int id;
+    private final int id; // attributo che rende unico quell'oggetto
 
-    private String name;
+    private String name; // nome 
 
-    private String description;
+    private String description; // descrizione
     
-    private Set<String> alias;
+    private Set<String> alias; // set di string che contiene tutti i sinonimi di quell'oggetto
 
-    private boolean openable = false;
+    private boolean openable = false; // l'oggetto puo essere aperto?
 
-    private boolean pickupable = true;
+    private boolean pickupable = true; // l'oggetto puo essere raccolto?
 
-    private boolean pushable = false;
+    private boolean pushable = false; // l'oggetto puo essere premuto?
 
-    private boolean open = false;
+    private boolean open = false; // l'oggetto è aperto?
 
-    private boolean push = false;
+    private boolean push = false; // l'oggetto è chiuso?
 
+
+    // costruttore
     public AdvObject(int id) {
         this.id = id;
     }
 
+    // costruttore
     public AdvObject(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
+    // costruttore
     public AdvObject(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
+    // costruttore
     public AdvObject(int id, String name, String description, Set<String> alias) {
         this.id = id;
         this.name = name;
@@ -55,6 +60,7 @@ public class AdvObject {
         this.alias = alias;
     }
 
+    // metodi set e get
     public String getName() {
         return name;
     }
