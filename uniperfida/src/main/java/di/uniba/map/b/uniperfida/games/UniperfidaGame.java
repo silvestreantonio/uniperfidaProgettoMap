@@ -33,7 +33,7 @@ import java.util.Iterator;
 public class UniperfidaGame extends GameDescription {
 
     @Override
-    public void init() throws Exception { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco 
+    public void init() throws Exception { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
         Command nord = new Command(CommandType.NORD, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
@@ -51,33 +51,82 @@ public class UniperfidaGame extends GameDescription {
         inventory.setAlias(new String[]{"inv", "i", "I"});
         getCommands().add(inventory);
         Command end = new Command(CommandType.END, "end");
-        end.setAlias(new String[]{"end", "fine", "esci", "muori", "ammazzati", "ucciditi", "suicidati", "exit"});
+        end.setAlias(new String[]{"end", "fine", "finire", "esci", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
         getCommands().add(end);
         Command look = new Command(CommandType.LOOK_AT, "osserva");
-        look.setAlias(new String[]{"guarda", "vedi", "trova", "cerca", "descrivi"});
+        look.setAlias(new String[]{"guarda", "guardare", "vedi", "vedere", "trova", "trovare", "cerca", "cercare", "fissa", "fissare"});
         getCommands().add(look);
         Command pickup = new Command(CommandType.PICK_UP, "raccogli");
-        pickup.setAlias(new String[]{"prendi"});
+        pickup.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
         getCommands().add(pickup);
         Command open = new Command(CommandType.OPEN, "apri");
-        open.setAlias(new String[]{});
+        open.setAlias(new String[]{"aprire", "schiudi", "schiudere", "spalanca", "spalancare"});
         getCommands().add(open);
         Command push = new Command(CommandType.PUSH, "premi");
-        push.setAlias(new String[]{"spingi", "attiva"});
+        push.setAlias(new String[]{"spingi", "spingere", "attiva", "attivare", "premere"});
         getCommands().add(push);
+        Command goUp = new Command(CommandType.GO_UP, "sali");
+        goUp.setAlias(new String[]{"salire", "sali scale", "salire scale"});
+        getCommands().add(goUp);
+        Command goDown = new Command(CommandType.GO_DOWN, "scendi");
+        goDown.setAlias(new String[]{"scendere", "scendi scale", "scendere scale"});
+        getCommands().add(goDown);
         // definizione delle stanze
-        Room hall = new Room(0, "Corridoio", "Sei appena tornato a casa e non sai cosa fare. Ti ricordi che non hai ancora aperto quel fantastico regalo di tua zia Lina."
-                + " Sarà il caso di cercarlo e di giocarci!");
-        hall.setLook("Sei nel corridoio, a nord vedi il bagno, a sud il soggiorno e ad ovest la tua cameretta, forse il gioco sarà lì?");
-        Room livingRoom = new Room(1, "Soggiorno", "Ti trovi nel soggiorno. Ci sono quei mobili marrone scuro che hai sempre odiato e delle orribili sedie.");
-        livingRoom.setLook("Non c'è nulla di interessante qui.");
-        Room kitchen = new Room(2, "Cucina", "Ti trovi nella solita cucina. Mobili bianchi, maniglie azzurre, quello strano lampadario che adoravi tanto quando eri piccolo. "
-                + "C'è un tavolo con un bel portafrutta e una finestra.");
-        kitchen.setLook("La solita cucina, ma noti una chiave vicino al portafrutta.");
-        Room bathroom = new Room(3, "Bagno", "Sei nel bagno. Quanto tempo passato qui dentro...meglio non pensarci...");
-        bathroom.setLook("Vedo delle batterie sul mobile alla destra del lavandino.");
-        Room yourRoom = new Room(4, "La tua cameratta", "Finalmente la tua cameretta! Questo luogo ti è così famigliare...ma non ricordi dove hai messo il nuovo regalo di zia Lina.");
-        yourRoom.setLook("C'è un armadio bianco, di solito conservi lì i tuoi giochi.");
+        Room laboratory = new Room(0, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.");
+        laboratory.setLook("Hai davanti la macchina, la porta è aperta;");
+        Room machine = new Room(1, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager. Il professore ed il suo assistente fremono per la tua imminente partenza.");
+        machine.setLook("C'è una luce soffusa e un enorme tasto rosso");
+        Room courtyard = new Room(2, "Cortile", "Ti trovi nel cortile. C'è uno strano edificio pieno zeppo di finestre. C'è un cartello con incisa una scritta.");
+        courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Fortunatamente qui si parla italiano. Di fronte a te c'è una porta."); //Senti qualcosa nelle tasche vibrare
+        Room hall = new Room(3, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.");
+        hall.setLook("C'è una macchinetta del caffè e una bacheca.");
+        Room reception = new Room(4, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Sembra essere vuoto.");
+        reception.setLook("C'è una scrivania con un computer ed un foglio.");
+        Room firstBathroom = new Room(5, "Bagno del piano terra", "Ti trovi nei bagni del piano terra. Non noti nulla di strano.");
+        firstBathroom.setLook("Un semplice bagno universitario, senza carta igienica e sapone..." + "ovviamente.");
+        Room corridor = new Room(6, "Corridoio del piano terra", "Sei nel corridoio. C'è un cartellone in onore di 'Accendino', un ragazzo fantastico.");
+        corridor.setLook("Non c'è niente di particolare.");
+        Room infoPoint = new Room(7, "Zona delle bacheche", "Ti trovi nella zona delle bacheche.");
+        infoPoint.setLook("Nelle bacheche non c'è nulla infisso. Come sempre d'altronde.");
+        Room firstElevator = new Room(8, "Ascensore", "Ti trovi nell'ascensore. E' molto grande.");
+        firstElevator.setLook("C'è un bottone.");
+        Room stairs = new Room(9, "Scale piano terra", "Ti trovi nel pianerottolo delle scale del piano terra.");
+        stairs.setLook("C'è un'enorme scalinata che sale.");
+        Room waitingRoom = new Room(10, "Sala d'attesa aule", "Ti trovi nella sala d'attesa delle aule.");
+        waitingRoom.setLook("Ci sono un paio di sedie. Sopra le sedie c'è una bacheca, l'ennesima bacheca.");
+        Room roomA = new Room(11, "Aula A", "Ti trovi nell'aula A. Non vedi nulla di interessante.");
+        roomA.setLook("Ci sono file di banchi. L'aula è vuota.");
+        Room roomB = new Room(12, "Aula B", "Ti trovi nell'aula B. Non vedi nulla di interessante.");
+        roomB.setLook("Ci sono file di banchi. L'aula è vuota.");
+        Room upStairs = new Room(13, "Scale primo piano", "Ti trovi nel pianerottolo delle scale del primo piano.");
+        upStairs.setLook("C'è un'enorme scalinata che scende.");
+        Room upStairsHall = new Room(14, "Atrio del primo piano", "Ti trovi nell'atrio del primo piano. C'è molto eco.");
+        upStairsHall.setLook("C'è un enorme corridoio ed una mezza dozzina di uffici.");
+        Room secondElevator = new Room(15, "Ascensore", "Ti trovi nell'ascensore. E' molto grande.");
+        secondElevator.setLook("C'è un bottone.");
+        Room secondBathroom = new Room(16, "Bagno del primo piano", "Ti trovi nel bagno del primo piano. Non noti nulla di strano.");
+        secondBathroom.setLook("Un semplice bagno universitario, senza carta igienica e sapone..." + "ovviamente.");
+        Room firstSector = new Room(17, "Primo settore del corridoio", "Ti trovi nel primo settore del corridoio. Sembra non finisca mai.");
+        firstSector.setLook("Ai lati ci sono due uffici.");
+        Room waitingRoomRossetto = new Room(18, "Sala d'attesa della prof.ssa Rossetto", "Ti trovi nella sala d'attesa della prof.ssa *****");
+        waitingRoomRossetto.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        Room waitingRoomImpavido = new Room(19, "Sala d'attesa del prof. Impavido", "Ti trovi nella sala d'attesa del prof. *****");
+        waitingRoomImpavido.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        Room secondSector = new Room(20, "Secondo settore del corridoio", "Ti trovi nel secondo settore del corridoio. Intravedi la fine.");
+        secondSector.setLook("Ai lati ci sono due uffici.");
+        Room waitingRoomGatto = new Room(21, "Sala d'attesa del prof. Gatto", "Ti trovi nella sala d'attesa del prof. *****");
+        waitingRoomGatto.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        Room waitingRoomCinquanta = new Room(22, "Sala d'attesa del prof. Cinquanta", "Ti trovi nella sala d'attesa del prof. *****");
+        waitingRoomImpavido.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        Room thirdSector = new Room(23, "Terzo settore del corridoio", "Ti trovi nel terzo settore del corridoio. Di fronte a te c'è un muro.");
+        thirdSector.setLook("Ai lati c'è l'ennesimo ufficio e l'ennesimo bagno. Avranno problemi d'incontinenza.");
+        Room thirdBathroom = new Room(24, "Bagno dei professori", "Ti trovi nel bagno dei professori.");
+        thirdBathroom.setLook("Questo bagno è molto meglio degli altri..." + "Sapone, carta igienica, persino un asciugamani ad aria!");
+        Room waitingRoomBasilico = new Room(25, "Sala d'attesa del prof. Basilico", "Ti trovi nella sala d'attesa del prof. Basilico.");
+        waitingRoomBasilico.setLook("C'è una porta, niente indovinelli questa volta.");
+        Room secretary = new Room(26, "Segreteria", "Ti trovi nella segreteria.");
+        secretary.setLook("C'è uno sportello con un foglio.");
+
         // definizione della mappa (collegamenti tra le stanze)
         kitchen.setEast(livingRoom);
         livingRoom.setNorth(hall);
