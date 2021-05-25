@@ -33,7 +33,10 @@ public class Room {
     private Room east = null; // attributo che memorizza la stanza in cui si puo andare se si preme "est"
 
     private Room west = null; // attributo che memorizza la stanza in cui si puo andare se si preme "ovest"
-    
+
+    private Room up = null;
+
+    private Room down = null;
     // nord sud est e ovest è detto concetto di aggregazione 
     
     private final List<AdvObject> objects=new ArrayList<>(); // la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
@@ -48,6 +51,14 @@ public class Room {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    // costruttore con la variabile visible
+    public Room(int id, String name, String description, boolean visible) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.visible= visible;
     }
 
     // metodi set e get
@@ -105,6 +116,22 @@ public class Room {
 
     public void setWest(Room west) {
         this.west = west;
+    }
+
+    public Room getUp() {
+        return up;
+    }
+
+    public void setUp(Room up) {
+        this.up = up;
+    }
+
+    public Room getDown() {
+        return down;
+    }
+
+    public void setDown(Room down) {
+        this.down = down;
     }
 
     public List<AdvObject> getObjects() {
