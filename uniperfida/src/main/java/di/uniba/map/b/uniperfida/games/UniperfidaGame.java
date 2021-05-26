@@ -63,7 +63,7 @@ public class UniperfidaGame extends GameDescription {
         open.setAlias(new String[]{"aprire", "schiudi", "schiudere", "spalanca", "spalancare"});
         getCommands().add(open);
         Command push = new Command(CommandType.PUSH, "premi");
-        push.setAlias(new String[]{"spingi", "spingere", "attiva", "attivare", "premere"});
+        push.setAlias(new String[]{"spingi", "spingere", "attiva", "attivare", "premere", "schiaccia", "schiacciare"});
         getCommands().add(push);
         Command goUp = new Command(CommandType.GO_UP, "sali");
         goUp.setAlias(new String[]{"salire", "sali scale", "salire scale"});
@@ -127,7 +127,10 @@ public class UniperfidaGame extends GameDescription {
         Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.", false);
         secretary.setLook("C'è uno sportello con un foglio.");
         // definizione della mappa (collegamenti tra le stanze)
+        laboratory.setNorth(machine);
+        machine.setSouth(laboratory);
         courtyard.setNorth(hall);
+        courtyard.setSouth(machine);
         hall.setNorth(corridor);
         hall.setSouth(courtyard);
         hall.setEast(firstBathroom);
@@ -204,9 +207,10 @@ public class UniperfidaGame extends GameDescription {
         getRooms().add(waitingRoomBasilico);
         getRooms().add(secretary);
         // definizione degli oggetti 
-        AdvObject battery = new AdvObject(1, "batteria", "Un pacco di batterie, chissà se sono cariche.");
-        battery.setAlias(new String[]{"batterie", "pile", "pila"});
-        bathroom.getObjects().add(battery);
+        AdvObject buttonMachine = new AdvObject(1, "bottone", "Un enorme tasto rosso", true, false);
+        buttonMachine.setAlias(new String[]{"tasto"});
+        machine.getObjects().add(buttonMachine);
+        /*
         AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
         wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
         wardrobe.setOpenable(true);
@@ -218,8 +222,10 @@ public class UniperfidaGame extends GameDescription {
         toy.setPushable(true);
         toy.setPush(false);
         wardrobe.add(toy);
+         */
         // definizione della stanza corrente
         setCurrentRoom(laboratory);
+
     }
 
     // questo metodo in base alla stanza in cui mi trovo deve interpretare un comando 
@@ -258,6 +264,20 @@ public class UniperfidaGame extends GameDescription {
                     move = true; // booleano che serve a settare il fatto che mi sono mosso
                 } else {
                     noroom = true; // booleano che serve a memorizzare che a ovest non c'è nulla
+                }
+            } else if (p.getCommand().getType() == CommandType.GO_UP) { // controlla se il comando è di tipo GO_UP
+                if (getCurrentRoom().getUp() != null) { // controlla se su si può andare
+                    setCurrentRoom(getCurrentRoom().getUp()); // se su si può andare setto la nuova stanza corrente 
+                    move = true; // booleano che serve a settare il fatto che mi sono mosso
+                } else {
+                    noroom = true; // booleano che serve a memorizzare che su non c'è nulla
+                }
+            } else if (p.getCommand().getType() == CommandType.GO_DOWN) { // controlla se il comando è di tipo GO_UP
+                if (getCurrentRoom().getDown() != null) { // controlla se su si può andare
+                    setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente 
+                    move = true; // booleano che serve a settare il fatto che mi sono mosso
+                } else {
+                    noroom = true; // booleano che serve a memorizzare che su non c'è nulla
                 }
             } else if (p.getCommand().getType() == CommandType.INVENTORY) { // se il comando è di tipo INVENTORY
                 out.println("Nel tuo inventario ci sono:");
@@ -343,31 +363,66 @@ public class UniperfidaGame extends GameDescription {
             } else if (p.getCommand().getType() == CommandType.PUSH) { // controlla se il comando è di tipo PUSH
                 //ricerca oggetti pushabili
                 if (p.getObject() != null && p.getObject().isPushable()) { // se il parser ha interpretato il comando di tipo oggetto e se l'oggetto è premibile
-                    out.println("Hai premuto: " + p.getObject().getName());
-                    if (p.getObject().getId() == 3) { // se premi il giocattolo numero 3 hai finito il gioco
-                        end(out);
+                    out.println("Fatto! Hai premuto: " + p.getObject().getName());
+                    out.println();
+                    if (p.getObject().getId() == 1 && p.getObject().isPushable()) { // istruzione per le volte dispari
+                        p.getObject().setPushable(false);
+                        p.getObject().setPush(true);
+                        super.setCurrentRoom(getRooms().get(2));
+                        // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
+                        out.println("...");
+                        out.println("...");
+                        out.println();
+                        out.println(getCurrentRoom().getDescription());
                     }
-                } else if (p.getInvObject() != null && p.getInvObject().isPushable()) { // stessa cosa ma con oggetto nell'inventario
-                    out.println("Hai premuto: " + p.getInvObject().getName());
-                    if (p.getInvObject().getId() == 3) {
-                        end(out);
+                } else if (p.getObject() != null && p.getObject().isPush()) {
+                    out.println("Fatto! Hai premuto: " + p.getObject().getName());
+                    out.println();
+                    if (p.getObject().getId() == 1 && p.getObject().isPush()) { // istruzione per le volte pari
+                        p.getObject().setPush(false);
+                        p.getObject().setPushable(true);
+                        super.setCurrentRoom(getRooms().get(0));
+                        // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
+                        out.println("...");
+                        out.println("...");
+                        out.println();
+                        out.println(getCurrentRoom().getDescription());
+                    } else {
+                        out.println("Premere cosa? Sii più preciso."); // se non ci sono oggetti o non si puo premere niente stampa questo
                     }
-                } else {
-                    out.println("Non ci sono oggetti che puoi premere qui."); // se non ci sono oggetti o non si puo premere niente stampa questo
+                } else if (p.getInvObject() != null && p.getInvObject().isPushable()) { // se il parser ha interpretato il comando di tipo oggetto INVENTARIO e se l'oggetto è premibile
+                    out.println("Fatto! Hai premuto: " + p.getInvObject().getName());
+                    out.println();
+                    if (p.getInvObject().getId() == 1 && p.getInvObject().isPushable()) { // istruzione per le volte dispari
+                        p.getInvObject().setPushable(false);
+                        p.getInvObject().setPush(true);
+                        out.println("prova dispari");
+                    }
+                } else if (p.getInvObject() != null && p.getInvObject().isPush()) {
+                    out.println("Fatto! Hai premuto: " + p.getInvObject().getName());
+                    out.println();
+                    if (p.getInvObject().getId() == 1 && p.getInvObject().isPush()) { // istruzione per le volte pari
+                        p.getInvObject().setPush(false);
+                        p.getInvObject().setPushable(true);
+                        out.println("prova pari");
+                    } else {
+                        out.println("Premere cosa? Sii più preciso."); // se non ci sono oggetti o non si puo premere niente stampa questo
+                    }
                 }
             }
+
             if (noroom) { // se noroom = true
-                out.println("Da quella parte non si può andare c'è un muro! Non hai ancora acquisito i poteri per oltrepassare i muri...");
+                out.println("Verso " + p.getCommand().getType().toString().toLowerCase() + " non puoi andare");
             } else if (move) { // se move = true
-                out.println(getCurrentRoom().getName());
-                out.println("================================================");
+                // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
                 out.println(getCurrentRoom().getDescription());
             }
+
         }
     }
 
     private void end(PrintStream out) {
         out.println("Premi il pulsante del giocattolo e in seguito ad una forte esplosione la tua casa prende fuoco... tu e tuoi famigliari cercate invano di salvarvi e venite avvolti dalle fiamme... è stata una morte CALOROSA... addio!");
-        System.exit(0); 
+        System.exit(0);
     }
 }

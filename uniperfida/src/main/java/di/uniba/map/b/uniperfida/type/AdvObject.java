@@ -20,7 +20,7 @@ public class AdvObject {
     private String name; // nome 
 
     private String description; // descrizione
-    
+
     private Set<String> alias; // set di string che contiene tutti i sinonimi di quell'oggetto
 
     private boolean openable = false; // l'oggetto puo essere aperto?
@@ -32,7 +32,8 @@ public class AdvObject {
     private boolean open = false; // l'oggetto è aperto?
 
     private boolean push = false; // l'oggetto è chiuso?
-
+    
+    private int nPressed = 0; 
 
     // costruttore
     public AdvObject(int id) {
@@ -58,6 +59,16 @@ public class AdvObject {
         this.name = name;
         this.description = description;
         this.alias = alias;
+    }
+
+    //costruttore
+    public AdvObject(int id, String name, String description, boolean pushable, boolean push) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.alias = alias;
+        this.pushable = pushable;
+        this.push = push;
     }
 
     // metodi set e get
@@ -117,6 +128,14 @@ public class AdvObject {
         this.push = push;
     }
 
+    public int getNPressed(int nPressed){
+        return nPressed;
+    }
+    
+    public void setNPressed(int nPressed){
+        this.nPressed= nPressed;
+    }
+    
     public Set<String> getAlias() {
         return alias;
     }
@@ -124,7 +143,7 @@ public class AdvObject {
     public void setAlias(Set<String> alias) {
         this.alias = alias;
     }
-    
+
     public void setAlias(String[] alias) {
         this.alias = new HashSet<>(Arrays.asList(alias));
     }
