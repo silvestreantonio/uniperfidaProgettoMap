@@ -12,5 +12,5 @@ package di.uniba.map.b.uniperfida.type;
 
 // comandi che il parser puo capire in maniera generica (tipo enumerativo)
 public enum CommandType {
-    END, INVENTORY, NORD, SOUTH, EAST, WEST, OPEN, CLOSE, PUSH, PULL, WALK_TO, PICK_UP, DROP, TALK_TO, GIVE, USE, LOOK_AT, TURN_ON, TURN_OFF, GO_UP, GO_DOWN
+    END, INVENTORY, NORD, SOUTH, EAST, WEST, OPEN, CLOSE, PUSH, PULL, WALK_TO, PRENDI, DROP, TALK_TO, GIVE, USE, LOOK_AT, TURN_ON, TURN_OFF, GO_UP, GO_DOWN
 }

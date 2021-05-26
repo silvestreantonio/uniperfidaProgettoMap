@@ -11,7 +11,6 @@ import di.uniba.map.b.uniperfida.type.AdvObject;
 import di.uniba.map.b.uniperfida.type.AdvObjectContainer;
 import di.uniba.map.b.uniperfida.type.Command;
 import di.uniba.map.b.uniperfida.type.CommandType;
-import di.uniba.map.b.uniperfida.type.Inventory;
 import di.uniba.map.b.uniperfida.type.Room;
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -57,7 +56,7 @@ public class UniperfidaGame extends GameDescription {
         Command look = new Command(CommandType.LOOK_AT, "osserva");
         look.setAlias(new String[]{"guarda", "guardare", "vedi", "vedere", "trova", "trovare", "cerca", "cercare", "fissa", "fissare"});
         getCommands().add(look);
-        Command pickup = new Command(CommandType.PICK_UP, "raccogli");
+        Command pickup = new Command(CommandType.PRENDI, "raccogli");
         pickup.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
         getCommands().add(pickup);
         Command drop = new Command(CommandType.DROP, "lascia");
@@ -77,7 +76,7 @@ public class UniperfidaGame extends GameDescription {
         getCommands().add(goDown);
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo J-371");
-        laboratory.setLook("Hai davanti la macchina, la porta è aperta;");
+        laboratory.setLook("Hai davanti la macchina, la porta è aperta");
         Room machine = new Room(2, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager. Il professore ed il suo assistente fremono per la tua imminente partenza.", "Universo J-371");
         machine.setLook("C'è una luce soffusa e un enorme tasto rosso");
         Room courtyard = new Room(3, "Cortile", "Ti trovi nel cortile. C'è uno strano edificio pieno zeppo di finestre. C'è un cartello con incisa una scritta.", "Universo J-371");
@@ -273,40 +272,40 @@ public class UniperfidaGame extends GameDescription {
 
     // questo metodo in base alla stanza in cui mi trovo deve interpretare un comando 
     @Override
-    public void nextMove(ParserOutput p, PrintStream out) { // riceve un input dal parser e un PrintStream dove scrivere
-        if (p.getCommand() == null) { // controlla se il parser ha interpetato il comando
-            out.println("Non ho capito cosa devo fare! Prova con un altro comando."); // se non l'ha fatto stampa che non ha capito
+    public void nextMove(ParserOutput p, PrintStream out) {
+        if (p.getCommand() == null) {
+            out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
         } else {
-            // comandi di movimento
+            //move
             boolean noroom = false;
             boolean move = false;
-            if (p.getCommand().getType() == CommandType.NORD) { // controlla se il comando è di tipo NORD
-                if (getCurrentRoom().getNorth() != null) { // controlla se a nord si può andare
-                    setCurrentRoom(getCurrentRoom().getNorth()); // se a nord si può andare setto la nuova stanza corrente 
-                    move = true; // booleano che serve a settare il fatto che mi sono mosso
+            if (p.getCommand().getType() == CommandType.NORD) {
+                if (getCurrentRoom().getNorth() != null) {
+                    setCurrentRoom(getCurrentRoom().getNorth());
+                    move = true;
                 } else {
-                    noroom = true; // booleano che serve a memorizzare che a nord non c'è nulla
+                    noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.SOUTH) { // controlla se il comando è di tipo SOUTH
-                if (getCurrentRoom().getSouth() != null) { // controlla se a sud si può andare
-                    setCurrentRoom(getCurrentRoom().getSouth()); // se a sud si può andare setto la nuova stanza corrente 
-                    move = true; // booleano che serve a settare il fatto che mi sono mosso
+            } else if (p.getCommand().getType() == CommandType.SOUTH) {
+                if (getCurrentRoom().getSouth() != null) {
+                    setCurrentRoom(getCurrentRoom().getSouth());
+                    move = true;
                 } else {
-                    noroom = true; // booleano che serve a memorizzare che a sud non c'è nulla
+                    noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.EAST) { // controlla se il comando è di tipo EAST
-                if (getCurrentRoom().getEast() != null) { // controlla se a est si può andare
-                    setCurrentRoom(getCurrentRoom().getEast()); // se a est si può andare setto la nuova stanza corrente
-                    move = true; // booleano che serve a settare il fatto che mi sono mosso
+            } else if (p.getCommand().getType() == CommandType.EAST) {
+                if (getCurrentRoom().getEast() != null) {
+                    setCurrentRoom(getCurrentRoom().getEast());
+                    move = true;
                 } else {
-                    noroom = true; // booleano che serve a memorizzare che a est non c'è nulla
+                    noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.WEST) { // controlla se il comando è di tipo WEST
-                if (getCurrentRoom().getWest() != null) { // controlla se a ovest si può andare
-                    setCurrentRoom(getCurrentRoom().getWest()); // se a ovest si può andare setto la nuova stanza corrente 
-                    move = true; // booleano che serve a settare il fatto che mi sono mosso
+            } else if (p.getCommand().getType() == CommandType.WEST) {
+                if (getCurrentRoom().getWest() != null) {
+                    setCurrentRoom(getCurrentRoom().getWest());
+                    move = true;
                 } else {
-                    noroom = true; // booleano che serve a memorizzare che a ovest non c'è nulla
+                    noroom = true;
                 }
             } else if (p.getCommand().getType() == CommandType.GO_UP) { // controlla se il comando è di tipo GO_UP
                 if (getCurrentRoom().getUp() != null) { // controlla se su si può andare
@@ -330,36 +329,20 @@ public class UniperfidaGame extends GameDescription {
             } else if (p.getCommand().getType() == CommandType.LOOK_AT) { // se il comando è di tipo LOOK_AT
                 if (getCurrentRoom().getLook() != null) { // se la stanza corrente ha l'attributo look
                     out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
+                    if (!getCurrentRoom().getObjects().isEmpty())
+                    for (AdvObject o : getCurrentRoom().getObjects()) {
+                        out.println("Inoltre è presente il seguente oggetto: " + o.getName());
+                    }
                 } else {
                     out.println("Non c'è niente di interessante qui.");
                 }
-            } else if (p.getCommand().getType() == CommandType.PICK_UP) { // se il comando è di tipo PICK_UP
-                if (p.getObject() != null) { // se ci sono oggetti
-                    if (getCurrentRoom().getObjects().equals(p.getObject())) { // se l'oggetto si puo raccogliere
-                        getInventory().add(p.getObject()); // aggiungo l'oggetto all'inventario
-                        getCurrentRoom().getObjects().remove(p.getObject()); // e lo rimuovo dalla stanza
-                        out.println("Hai raccolto: " + p.getObject().getDescription());
-                    } else {
-                        out.println("Non puoi raccogliere questo oggetto.");
-                    }
-                }else if (p.getObject() != null) { // se ci sono oggetti
-                    if (p.getObject().isPickupable()) { // se l'oggetto si puo raccogliere
-                        getCurrentRoom().getObjects().remove(p.getObject()); // aggiungo l'oggetto all'inventario
-                        getInventory().add(p.getObject()); // e lo rimuovo dalla stanza
-                        out.println("Hai raccolto: " + p.getInvObject().getDescription());
-                    } else {
-                        out.println("Non puoi raccogliere questo oggetto.");
-                    }
-                }
-                else {
-                    out.println("Non c'è niente da raccogliere qui.");
-                }
+            
             } else if (p.getCommand().getType() == CommandType.DROP) { // se il comando è di tipo PICK_UP
                 if (p.getInvObject() != null) { // se ci sono oggetti
-                    if (getInventory().contains(p.getInvObject())) { // se l'oggetto si puo raccogliere
-                        getInventory().remove(p.getInvObject()); // aggiungo l'oggetto all'inventario
-                        getCurrentRoom().getObjects().add(p.getInvObject()); // e lo rimuovo dalla stanza
-                        out.println("Hai lasciato: " + p.getInvObject().getDescription());
+                    if (getInventory().contains(p.getInvObject())) { // se l'oggetto è presente nell'inventario
+                        getInventory().remove(p.getInvObject()); // rimuovo l'oggetto dall'inventario
+                        getCurrentRoom().getObjects().add(p.getInvObject()); // e lo aggiungo alla stanza
+                        out.println("Hai lasciato: " + p.getInvObject().getName());
                     } else {
                         out.println("Non puoi lasciare questo oggetto.");
                     }
@@ -433,6 +416,7 @@ public class UniperfidaGame extends GameDescription {
                         p.getObject().setPushable(false);
                         p.getObject().setPush(true);
                         setCurrentRoom(getRooms().get(2));
+                        move = true; // booleano che serve a settare il fatto che mi sono mosso
                         // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
                         out.println("...");
                         out.println("...");
@@ -446,6 +430,7 @@ public class UniperfidaGame extends GameDescription {
                         p.getObject().setPush(false);
                         p.getObject().setPushable(true);
                         setCurrentRoom(getRooms().get(0));
+                        move = true; // booleano che serve a settare il fatto che mi sono mosso
                         // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
                         out.println("...");
                         out.println("...");
