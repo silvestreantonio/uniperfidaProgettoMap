@@ -32,8 +32,8 @@ public class AdvObject {
     private boolean open = false; // l'oggetto è aperto?
 
     private boolean push = false; // l'oggetto è chiuso?
-    
-    private int nPressed = 0; 
+
+    private boolean readable = false;
 
     // costruttore
     public AdvObject(int id) {
@@ -69,6 +69,14 @@ public class AdvObject {
         this.alias = alias;
         this.pushable = pushable;
         this.push = push;
+    }
+
+    //costruttore
+    public AdvObject(int id, String name, String description, boolean readable){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.readable = readable;
     }
 
     // metodi set e get
@@ -128,14 +136,6 @@ public class AdvObject {
         this.push = push;
     }
 
-    public int getNPressed(int nPressed){
-        return nPressed;
-    }
-    
-    public void setNPressed(int nPressed){
-        this.nPressed= nPressed;
-    }
-    
     public Set<String> getAlias() {
         return alias;
     }
@@ -151,6 +151,10 @@ public class AdvObject {
     public int getId() {
         return id;
     }
+
+    public boolean isReadable(){ return readable; }
+
+    public void setReadable(boolean readable) { this.readable = readable; }
 
     @Override
     public int hashCode() {

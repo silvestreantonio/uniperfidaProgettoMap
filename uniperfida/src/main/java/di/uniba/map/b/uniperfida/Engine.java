@@ -65,6 +65,7 @@ public class Engine {
                 + "\n“Okay, ci incontriamo qui giovedì alle 15”.\n\n");
         //System.out.println(game.getCurrentRoom().getName());  // stampa il nome della stanza in cui si trova il giocatore
         //System.out.println();
+        System.out.println("-----[" + game.getCurrentRoom().getuniverse() + "]-----");
         System.out.println(game.getCurrentRoom().getDescription()); // stampa la descrizione della stanza in cui si trova il giocatore
         System.out.println();
         System.out.println("Inserisci il comando qui sotto:");

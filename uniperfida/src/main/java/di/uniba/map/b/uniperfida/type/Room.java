@@ -24,6 +24,8 @@ public class Room {
 
     private String look; // stringa che viene visualizzata quando il giocatore preme "osserva" o "descrivi"
 
+    private String universe;
+
     private boolean visible = true; // attributo che serve per nascondere la stanza (es. la segreteria)
 
     private Room south = null; // attributo che memorizza la stanza in cui si puo andare se si preme "sud"
@@ -42,23 +44,19 @@ public class Room {
     private final List<AdvObject> objects=new ArrayList<>(); // la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
 
     // costruttore
-    public Room(int id) {
-        this.id = id;
-    }
-
-    // costruttore
-    public Room(int id, String name, String description) {
+    public Room(int id, String name, String description, boolean visible, String universe) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.visible = visible;
+        this.universe = universe;
     }
 
-    // costruttore con la variabile visible
-    public Room(int id, String name, String description, boolean visible) {
+    public Room(int id, String name, String description, String universe) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.visible= visible;
+        this.universe = universe;
     }
 
     // metodi set e get
@@ -133,6 +131,10 @@ public class Room {
     public void setDown(Room down) {
         this.down = down;
     }
+
+    public String getuniverse() {return universe; }
+
+    public void setuniverse(String universe) {this.universe = universe; }
 
     public List<AdvObject> getObjects() {
         return objects;
