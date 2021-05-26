@@ -60,6 +60,9 @@ public class UniperfidaGame extends GameDescription {
         Command pickup = new Command(CommandType.PICK_UP, "raccogli");
         pickup.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
         getCommands().add(pickup);
+        Command drop = new Command(CommandType.DROP, "lascia");
+        pickup.setAlias(new String[]{"lasciare", "buttare", "gettare", "butta", "getta"});
+        getCommands().add(drop);
         Command open = new Command(CommandType.OPEN, "apri");
         open.setAlias(new String[]{"aprire", "schiudi", "schiudere", "spalanca", "spalancare"});
         getCommands().add(open);
@@ -215,9 +218,41 @@ public class UniperfidaGame extends GameDescription {
         boardsHall.setAlias(new String[]{"diario"});
         hall.getObjects().add(boardsHall);
         AdvObject prova = new AdvObject(3, "prova", "Una semplice bacheca", true);
-        boardsHall.setAlias(new String[]{"prova"});
+        prova.setAlias(new String[]{"prova"});
+        AdvObject coin = new AdvObject(4,"moneta",true,"Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        coin.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
+        AdvObject snack = new AdvObject(5,"snack",true,"Uno snack al cioccolato");
+        snack.setAlias(new String[]{"merendina", "cibo", "merenda", "dolce", "dolcetto"});
+        AdvObject receptionSheet = new AdvObject(6, "foglio", "'Sono al bar, torno tra cinque minuti'", true);
+        receptionSheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
+        reception.getObjects().add(receptionSheet);
+        AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante", true);
+        boardsInfoPoint.setAlias(new String[]{"diario"});
+        infoPoint.getObjects().add(boardsInfoPoint);
+        AdvObject boardsWaitingRoom = new AdvObject(8, "bacheca","Indovina indovinello \n" +
+                "Come fermo 'sto fardello? \n" +
+                "Se la segreteria vuoi trovare \n" +
+                "Ed il voto verbalizzare \n" +
+                "Non ti resta che pagare \n" +
+                "Un bel caffè da assaporare");
+        boardsWaitingRoom.setAlias(new String[]{"diario"});
+        waitingRoom.getObjects().add(boardsWaitingRoom);
+        AdvObject buttonFirstElev = new AdvObject(9, "bottone", "Un piccolo tasto", true, false);
+        buttonFirstElev.setAlias(new String[]{"tasto"});
+        firstElevator.getObjects().add(buttonFirstElev);
+        AdvObject buttonSecondElev = new AdvObject(10, "bottone", "Un piccolo tasto", true, false);
+        buttonSecondElev.setAlias(new String[]{"tasto"});
+        secondElevator.getObjects().add(buttonSecondElev);
+        AdvObject secretarySheet = new AdvObject(11, "foglio", "Siamo al bar. Ci stiamo riposando." +
+                "La mola di lavoro è troppa. Chiamare il numero 3774480028");
+        secretarySheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
+        secretary.getObjects().add(secretarySheet);
+
+
         // inventario
         getInventory().add(prova);
+        getInventory().add(coin);
+        getInventory().add(snack);
         /*
         AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
         wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
@@ -300,17 +335,38 @@ public class UniperfidaGame extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.PICK_UP) { // se il comando è di tipo PICK_UP
                 if (p.getObject() != null) { // se ci sono oggetti
-                    if (p.getObject().isPickupable()) { // se l'oggetto si puo raccogliere
+                    if (getCurrentRoom().getObjects().equals(p.getObject())) { // se l'oggetto si puo raccogliere
                         getInventory().add(p.getObject()); // aggiungo l'oggetto all'inventario
                         getCurrentRoom().getObjects().remove(p.getObject()); // e lo rimuovo dalla stanza
                         out.println("Hai raccolto: " + p.getObject().getDescription());
                     } else {
                         out.println("Non puoi raccogliere questo oggetto.");
                     }
-                } else {
+                }else if (p.getObject() != null) { // se ci sono oggetti
+                    if (p.getObject().isPickupable()) { // se l'oggetto si puo raccogliere
+                        getCurrentRoom().getObjects().remove(p.getObject()); // aggiungo l'oggetto all'inventario
+                        getInventory().add(p.getObject()); // e lo rimuovo dalla stanza
+                        out.println("Hai raccolto: " + p.getInvObject().getDescription());
+                    } else {
+                        out.println("Non puoi raccogliere questo oggetto.");
+                    }
+                }
+                else {
                     out.println("Non c'è niente da raccogliere qui.");
                 }
-            } else if (p.getCommand().getType() == CommandType.OPEN) { // se il comando è di tipo apri 
+            } else if (p.getCommand().getType() == CommandType.DROP) { // se il comando è di tipo PICK_UP
+                if (p.getInvObject() != null) { // se ci sono oggetti
+                    if (getInventory().contains(p.getInvObject())) { // se l'oggetto si puo raccogliere
+                        getInventory().remove(p.getInvObject()); // aggiungo l'oggetto all'inventario
+                        getCurrentRoom().getObjects().add(p.getInvObject()); // e lo rimuovo dalla stanza
+                        out.println("Hai lasciato: " + p.getInvObject().getDescription());
+                    } else {
+                        out.println("Non puoi lasciare questo oggetto.");
+                    }
+                } else {
+                    out.println("Non c'è niente da lasciare.");
+                }
+            } else if (p.getCommand().getType() == CommandType.OPEN) { // se il comando è di tipo apri
                 /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti
                 * vengongo inseriti nella stanza o nell'inventario a seconda di dove si trova l'oggetto contenitore.
                 * Questa soluzione NON va bene poiché quando un oggetto contenitore viene richiuso è complicato

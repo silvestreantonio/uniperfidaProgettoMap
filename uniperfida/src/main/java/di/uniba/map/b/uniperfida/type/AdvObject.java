@@ -25,7 +25,9 @@ public class AdvObject {
 
     private boolean openable = false; // l'oggetto puo essere aperto?
 
-    private boolean pickupable = true; // l'oggetto puo essere raccolto?
+    private boolean pickupable = false; // l'oggetto puo essere raccolto?
+
+    private boolean droppable = false; // l'oggetto puo essere droppato?
 
     private boolean pushable = false; // l'oggetto puo essere premuto?
 
@@ -79,6 +81,13 @@ public class AdvObject {
         this.readable = readable;
     }
 
+    public AdvObject(int id, String name,boolean pickupable, String description){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.pickupable = pickupable;
+    }
+
     // metodi set e get
     public String getName() {
         return name;
@@ -110,6 +119,14 @@ public class AdvObject {
 
     public void setPickupable(boolean pickupable) {
         this.pickupable = pickupable;
+    }
+
+    public boolean isDroppable() {
+        return droppable;
+    }
+
+    public void setDroppable(boolean droppable) {
+        this.droppable = droppable;
     }
 
     public boolean isPushable() {
