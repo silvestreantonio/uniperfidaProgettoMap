@@ -11,6 +11,7 @@ import di.uniba.map.b.uniperfida.type.AdvObject;
 import di.uniba.map.b.uniperfida.type.AdvObjectContainer;
 import di.uniba.map.b.uniperfida.type.Command;
 import di.uniba.map.b.uniperfida.type.CommandType;
+import di.uniba.map.b.uniperfida.type.Inventory;
 import di.uniba.map.b.uniperfida.type.Room;
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -210,9 +211,13 @@ public class UniperfidaGame extends GameDescription {
         AdvObject buttonMachine = new AdvObject(1, "bottone", "Un enorme tasto rosso", true, false);
         buttonMachine.setAlias(new String[]{"tasto"});
         machine.getObjects().add(buttonMachine);
-        AdvObject boardsHall = new AdvObject(2,"bacheca","Una semplice bacheca", true);
+        AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca", true);
         boardsHall.setAlias(new String[]{"diario"});
         hall.getObjects().add(boardsHall);
+        AdvObject prova = new AdvObject(3, "prova", "Una semplice bacheca", true);
+        boardsHall.setAlias(new String[]{"prova"});
+        // inventario
+        getInventory().add(prova);
         /*
         AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
         wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
@@ -316,7 +321,7 @@ public class UniperfidaGame extends GameDescription {
                     out.println("Non c'è niente da aprire qui."); // lo stampo
                 } else {
                     if (p.getObject() != null) { // se il parser ha interpretato un oggetto nel comando
-                        if (p.getObject().isOpenable() &&  p.getObject().isOpen() == false) { // se l'oggetto si puo aprire e non è stato aperto
+                        if (p.getObject().isOpenable() && p.getObject().isOpen() == false) { // se l'oggetto si puo aprire e non è stato aperto
                             if (p.getObject() instanceof AdvObjectContainer) { // se l'oggetto è un'istanza di AdvObjectContainer 
                                 out.println("Hai aperto: " + p.getObject().getName());
                                 AdvObjectContainer c = (AdvObjectContainer) p.getObject(); // converto un object in un AdvObjectContainer facendo il casting
@@ -378,8 +383,7 @@ public class UniperfidaGame extends GameDescription {
                         out.println();
                         out.println(getCurrentRoom().getDescription());
                     }
-                }
-                else if (p.getObject() != null && p.getObject().isPush()) {
+                } else if (p.getObject() != null && p.getObject().isPush()) {
                     out.println("Fatto! Hai premuto: " + p.getObject().getName());
                     out.println();
                     if (p.getObject().getId() == 1 && p.getObject().isPush()) { // istruzione per le volte pari
@@ -392,10 +396,9 @@ public class UniperfidaGame extends GameDescription {
                         out.println();
                         out.println(getCurrentRoom().getDescription());
                     }
-                } else if (p.getObject() == null){
+                } else if (p.getObject() == null) {
                     out.println("Premere cosa? Sii più preciso."); // se non ci sono oggetti o non si puo premere niente stampa questo
-                }
-                else if (p.getInvObject() != null && p.getInvObject().isPushable()) { // se il parser ha interpretato il comando di tipo oggetto INVENTARIO e se l'oggetto è premibile
+                } else if (p.getInvObject() != null && p.getInvObject().isPushable()) { // se il parser ha interpretato il comando di tipo oggetto INVENTARIO e se l'oggetto è premibile
                     out.println("Fatto! Hai premuto: " + p.getInvObject().getName());
                     out.println();
                     if (p.getInvObject().getId() == 1 && p.getInvObject().isPushable()) { // istruzione per le volte dispari
@@ -411,7 +414,7 @@ public class UniperfidaGame extends GameDescription {
                         p.getInvObject().setPushable(true);
                         out.println("prova pari");
                     }
-                    } else if (p.getInvObject() == null){
+                } else if (p.getInvObject() == null) {
                     out.println("Premere cosa? Sii più preciso."); // se non ci sono oggetti o non si puo premere niente stampa questo
                 }
             }

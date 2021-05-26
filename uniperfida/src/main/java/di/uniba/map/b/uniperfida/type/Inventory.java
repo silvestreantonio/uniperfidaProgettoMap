@@ -18,6 +18,7 @@ public class Inventory {
 
     private List<AdvObject> list = new ArrayList<>();
 
+
     public List<AdvObject> getList() {
         return list;
     }
