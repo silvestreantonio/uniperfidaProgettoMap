@@ -59,6 +59,12 @@ public class Room {
         this.universe = universe;
     }
 
+       public Room(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+    
     // metodi set e get
     public String getName() {
         return name;
