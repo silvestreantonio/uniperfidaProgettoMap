@@ -10,6 +10,7 @@ import di.uniba.map.b.uniperfida.type.AdvObject;
 import di.uniba.map.b.uniperfida.type.Command;
 import java.util.List;
 import java.util.Set;
+import java.io.*;
 
 /**
  *
@@ -37,9 +38,9 @@ public class Parser {
     }
 
     // metodo che cicla sui comandi e verifica che il token coincide con un comando o un alias di un comando e restituisce l'indice in cui si trova
-    private int checkForObject(String token, List<AdvObject> obejcts) {
-        for (int i = 0; i < obejcts.size(); i++) {
-            if (obejcts.get(i).getName().equals(token) || obejcts.get(i).getAlias().contains(token)) {
+    private int checkForObject(String token, List<AdvObject> objects) {
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i).getName().equals(token) || objects.get(i).getAlias().contains(token)) {
                 return i;
             }
         }

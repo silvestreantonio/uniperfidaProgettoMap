@@ -34,11 +34,9 @@ public class Utils {
     // questo metodo fa lo split della stringa sugli spazi, cicla sul risultato di questo split, se la parola che trova non e' presente nelle stopwords la aggiunge al token e restituisce la lista di token
     public static List<String> parseString(String string, Set<String> stopwords) {
         List<String> tokens = new ArrayList<>();
-        String e = "e";
-        String o = "o";
         String[] split = string.toLowerCase().split("'|\\s+"); // fa lo split della stringa sugli spazi e sugli apostrofi (da vedere)
         for (String t : split) { // cicla sul risultato di questo split
-            if (!stopwords.contains(t) || t.equals(e) || t.equals(o)) { // se la parola che trova non e' presente nelle stopwords
+            if (!stopwords.contains(t)) { // se la parola che trova non e' presente nelle stopwords
                 tokens.add(t); // la aggiunge al token
             }
         }

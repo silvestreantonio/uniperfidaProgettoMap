@@ -38,40 +38,40 @@ public class UniperfidaGame extends GameDescription {
         Command nord = new Command(CommandType.NORD, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
-        Command sud = new Command(CommandType.SOUTH, "sud");
+        Command sud = new Command(CommandType.SUD, "sud");
         sud.setAlias(new String[]{"s", "S", "Sud", "SUD"});
         getCommands().add(sud);
-        Command est = new Command(CommandType.EAST, "est");
+        Command est = new Command(CommandType.EST, "est");
         est.setAlias(new String[]{"e", "E", "Est", "EST"});
         getCommands().add(est);
-        Command ovest = new Command(CommandType.WEST, "ovest");
+        Command ovest = new Command(CommandType.OVEST, "ovest");
         ovest.setAlias(new String[]{"o", "O", "Ovest", "OVEST"});
         getCommands().add(ovest);
-        Command inventory = new Command(CommandType.INVENTORY, "inventario");
+        Command inventory = new Command(CommandType.INVENTARIO, "inventario");
         inventory.setAlias(new String[]{"inv", "i", "I"});
         getCommands().add(inventory);
-        Command end = new Command(CommandType.END, "end");
+        Command end = new Command(CommandType.ESCI, "end");
         end.setAlias(new String[]{"end", "fine", "finire", "esci", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
         getCommands().add(end);
-        Command look = new Command(CommandType.LOOK_AT, "osserva");
+        Command look = new Command(CommandType.OSSERVA, "osserva");
         look.setAlias(new String[]{"guarda", "guardare", "vedi", "vedere", "trova", "trovare", "cerca", "cercare", "fissa", "fissare"});
         getCommands().add(look);
         Command pickup = new Command(CommandType.PRENDI, "raccogli");
         pickup.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
         getCommands().add(pickup);
-        Command drop = new Command(CommandType.DROP, "lascia");
-        pickup.setAlias(new String[]{"lasciare", "buttare", "gettare", "butta", "getta"});
-        getCommands().add(drop);
-        Command open = new Command(CommandType.OPEN, "apri");
+        Command lascia = new Command(CommandType.LASCIA, "lascia");
+        lascia.setAlias(new String[]{"lasciare", "buttare", "gettare", "butta", "getta"});
+        getCommands().add(lascia);
+        Command open = new Command(CommandType.APRI, "apri");
         open.setAlias(new String[]{"aprire", "schiudi", "schiudere", "spalanca", "spalancare"});
         getCommands().add(open);
-        Command push = new Command(CommandType.PUSH, "premi");
+        Command push = new Command(CommandType.PREMI, "premi");
         push.setAlias(new String[]{"spingi", "spingere", "attiva", "attivare", "premere", "schiaccia", "schiacciare"});
         getCommands().add(push);
-        Command goUp = new Command(CommandType.GO_UP, "sopra");
+        Command goUp = new Command(CommandType.SALI, "sopra");
         goUp.setAlias(new String[]{"salire", "sali scale", "salire scale", "sali", "su", "sù"});
         getCommands().add(goUp);
-        Command goDown = new Command(CommandType.GO_DOWN, "sotto");
+        Command goDown = new Command(CommandType.SCENDI, "sotto");
         goDown.setAlias(new String[]{"scendere", "scendi scale", "scendere scale", "scendi", "giu", "giù"});
         getCommands().add(goDown);
         // definizione delle stanze
@@ -286,70 +286,71 @@ public class UniperfidaGame extends GameDescription {
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.SOUTH) {
+            } else if (p.getCommand().getType() == CommandType.SUD) {
                 if (getCurrentRoom().getSouth() != null) {
                     setCurrentRoom(getCurrentRoom().getSouth());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.EAST) {
+            } else if (p.getCommand().getType() == CommandType.EST) {
                 if (getCurrentRoom().getEast() != null) {
                     setCurrentRoom(getCurrentRoom().getEast());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.WEST) {
+            } else if (p.getCommand().getType() == CommandType.OVEST) {
                 if (getCurrentRoom().getWest() != null) {
                     setCurrentRoom(getCurrentRoom().getWest());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.GO_UP) { // controlla se il comando è di tipo GO_UP
+            } else if (p.getCommand().getType() == CommandType.SALI) { // controlla se il comando è di tipo GO_UP
                 if (getCurrentRoom().getUp() != null) { // controlla se su si può andare
                     setCurrentRoom(getCurrentRoom().getUp()); // se su si può andare setto la nuova stanza corrente 
                     move = true; // booleano che serve a settare il fatto che mi sono mosso
                 } else {
                     noroom = true; // booleano che serve a memorizzare che su non c'è nulla
                 }
-            } else if (p.getCommand().getType() == CommandType.GO_DOWN) { // controlla se il comando è di tipo GO_UP
+            } else if (p.getCommand().getType() == CommandType.SCENDI) { // controlla se il comando è di tipo GO_UP
                 if (getCurrentRoom().getDown() != null) { // controlla se su si può andare
                     setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente 
                     move = true; // booleano che serve a settare il fatto che mi sono mosso
                 } else {
                     noroom = true; // booleano che serve a memorizzare che su non c'è nulla
                 }
-            } else if (p.getCommand().getType() == CommandType.INVENTORY) { // se il comando è di tipo INVENTORY
+            } else if (p.getCommand().getType() == CommandType.INVENTARIO) { // se il comando è di tipo INVENTORY
                 out.println("Nel tuo inventario ci sono:");
                 for (AdvObject o : getInventory()) { // ciclo sugli elementi dell'inventario
                     out.println(o.getName() + ": " + o.getDescription()); // e stampo nome + descrizione
                 }
-            } else if (p.getCommand().getType() == CommandType.LOOK_AT) { // se il comando è di tipo LOOK_AT
+            } else if (p.getCommand().getType() == CommandType.OSSERVA) { // se il comando è di tipo LOOK_AT
                 if (getCurrentRoom().getLook() != null) { // se la stanza corrente ha l'attributo look
                     out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
                     if (!getCurrentRoom().getObjects().isEmpty())
+                        out.println("Sono presenti inoltre i seguenti oggetti:");
                     for (AdvObject o : getCurrentRoom().getObjects()) {
-                        out.println("Inoltre è presente il seguente oggetto: " + o.getName());
+                        out.println("- " + o.getName());
                     }
                 } else {
                     out.println("Non c'è niente di interessante qui.");
                 }
             
-            } else if (p.getCommand().getType() == CommandType.DROP) { // se il comando è di tipo PICK_UP
+            } else if (p.getCommand().getType() == CommandType.LASCIA) { // se il comando è di tipo PICK_UP
                 if (p.getInvObject() != null) { // se ci sono oggetti
                     if (getInventory().contains(p.getInvObject())) { // se l'oggetto è presente nell'inventario
                         getInventory().remove(p.getInvObject()); // rimuovo l'oggetto dall'inventario
                         getCurrentRoom().getObjects().add(p.getInvObject()); // e lo aggiungo alla stanza
-                        out.println("Hai lasciato: " + p.getInvObject().getName());
+                        out.println("Fatto! Hai lasciato: " + p.getInvObject().getName());
                     } else {
                         out.println("Non puoi lasciare questo oggetto.");
                     }
                 } else {
                     out.println("Non c'è niente da lasciare.");
                 }
-            } else if (p.getCommand().getType() == CommandType.OPEN) { // se il comando è di tipo apri
+            } else if (p.getCommand().getType() == CommandType.APRI) { // se il comando è di tipo apri
                 /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti
                 * vengongo inseriti nella stanza o nell'inventario a seconda di dove si trova l'oggetto contenitore.
                 * Questa soluzione NON va bene poiché quando un oggetto contenitore viene richiuso è complicato
@@ -362,7 +363,7 @@ public class UniperfidaGame extends GameDescription {
                     if (p.getObject() != null) { // se il parser ha interpretato un oggetto nel comando
                         if (p.getObject().isOpenable() && p.getObject().isOpen() == false) { // se l'oggetto si puo aprire e non è stato aperto
                             if (p.getObject() instanceof AdvObjectContainer) { // se l'oggetto è un'istanza di AdvObjectContainer 
-                                out.println("Hai aperto: " + p.getObject().getName());
+                                out.println("Fatto! Hai aperto: " + p.getObject().getName());
                                 AdvObjectContainer c = (AdvObjectContainer) p.getObject(); // converto un object in un AdvObjectContainer facendo il casting
                                 if (!c.getList().isEmpty()) { // se la lista oggetti non è vuota
                                     out.print(c.getName() + " contiene:"); // stampo tutti gli oggetti
@@ -407,7 +408,7 @@ public class UniperfidaGame extends GameDescription {
                         }
                     }
                 }
-            } else if (p.getCommand().getType() == CommandType.PUSH) { // controlla se il comando è di tipo PUSH
+            } else if (p.getCommand().getType() == CommandType.PREMI) { // controlla se il comando è di tipo PUSH
                 //ricerca oggetti pushabili
                 if (p.getObject() != null && p.getObject().isPushable()) { // se il parser ha interpretato il comando di tipo oggetto e se l'oggetto è premibile
                     out.println("Fatto! Hai premuto: " + p.getObject().getName());
