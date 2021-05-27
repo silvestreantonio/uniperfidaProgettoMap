@@ -35,43 +35,43 @@ public class UniperfidaGame extends GameDescription {
     @Override
     public void init() throws Exception { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
-        Command nord = new Command(CommandType.NORD, "nord");
+        Command nord = new Command(CommandType.NORTH, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
-        Command sud = new Command(CommandType.SUD, "sud");
+        Command sud = new Command(CommandType.SOUTH, "sud");
         sud.setAlias(new String[]{"s", "S", "Sud", "SUD"});
         getCommands().add(sud);
-        Command est = new Command(CommandType.EST, "est");
+        Command est = new Command(CommandType.EAST, "est");
         est.setAlias(new String[]{"e", "E", "Est", "EST"});
         getCommands().add(est);
-        Command ovest = new Command(CommandType.OVEST, "ovest");
+        Command ovest = new Command(CommandType.WEST, "ovest");
         ovest.setAlias(new String[]{"o", "O", "Ovest", "OVEST"});
         getCommands().add(ovest);
-        Command inventory = new Command(CommandType.INVENTARIO, "inventario");
+        Command inventory = new Command(CommandType.INVENTORY, "inventario");
         inventory.setAlias(new String[]{"inv", "i", "I"});
         getCommands().add(inventory);
-        Command end = new Command(CommandType.ESCI, "end");
+        Command end = new Command(CommandType.END, "end");
         end.setAlias(new String[]{"end", "fine", "finire", "esci", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
         getCommands().add(end);
-        Command look = new Command(CommandType.OSSERVA, "osserva");
+        Command look = new Command(CommandType.LOOK, "osserva");
         look.setAlias(new String[]{"guarda", "guardare", "vedi", "vedere", "trova", "trovare", "cerca", "cercare", "fissa", "fissare"});
         getCommands().add(look);
-        Command pickup = new Command(CommandType.PRENDI, "raccogli");
+        Command pickup = new Command(CommandType.PICK_UP, "raccogli");
         pickup.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
         getCommands().add(pickup);
-        Command lascia = new Command(CommandType.LASCIA, "lascia");
+        Command lascia = new Command(CommandType.LEAVE, "lascia");
         lascia.setAlias(new String[]{"lasciare", "buttare", "gettare", "butta", "getta"});
         getCommands().add(lascia);
-        Command open = new Command(CommandType.APRI, "apri");
+        Command open = new Command(CommandType.OPEN, "apri");
         open.setAlias(new String[]{"aprire", "schiudi", "schiudere", "spalanca", "spalancare"});
         getCommands().add(open);
-        Command push = new Command(CommandType.PREMI, "premi");
+        Command push = new Command(CommandType.PUSH, "premi");
         push.setAlias(new String[]{"spingi", "spingere", "attiva", "attivare", "premere", "schiaccia", "schiacciare"});
         getCommands().add(push);
-        Command goUp = new Command(CommandType.SALI, "sopra");
+        Command goUp = new Command(CommandType.GO_UP, "sopra");
         goUp.setAlias(new String[]{"salire", "sali scale", "salire scale", "sali", "su", "sù"});
         getCommands().add(goUp);
-        Command goDown = new Command(CommandType.SCENDI, "sotto");
+        Command goDown = new Command(CommandType.GO_DOWN, "sotto");
         goDown.setAlias(new String[]{"scendere", "scendi scale", "scendere scale", "scendi", "giu", "giù"});
         getCommands().add(goDown);
         // definizione delle stanze
@@ -216,8 +216,6 @@ public class UniperfidaGame extends GameDescription {
         AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca", true);
         boardsHall.setAlias(new String[]{"diario"});
         hall.getObjects().add(boardsHall);
-        AdvObject prova = new AdvObject(3, "prova", "Una semplice bacheca", true);
-        prova.setAlias(new String[]{"prova"});
         AdvObject coin = new AdvObject(4,"moneta",true,"Una moneta da 50 cents, perfetta per comprare cinque goleador");
         coin.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
         AdvObject snack = new AdvObject(5,"snack",true,"Uno snack al cioccolato");
@@ -236,20 +234,38 @@ public class UniperfidaGame extends GameDescription {
                 "Un bel caffè da assaporare");
         boardsWaitingRoom.setAlias(new String[]{"diario"});
         waitingRoom.getObjects().add(boardsWaitingRoom);
-        AdvObject buttonFirstElev = new AdvObject(9, "bottone", "Un piccolo tasto", true, false);
-        buttonFirstElev.setAlias(new String[]{"tasto"});
-        firstElevator.getObjects().add(buttonFirstElev);
-        AdvObject buttonSecondElev = new AdvObject(10, "bottone", "Un piccolo tasto", true, false);
-        buttonSecondElev.setAlias(new String[]{"tasto"});
-        secondElevator.getObjects().add(buttonSecondElev);
-        AdvObject secretarySheet = new AdvObject(11, "foglio", "Siamo al bar. Ci stiamo riposando." +
-                "La mola di lavoro è troppa. Chiamare il numero 3774480028");
+        AdvObject buttonElev = new AdvObject(9, "bottone", "Un piccolo tasto", true, false);
+        buttonElev.setAlias(new String[]{"tasto", "pulsante"});
+        firstElevator.getObjects().add(buttonElev);
+        secondElevator.getObjects().add(buttonElev);
+        AdvObject secretarySheet = new AdvObject(10, "foglio", "Siamo al bar. Ci stiamo riposando." +
+                "La mole di lavoro è troppa. Chiamare il numero 3774480028");
         secretarySheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
         secretary.getObjects().add(secretarySheet);
 
+        AdvObjectContainer coffeeDispenser = new AdvObjectContainer(11, "macchinetta del caffè","Una semplice macchinetta del caffè", true);
+        coffeeDispenser.setAlias(new String[]{"dispenser", "macchinetta"});
+        hall.getObjects().add(coffeeDispenser);
+
+        AdvObject coffee = new AdvObject(12, "caffè",true, "Un caffè caldo"); //costruttore da aggiungere
+        coffee.setAlias(new String[]{"marocchino"});
+        coffeeDispenser.add(coffee);
+
+        AdvObject chocolateCoffee = new AdvObject(13, "caffè con cioccolato",true, "Un caffè al cioccolato, caldo");
+        chocolateCoffee.setAlias(new String[]{"cioccolata"});
+        coffeeDispenser.add(chocolateCoffee);
+
+        AdvObject macchiatoCoffee = new AdvObject(14, "caffè macchiato",true, "Un caffè macchiato caldo");
+        macchiatoCoffee.setAlias(new String[]{"macchiato"});
+        coffeeDispenser.add(macchiatoCoffee);
+
+        AdvObject longCoffee = new AdvObject(15, "caffè lungo",true, "Un caffè lungo caldo");
+        longCoffee.setAlias(new String[]{"lungo"});
+        coffeeDispenser.add(longCoffee);
+
+
 
         // inventario
-        getInventory().add(prova);
         getInventory().add(coin);
         getInventory().add(snack);
         /*
@@ -279,54 +295,54 @@ public class UniperfidaGame extends GameDescription {
             //move
             boolean noroom = false;
             boolean move = false;
-            if (p.getCommand().getType() == CommandType.NORD) {
+            if (p.getCommand().getType() == CommandType.NORTH) {
                 if (getCurrentRoom().getNorth() != null) {
                     setCurrentRoom(getCurrentRoom().getNorth());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.SUD) {
+            } else if (p.getCommand().getType() == CommandType.SOUTH) {
                 if (getCurrentRoom().getSouth() != null) {
                     setCurrentRoom(getCurrentRoom().getSouth());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.EST) {
+            } else if (p.getCommand().getType() == CommandType.EAST) {
                 if (getCurrentRoom().getEast() != null) {
                     setCurrentRoom(getCurrentRoom().getEast());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.OVEST) {
+            } else if (p.getCommand().getType() == CommandType.WEST) {
                 if (getCurrentRoom().getWest() != null) {
                     setCurrentRoom(getCurrentRoom().getWest());
                     move = true;
                 } else {
                     noroom = true;
                 }
-            } else if (p.getCommand().getType() == CommandType.SALI) { // controlla se il comando è di tipo GO_UP
+            } else if (p.getCommand().getType() == CommandType.GO_UP) { // controlla se il comando è di tipo GO_UP
                 if (getCurrentRoom().getUp() != null) { // controlla se su si può andare
                     setCurrentRoom(getCurrentRoom().getUp()); // se su si può andare setto la nuova stanza corrente 
                     move = true; // booleano che serve a settare il fatto che mi sono mosso
                 } else {
                     noroom = true; // booleano che serve a memorizzare che su non c'è nulla
                 }
-            } else if (p.getCommand().getType() == CommandType.SCENDI) { // controlla se il comando è di tipo GO_UP
+            } else if (p.getCommand().getType() == CommandType.GO_DOWN) { // controlla se il comando è di tipo GO_UP
                 if (getCurrentRoom().getDown() != null) { // controlla se su si può andare
                     setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente 
                     move = true; // booleano che serve a settare il fatto che mi sono mosso
                 } else {
                     noroom = true; // booleano che serve a memorizzare che su non c'è nulla
                 }
-            } else if (p.getCommand().getType() == CommandType.INVENTARIO) { // se il comando è di tipo INVENTORY
+            } else if (p.getCommand().getType() == CommandType.INVENTORY) { // se il comando è di tipo INVENTORY
                 out.println("Nel tuo inventario ci sono:");
                 for (AdvObject o : getInventory()) { // ciclo sugli elementi dell'inventario
                     out.println(o.getName() + ": " + o.getDescription()); // e stampo nome + descrizione
                 }
-            } else if (p.getCommand().getType() == CommandType.OSSERVA) { // se il comando è di tipo LOOK_AT
+            } else if (p.getCommand().getType() == CommandType.LOOK) { // se il comando è di tipo LOOK_AT
                 if (getCurrentRoom().getLook() != null) { // se la stanza corrente ha l'attributo look
                     out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
                     if (!getCurrentRoom().getObjects().isEmpty())
@@ -338,7 +354,7 @@ public class UniperfidaGame extends GameDescription {
                     out.println("Non c'è niente di interessante qui.");
                 }
             
-            } else if (p.getCommand().getType() == CommandType.LASCIA) { // se il comando è di tipo PICK_UP
+            } else if (p.getCommand().getType() == CommandType.LEAVE) { // se il comando è di tipo PICK_UP
                 if (p.getInvObject() != null) { // se ci sono oggetti
                     if (getInventory().contains(p.getInvObject())) { // se l'oggetto è presente nell'inventario
                         getInventory().remove(p.getInvObject()); // rimuovo l'oggetto dall'inventario
@@ -350,7 +366,7 @@ public class UniperfidaGame extends GameDescription {
                 } else {
                     out.println("Non c'è niente da lasciare.");
                 }
-            } else if (p.getCommand().getType() == CommandType.APRI) { // se il comando è di tipo apri
+            } else if (p.getCommand().getType() == CommandType.OPEN) { // se il comando è di tipo apri
                 /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti
                 * vengongo inseriti nella stanza o nell'inventario a seconda di dove si trova l'oggetto contenitore.
                 * Questa soluzione NON va bene poiché quando un oggetto contenitore viene richiuso è complicato
@@ -408,7 +424,7 @@ public class UniperfidaGame extends GameDescription {
                         }
                     }
                 }
-            } else if (p.getCommand().getType() == CommandType.PREMI) { // controlla se il comando è di tipo PUSH
+            } else if (p.getCommand().getType() == CommandType.PUSH) { // controlla se il comando è di tipo PUSH
                 //ricerca oggetti pushabili
                 if (p.getObject() != null && p.getObject().isPushable()) { // se il parser ha interpretato il comando di tipo oggetto e se l'oggetto è premibile
                     out.println("Fatto! Hai premuto: " + p.getObject().getName());
@@ -422,7 +438,8 @@ public class UniperfidaGame extends GameDescription {
                         out.println("...");
                         out.println("...");
                         out.println();
-                        out.println(getCurrentRoom().getDescription());
+                    } else if (p.getObject().getId() == 9 && p.getObject().isPushable()){
+                        System.out.println("L'ascensore non è disponibile.");
                     }
                 } else if (p.getObject() != null && p.getObject().isPush()) {
                     out.println("Fatto! Hai premuto: " + p.getObject().getName());

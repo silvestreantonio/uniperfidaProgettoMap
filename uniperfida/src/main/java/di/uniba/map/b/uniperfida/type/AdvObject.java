@@ -37,6 +37,8 @@ public class AdvObject {
 
     private boolean readable = false;
 
+    private boolean useable = false;
+
     // costruttore
     public AdvObject(int id) {
         this.id = id;
@@ -80,7 +82,7 @@ public class AdvObject {
         this.description = description;
         this.readable = readable;
     }
-
+    //costruttore
     public AdvObject(int id, String name,boolean pickupable, String description){
         this.id = id;
         this.name = name;
@@ -172,6 +174,10 @@ public class AdvObject {
     public boolean isReadable(){ return readable; }
 
     public void setReadable(boolean readable) { this.readable = readable; }
+
+    public boolean isUseable(){return useable;}
+
+    public void setUseable(boolean useable){this.useable = useable;}
 
     @Override
     public int hashCode() {
