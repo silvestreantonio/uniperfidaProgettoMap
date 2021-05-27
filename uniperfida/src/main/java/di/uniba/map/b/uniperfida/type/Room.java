@@ -42,7 +42,7 @@ public class Room {
     // nord sud est e ovest è detto concetto di aggregazione 
     
     private final List<AdvObject> objects=new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
-    private final List<AdvObjectContainer> objectsContainers=new ArrayList<>();
+
     // costruttore
     public Room(int id, String name, String description, boolean visible, String universe) {
         this.id = id;
@@ -146,9 +146,7 @@ public class Room {
         return objects;
     }
 
-    public List<AdvObjectContainer> getObjectsContainers() {
-        return objectsContainers;
-    }
+
 
     @Override
     public int hashCode() {

@@ -15,6 +15,8 @@ import di.uniba.map.b.uniperfida.type.Room;
 import java.io.PrintStream;
 import java.util.Iterator;
 
+import static di.uniba.map.b.uniperfida.print.Printings.printHelp;
+
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
  * debba estendere la classe GameDescription. L'Engine è fatto in modo che posso
@@ -74,13 +76,16 @@ public class UniperfidaGame extends GameDescription {
         Command goDown = new Command(CommandType.GO_DOWN, "sotto");
         goDown.setAlias(new String[]{"scendere", "scendi scale", "scendere scale", "scendi", "giu", "giù"});
         getCommands().add(goDown);
+        Command help = new Command(CommandType.HELP, "help");
+        help.setAlias(new String[] {"aiuto"});
+        getCommands().add(help);
         // definizione delle stanze
-        Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo J-371");
+        Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
         laboratory.setLook("Hai davanti la macchina, la porta è aperta");
-        Room machine = new Room(2, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager.", "Universo J-371");
+        Room machine = new Room(2, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager.", "Universo T-327");
         machine.setLook("C'è una luce soffusa e un enorme tasto rosso");
         Room courtyard = new Room(3, "Cortile", "Ti trovi nel cortile. C'è uno strano edificio pieno zeppo di finestre. C'è un cartello con incisa una scritta.", "Universo J-371");
-        courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Fortunatamente qui si parla italiano. Di fronte a te c'è una porta."); //Senti qualcosa nelle tasche vibrare
+        courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Fortunatamente qui si parla italiano. Di fronte a te c'è una porta aperta."); //Senti qualcosa nelle tasche vibrare
         Room hall = new Room(4, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.", "Universo J-371");
         hall.setLook("C'è una macchinetta del caffè e una bacheca.");
         Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Sembra essere vuoto.", "Universo J-371");
@@ -92,7 +97,7 @@ public class UniperfidaGame extends GameDescription {
         Room infoPoint = new Room(8, "Zona delle bacheche", "Ti trovi nella zona delle bacheche.", "Universo J-371");
         infoPoint.setLook("Nelle bacheche non c'è nulla infisso. Come sempre d'altronde.");
         Room firstElevator = new Room(9, "Ascensore", "Ti trovi nell'ascensore. E' molto grande.", "Universo J-371");
-        firstElevator.setLook("C'è un bottone.");
+        firstElevator.setLook("'Capienza massima: 8 persone'");
         Room stairs = new Room(10, "Scale piano terra", "Ti trovi nel pianerottolo delle scale del piano terra.", "Universo J-371");
         stairs.setLook("C'è un'enorme scalinata che sale.");
         Room waitingRoom = new Room(11, "Sala d'attesa aule", "Ti trovi nella sala d'attesa delle aule.", "Universo J-371");
@@ -289,7 +294,6 @@ public class UniperfidaGame extends GameDescription {
     public void nextMove(ParserOutput p, PrintStream out) {
         if (p.getCommand() == null) {
             out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
-            out.println();
         } else {
             //move
             boolean noroom = false;
@@ -328,6 +332,7 @@ public class UniperfidaGame extends GameDescription {
                             noroom = true;
                         }
                         break;
+                       // case
                     case GO_UP:
                         // controlla se il comando è di tipo GO_UP
                         if (getCurrentRoom().getUp() != null) { // controlla se su si può andare
@@ -442,6 +447,8 @@ public class UniperfidaGame extends GameDescription {
                             }
                         }
                         break;
+                    case HELP:
+                        printHelp();
                     case PUSH:
                         // controlla se il comando è di tipo PUSH
                         //ricerca oggetti pushabili
