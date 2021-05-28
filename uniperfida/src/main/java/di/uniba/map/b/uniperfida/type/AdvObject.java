@@ -37,7 +37,7 @@ public class AdvObject {
 
     private boolean readable = false;
 
-    private boolean useable = false;
+    private boolean useable = true;
 
     // costruttore
     public AdvObject(int id) {
@@ -83,12 +83,14 @@ public class AdvObject {
         this.readable = readable;
     }
     //costruttore
-    public AdvObject(int id, String name,boolean pickupable, String description){
+    public AdvObject(int id, String name,boolean pickupable, boolean droppable, String description){
         this.id = id;
         this.name = name;
         this.description = description;
         this.pickupable = pickupable;
+        this.droppable = droppable;
     }
+
 
     // metodi set e get
     public String getName() {
@@ -171,13 +173,21 @@ public class AdvObject {
         return id;
     }
 
-    public boolean isReadable(){ return readable; }
+    public boolean isReadable(){
+        return readable;
+    }
 
-    public void setReadable(boolean readable) { this.readable = readable; }
+    public void setReadable(boolean readable) {
+        this.readable = readable;
+    }
 
-    public boolean isUseable(){return useable;}
+    public boolean isUseable(){
+        return useable;
+    }
 
-    public void setUseable(boolean useable){this.useable = useable;}
+    public void setUseable(boolean useable){
+        this.useable = useable;
+    }
 
     @Override
     public int hashCode() {

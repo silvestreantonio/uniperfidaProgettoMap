@@ -40,45 +40,63 @@ public class UniperfidaGame extends GameDescription {
         Command nord = new Command(CommandType.NORTH, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
+
         Command sud = new Command(CommandType.SOUTH, "sud");
         sud.setAlias(new String[]{"s", "S", "Sud", "SUD"});
         getCommands().add(sud);
+
         Command est = new Command(CommandType.EAST, "est");
         est.setAlias(new String[]{"e", "E", "Est", "EST"});
         getCommands().add(est);
+
         Command ovest = new Command(CommandType.WEST, "ovest");
         ovest.setAlias(new String[]{"o", "O", "Ovest", "OVEST"});
         getCommands().add(ovest);
+
         Command inventory = new Command(CommandType.INVENTORY, "inventario");
         inventory.setAlias(new String[]{"inv", "i", "I"});
         getCommands().add(inventory);
+
         Command end = new Command(CommandType.END, "end");
         end.setAlias(new String[]{"end", "fine", "finire", "esci", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
         getCommands().add(end);
+
         Command look = new Command(CommandType.LOOK, "osserva");
         look.setAlias(new String[]{"guarda", "guardare", "vedi", "vedere", "trova", "trovare", "cerca", "cercare", "fissa", "fissare"});
         getCommands().add(look);
-        Command pickup = new Command(CommandType.PICK_UP, "raccogli");
-        pickup.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
-        getCommands().add(pickup);
-        Command lascia = new Command(CommandType.LEAVE, "lascia");
-        lascia.setAlias(new String[]{"lasciare", "buttare", "gettare", "butta", "getta"});
-        getCommands().add(lascia);
+
+        Command pickUp = new Command(CommandType.PICK_UP, "raccogli");
+        pickUp.setAlias(new String[]{"prendi", "prendere", "raccogliere"});
+        getCommands().add(pickUp);
+
+        Command leave = new Command(CommandType.LEAVE, "lascia");
+        leave.setAlias(new String[]{"lasciare", "buttare", "gettare", "butta", "getta"});
+        getCommands().add(leave);
+
         Command open = new Command(CommandType.OPEN, "apri");
         open.setAlias(new String[]{"aprire", "schiudi", "schiudere", "spalanca", "spalancare"});
         getCommands().add(open);
+
         Command push = new Command(CommandType.PUSH, "premi");
         push.setAlias(new String[]{"spingi", "spingere", "attiva", "attivare", "premere", "schiaccia", "schiacciare"});
         getCommands().add(push);
+
         Command goUp = new Command(CommandType.GO_UP, "sopra");
         goUp.setAlias(new String[]{"salire", "sali scale", "salire scale", "sali", "su", "sù"});
         getCommands().add(goUp);
+
         Command goDown = new Command(CommandType.GO_DOWN, "sotto");
         goDown.setAlias(new String[]{"scendere", "scendi scale", "scendere scale", "scendi", "giu", "giù"});
         getCommands().add(goDown);
+
         Command help = new Command(CommandType.HELP, "help");
         help.setAlias(new String[] {"aiuto"});
         getCommands().add(help);
+
+        Command use = new Command(CommandType.USE, "usa");
+        use.setAlias(new String[]{"usare", "utilizza", "utilizzare"});
+        getCommands().add(use);
+
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
         laboratory.setLook("Hai davanti la macchina, la porta è aperta");
@@ -214,23 +232,30 @@ public class UniperfidaGame extends GameDescription {
         getRooms().add(thirdBathroom);
         getRooms().add(waitingRoomBasilico);
         getRooms().add(secretary);
+
         // definizione degli oggetti 
         AdvObject buttonMachine = new AdvObject(1, "bottone", "Un enorme tasto rosso", true, false);
         buttonMachine.setAlias(new String[]{"tasto"});
         machine.getObjects().add(buttonMachine);
+
         AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca", true);
         boardsHall.setAlias(new String[]{"diario"});
         hall.getObjects().add(boardsHall);
-        AdvObject coin = new AdvObject(4, "moneta", true, "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+
+        AdvObject coin = new AdvObject(4, "moneta", false, true, "Una moneta da 50 cents, perfetta per comprare cinque goleador");
         coin.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
-        AdvObject snack = new AdvObject(5, "snack", true, "Uno snack al cioccolato");
+
+        AdvObject snack = new AdvObject(5, "snack",false,true, "Uno snack al cioccolato");
         snack.setAlias(new String[]{"merendina", "cibo", "merenda", "dolce", "dolcetto"});
+
         AdvObject receptionSheet = new AdvObject(6, "foglio", "'Sono al bar, torno tra cinque minuti'", true);
         receptionSheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
         reception.getObjects().add(receptionSheet);
+
         AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante", true);
         boardsInfoPoint.setAlias(new String[]{"diario"});
         infoPoint.getObjects().add(boardsInfoPoint);
+
         AdvObject boardsWaitingRoom = new AdvObject(8, "bacheca", "Indovina indovinello \n"
                 + "Come fermo 'sto fardello? \n"
                 + "Se la segreteria vuoi trovare \n"
@@ -239,10 +264,12 @@ public class UniperfidaGame extends GameDescription {
                 + "Un bel caffè da assaporare");
         boardsWaitingRoom.setAlias(new String[]{"diario"});
         waitingRoom.getObjects().add(boardsWaitingRoom);
+
         AdvObject buttonElev = new AdvObject(9, "bottone", "Un piccolo tasto", true, false);
         buttonElev.setAlias(new String[]{"tasto", "pulsante"});
         firstElevator.getObjects().add(buttonElev);
         secondElevator.getObjects().add(buttonElev);
+
         AdvObject secretarySheet = new AdvObject(10, "foglio", "Siamo al bar. Ci stiamo riposando."
                 + "La mole di lavoro è troppa. Chiamare il numero 3774480028");
         secretarySheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
@@ -250,21 +277,22 @@ public class UniperfidaGame extends GameDescription {
 
         AdvObjectContainer coffeeDispenser = new AdvObjectContainer(11, "macchinetta del caffè", "Una semplice macchinetta del caffè", true);
         coffeeDispenser.setAlias(new String[]{"dispenser", "macchinetta"});
+        coffeeDispenser.setUseable(true);
         hall.getObjects().add(coffeeDispenser);
 
-        AdvObject coffee = new AdvObject(12, "caffè", true, "Un caffè caldo"); //costruttore da aggiungere
+        AdvObject coffee = new AdvObject(12, "caffè", true, false, "Un caffè caldo"); //costruttore da aggiungere
         coffee.setAlias(new String[]{"marocchino"});
         coffeeDispenser.add(coffee);
 
-        AdvObject chocolateCoffee = new AdvObject(13, "caffè con cioccolato", true, "Un caffè al cioccolato, caldo");
+        AdvObject chocolateCoffee = new AdvObject(13, "caffè con cioccolato", true, false, "Un caffè al cioccolato, caldo");
         chocolateCoffee.setAlias(new String[]{"cioccolata"});
         coffeeDispenser.add(chocolateCoffee);
 
-        AdvObject macchiatoCoffee = new AdvObject(14, "caffè macchiato", true, "Un caffè macchiato caldo");
+        AdvObject macchiatoCoffee = new AdvObject(14, "caffè macchiato", true, false, "Un caffè macchiato caldo");
         macchiatoCoffee.setAlias(new String[]{"macchiato"});
         coffeeDispenser.add(macchiatoCoffee);
 
-        AdvObject longCoffee = new AdvObject(15, "caffè lungo", true, "Un caffè lungo caldo");
+        AdvObject longCoffee = new AdvObject(15, "caffè lungo", true, false, "Un caffè lungo caldo");
         longCoffee.setAlias(new String[]{"lungo"});
         coffeeDispenser.add(longCoffee);
 
@@ -373,10 +401,46 @@ public class UniperfidaGame extends GameDescription {
                             out.println("Non c'è niente di interessante qui.");
                         }
                         break;
+                    case USE:
+                        if(p.getObject() != null){
+                            if(p.getObject().getId() == 11){
+                                if (p.getObject().isUseable()) {
+                                    out.println("Stai utilizzando la macchinetta.");
+                                    p.getObject().setUseable(false);
+                                    out.println("'Caffè terminati'. Che fortuna! Hai preso l'ultimo caffè");
+                                } else {
+                                    out.println("Spiacente, caffè terminati");
+                                }
+                            } else {
+                                out.println("no");
+                            }
+
+                        } else {
+                            out.println("Non c'è niente da usare.");
+                        }
+                        break;
+                    case PICK_UP:
+                        //se il comando è di tipo PICK_UP
+                        if(p.getObject() != null){
+                            if(getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable()){
+                                p.getObject().setPickupable(false);
+                                p.getObject().setDroppable(true);
+                                getCurrentRoom().getObjects().remove(p.getObject());
+                                getInventory().add(p.getObject());
+                                out.println("Fatto! Hai preso: " + p.getObject().getName());
+                            } else {
+                                out.println("Non puoi prendere questo oggetto.");
+                            }
+                        } else {
+                            out.println("Prendere cosa? Sii più preciso.");
+                        }
+                        break;
                     case LEAVE:
-                        // se il comando è di tipo PICK_UP
+                        // se il comando è di tipo LEAVE
                         if (p.getInvObject() != null) { // se ci sono oggetti
-                            if (getInventory().contains(p.getInvObject())) { // se l'oggetto è presente nell'inventario
+                            if (getInventory().contains(p.getInvObject()) && p.getInvObject().isDroppable()) { // se l'oggetto è presente nell'inventario
+                                p.getInvObject().setDroppable(false);
+                                p.getInvObject().setPickupable(true);
                                 getInventory().remove(p.getInvObject()); // rimuovo l'oggetto dall'inventario
                                 getCurrentRoom().getObjects().add(p.getInvObject()); // e lo aggiungo alla stanza
                                 out.println("Fatto! Hai lasciato: " + p.getInvObject().getName());
@@ -384,7 +448,7 @@ public class UniperfidaGame extends GameDescription {
                                 out.println("Non puoi lasciare questo oggetto.");
                             }
                         } else {
-                            out.println("Non c'è niente da lasciare.");
+                            out.println("Lasciare cosa? Sii più preciso.");
                         }
                         break;
                     case OPEN:
@@ -449,6 +513,7 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case HELP:
                         printHelp();
+                        break;
                     case PUSH:
                         // controlla se il comando è di tipo PUSH
                         //ricerca oggetti pushabili

@@ -36,7 +36,7 @@ public class Printings {
         System.out.println("'Osserva' per osservare l'ambiente circostante.");
         System.out.println("'Esci' per uscire dal gioco.");
         System.out.println("Potrei elencarti tutti i possibili comandi ma, ahime, ciò renderebbe il gioco troppo semplice.");
-        System.out.println("Sta' a te scoprire tutti gli altri comandi per proseguire nell'avventura. :)");
+        System.out.println("Sta a te scoprire tutti gli altri comandi per proseguire nell'avventura. :)");
 
     }
 }
