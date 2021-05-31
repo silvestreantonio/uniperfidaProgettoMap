@@ -150,7 +150,7 @@ public class UniperfidaGame extends GameDescription {
         waitingRoomGatto.setLook("Ci sono delle sedie e una porta con uno schermo.");
         Room waitingRoomCinquanta = new Room(23, "Sala d'attesa del prof. Cinquanta", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
         waitingRoomCinquanta.setLook("Ci sono delle sedie e una porta con uno schermo.");
-        Room thirdSector = new Room(24, "Terzo settore del corridoio", "Ti trovi nel terzo settore del corridoio. Di fronte a te c'è un muro.", "Universo J-371");
+        Room thirdSector = new Room(24, "Terzo settore del corridoio", "Ti trovi nel terzo settore del corridoio. Dietro di te c'è un muro.", "Universo J-371");
         thirdSector.setLook("Ai lati c'è l'ennesimo ufficio e l'ennesimo bagno. Avranno problemi d'incontinenza.");
         Room thirdBathroom = new Room(25, "Bagno dei professori", "Ti trovi nel bagno dei professori.", "Universo J-371");
         thirdBathroom.setLook("Questo bagno è molto meglio degli altri..." + "Sapone, carta igienica, persino un asciugamani ad aria!");
@@ -257,10 +257,12 @@ public class UniperfidaGame extends GameDescription {
         hall.getObjects().add(boardsHall);
 
         AdvObject coin = new AdvObject(4, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
-        coin.setPickupable(false);
-        coin.setDroppable(true);
+        coin.setPickupable(true);
+        coin.setDroppable(false);
         coin.setInsertable(true);
         coin.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
+        thirdBathroom.getObjects().add(coin);
+        roomB.getObjects().add(coin);
 
         AdvObject snack = new AdvObject(5, "snack", "Uno snack al cioccolato");
         snack.setPickupable(false);
@@ -320,8 +322,7 @@ public class UniperfidaGame extends GameDescription {
         coffeeDispenser.add(longCoffee);
 
         // inventario
-        getInventory().add(coin);
-        getInventory().add(snack);
+        // getInventory().add(snack);
         /*
         AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
         wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
@@ -355,6 +356,7 @@ public class UniperfidaGame extends GameDescription {
                         if (getCurrentRoom().getNorth() != null) {
                             setCurrentRoom(getCurrentRoom().getNorth());
                             move = true;
+                            out.println();
                         } else {
                             noroom = true;
                         }
@@ -429,6 +431,7 @@ public class UniperfidaGame extends GameDescription {
                         if (p.getObject() != null) {
                             if (p.getObject().getId() == 11) {
                                 if (p.getObject().isUseable()) {
+                                    if (!getInventory().isEmpty()) {
                                     if (p.getObject() instanceof AdvObjectContainer) {
                                         AdvObjectContainer c = (AdvObjectContainer) p.getObject();
                                         while (flag) {
@@ -437,27 +440,24 @@ public class UniperfidaGame extends GameDescription {
                                         String chooseCoffee = scanner2.nextLine();
                                             switch (chooseCoffee) {
                                                 case "1":
-                                                    getInventory().add(c.getList().get(0));
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè.");
                                                     flag = false;
                                                     break;
                                                 case "2":
-                                                    getInventory().add(c.getList().get(1));
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè al cioccolato.");
                                                     flag = false;
                                                     break;
                                                 case "3":
-                                                    getInventory().add(c.getList().get(2));
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè macchiato.");
                                                     flag = false;
                                                     break;
                                                 case "4":
-                                                    getInventory().add(c.getList().get(3));
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè lungo.");
+                                                    getCurrentRoom().getNorth().getNorth().getWest().getNorth().getDown().setVisible(true);
                                                     flag = false;
                                                     break;
                                                 case "0":
@@ -470,9 +470,10 @@ public class UniperfidaGame extends GameDescription {
                                                     break;
                                             }
                                         }
-
-
-                                }
+                                } }
+                                    else {
+                                        out.println("Non hai monete! Procurati una moneta");
+                                    }
                                 } else {
                                     out.println("Non puoi utilizzare ." + p.getObject().getName());
                                 }
@@ -486,14 +487,16 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case PICK_UP:
                         //se il comando è di tipo PICK_UP
+                        boolean coinYes;
                         if (p.getObject() != null) {
-                            if (getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable()) {
+                            if (getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable() && p.getObject().getId() == 4) {
                                 p.getObject().setPickupable(false);
                                 p.getObject().setDroppable(true);
                                 getCurrentRoom().getObjects().remove(p.getObject());
                                 getInventory().add(p.getObject());
                                 out.println("Fatto! Hai preso: " + p.getObject().getName());
-                            } else {
+                            }
+                            else {
                                 out.println("Non puoi prendere " + p.getObject().getName());
                             }
                         } else {
@@ -503,7 +506,7 @@ public class UniperfidaGame extends GameDescription {
                     case LEAVE:
                         // se il comando è di tipo LEAVE
                         if (p.getInvObject() != null) { // se ci sono oggetti
-                            if (getInventory().contains(p.getInvObject()) && p.getInvObject().isDroppable()) { // se l'oggetto è presente nell'inventario
+                            if (getInventory().contains(p.getInvObject()) && p.getInvObject().isDroppable() && p.getObject().getId() == 4) { // se l'oggetto è presente nell'inventario
                                 p.getInvObject().setDroppable(false);
                                 p.getInvObject().setPickupable(true);
                                 getInventory().remove(p.getInvObject()); // rimuovo l'oggetto dall'inventario
