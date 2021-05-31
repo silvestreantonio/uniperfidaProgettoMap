@@ -425,43 +425,48 @@ public class UniperfidaGame extends GameDescription {
                         }
                         break;
                     case USE:
-                        boolean exit = false;
+                        boolean flag = true;
                         if (p.getObject() != null) {
                             if (p.getObject().getId() == 11) {
                                 if (p.getObject().isUseable()) {
                                     if (p.getObject() instanceof AdvObjectContainer) {
                                         AdvObjectContainer c = (AdvObjectContainer) p.getObject();
+                                        while (flag) {
                                         printCoffeeMenu();
                                         Scanner scanner2 = new Scanner(System.in);
                                         String chooseCoffee = scanner2.nextLine();
-                                        while (!exit) {
                                             switch (chooseCoffee) {
                                                 case "1":
                                                     getInventory().add(c.getList().get(0));
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè.");
+                                                    flag = false;
                                                     break;
                                                 case "2":
                                                     getInventory().add(c.getList().get(1));
                                                     getInventory().remove(getInventory().get(0));
-                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    out.println("Fatto! Hai preso un caffè al cioccolato.");
+                                                    flag = false;
                                                     break;
                                                 case "3":
                                                     getInventory().add(c.getList().get(2));
                                                     getInventory().remove(getInventory().get(0));
-                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    out.println("Fatto! Hai preso un caffè macchiato.");
+                                                    flag = false;
                                                     break;
                                                 case "4":
                                                     getInventory().add(c.getList().get(3));
                                                     getInventory().remove(getInventory().get(0));
-                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    out.println("Fatto! Hai preso un caffè lungo.");
+                                                    flag = false;
                                                     break;
                                                 case "0":
                                                     out.println("Nessun caffè.");
-                                                    exit = true;
+                                                    flag = false;
                                                     break;
                                                 default:
-                                                    out.println("Inserisci un valore valido.");
+                                                    out.println("Inserisci un valore valido. \n");
+                                                    flag = true;
                                                     break;
                                             }
                                         }
@@ -469,60 +474,15 @@ public class UniperfidaGame extends GameDescription {
 
                                 }
                                 } else {
-                                    out.println("Spiacente, caffè terminati");
+                                    out.println("Non puoi utilizzare ." + p.getObject().getName());
                                 }
                             } else {
-                                out.println("Spiacente, caffè terminati");
+                                out.println("Qui ci sarà un else if nel caso ci saranno altri oggetti da usare.");
                             }
 
                         } else {
-                            out.println("Non c'è niente da usare.");
+                            out.println("Usare cosa? Sii più preciso.");
                         }
-                        break;
-                    case INSERT:
-                        if (p.getInvObject() != null){
-                                if (getInventory().contains(p.getInvObject()) && p.getInvObject().isInsertable()) {
-                                    if (p.getObject() != null && getCurrentRoom().getObjects().contains(p.getObject())) {
-                                        if (p.getObject().getId() == 11)  {
-                                        out.println("Fatto! Hai inserito: " + p.getInvObject().getName() + "nella " + p.getObject().getName());
-                                        printCoffeeMenu();
-                                        switch (p.getInvObject().getId()){
-                                            case 12:
-                                                out.println("Hai preso un caffè");
-                                                getInventory().add(p.getObject());
-                                                break;
-                                            case 13:
-                                                out.println("Hai preso un caffè al cioccolato");
-                                                getInventory().add(p.getObject());
-                                                break;
-                                            case 14:
-                                                out.println("Hai preso un caffè macchiato");
-                                                getInventory().add(p.getObject());
-                                                break;
-                                            case 15:
-                                                out.println("Hai preso un caffè lungo");
-                                                getInventory().add(p.getObject());
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    } else {
-                                            out.println("Non puoi inserire " + p.getInvObject().getName() + "in " + p.getObject().getName());
-                                        }
-                                    }
-                                        else {
-                                        out.println("Non ho capito dove inserire " + p.getInvObject().getName());
-                                    }
-                                }
-                            else {
-                                out.println("Non puoi inserire " + p.getInvObject().getName());
-                            }
-                        }
-                        else {
-                            out.println("Inserire cosa? Sii più preciso.");
-                        }
-                        if (p.getObject() != null)
-                            out.println("ciao");
                         break;
                     case PICK_UP:
                         //se il comando è di tipo PICK_UP
