@@ -126,9 +126,9 @@ public class UniperfidaGame extends GameDescription {
         stairs.setLook("C'è un'enorme scalinata che sale.");
         Room waitingRoom = new Room(11, "Sala d'attesa aule", "Ti trovi nella sala d'attesa delle aule.", "Universo J-371");
         waitingRoom.setLook("Ci sono un paio di sedie. Sopra le sedie c'è una bacheca, l'ennesima bacheca.");
-        Room roomA = new Room(12, "Aula A", "Ti trovi nell'aula A. Non vedi nulla di interessante.", "Universo J-371");
+        Room roomA = new Room(12, "Aula A", "Ti trovi nell'aula A.", "Universo J-371");
         roomA.setLook("Ci sono file di banchi. L'aula è vuota.");
-        Room roomB = new Room(13, "Aula B", "Ti trovi nell'aula B. Non vedi nulla di interessante.", "Universo J-371");
+        Room roomB = new Room(13, "Aula B", "Ti trovi nell'aula B.", "Universo J-371");
         roomB.setLook("Ci sono file di banchi. L'aula è vuota.");
         Room upStairs = new Room(14, "Scale primo piano", "Ti trovi nel pianerottolo delle scale del primo piano.", "Universo J-371");
         upStairs.setLook("C'è un'enorme scalinata che scende.");
@@ -284,7 +284,7 @@ public class UniperfidaGame extends GameDescription {
                 + "Se la segreteria vuoi trovare \n"
                 + "Ed il voto verbalizzare \n"
                 + "Non ti resta che pagare \n"
-                + "Un bel caffè da assaporare");
+                + "Un bel caffè lungo da assaporare");
         boardsWaitingRoom.setAlias(new String[]{"diario"});
         boardsWaitingRoom.setReadable(true);
         waitingRoom.getObjects().add(boardsWaitingRoom);
@@ -322,7 +322,7 @@ public class UniperfidaGame extends GameDescription {
         coffeeDispenser.add(longCoffee);
 
         // inventario
-        // getInventory().add(snack);
+        getInventory().add(coin);
         /*
         AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
         wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
@@ -337,7 +337,7 @@ public class UniperfidaGame extends GameDescription {
         wardrobe.add(toy);
          */
         // definizione della stanza corrente
-        setCurrentRoom(hall);
+        setCurrentRoom(roomA);
 
     }
 
@@ -397,12 +397,15 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case GO_DOWN:
                         // controlla se il comando è di tipo GO_UP
-                        if (getCurrentRoom().getDown() != null) { // controlla se su si può andare
+                        if (getCurrentRoom().getDown() != null && getCurrentRoom() != getRooms().get(11)) { // controlla se su si può andare
                             setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente
+                            move = true; // booleano che serve a settare il fatto che mi sono mosso
+                        } else if (getCurrentRoom() == getRooms().get(11) && getRooms().get(26).isVisible()){
+                           setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente
                             move = true; // booleano che serve a settare il fatto che mi sono mosso
                         } else {
                             noroom = true; // booleano che serve a memorizzare che su non c'è nulla
-                        }
+                             }
                         break;
                     case INVENTORY:
                         // se il comando è di tipo INVENTORY
@@ -413,7 +416,7 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case LOOK:
                         // se il comando è di tipo LOOK_AT
-                        if (getCurrentRoom().getLook() != null) { // se la stanza corrente ha l'attributo look
+                        if (p.getObject() == null) { // se la stanza corrente ha l'attributo look
                             out.println(getCurrentRoom().getDescription());
                             out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
                             if (!getCurrentRoom().getObjects().isEmpty()) {
@@ -422,8 +425,13 @@ public class UniperfidaGame extends GameDescription {
                             for (AdvObject o : getCurrentRoom().getObjects()) {
                                 out.println("- " + o.getName());
                             }
-                        } else {
-                            out.println("Non c'è niente di interessante qui.");
+                        } else if (p.getObject().getId()== 2 || p.getObject().getId()== 7 || p.getObject().getId()== 8) {
+                            out.println("La " + p.getObject().getName() + "cnon si osserva, si legge. Inserisci il comando giusto. (Es. leggi)");
+                        } else if (p.getObject().getId() == 6 || p.getObject().getId() == 10) {
+                            out.println("Il " + p.getObject().getName() + " non si osserva, si legge. Inserisci il comando giusto. (Es. leggi)");
+                        }
+                        else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11){
+                            out.println(p.getObject().getDescription());
                         }
                         break;
                     case USE:
@@ -442,22 +450,35 @@ public class UniperfidaGame extends GameDescription {
                                                 case "1":
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè.");
+                                                    out.println("...");
+                                                    out.println("Mmh, buono questo caffè");
+                                                    out.println("...");
                                                     flag = false;
                                                     break;
                                                 case "2":
                                                     getInventory().remove(getInventory().get(0));
-                                                    out.println("Fatto! Hai preso un caffè al cioccolato.");
+                                                    out.println("Fatto! Hai preso un caffè lungo.");
+                                                    out.println("...");
+                                                    out.println("Mmh, buono questo caffè");
+                                                    out.println("...");
+                                                    getRooms().get(26).setVisible(true);
+                                                    out.println("Ma cos'è stato questo rumore? Proveniva dalla aula A.");
                                                     flag = false;
                                                     break;
                                                 case "3":
                                                     getInventory().remove(getInventory().get(0));
                                                     out.println("Fatto! Hai preso un caffè macchiato.");
+                                                    out.println("...");
+                                                    out.println("Mmh, buono questo caffè");
+                                                    out.println("...");
                                                     flag = false;
                                                     break;
                                                 case "4":
                                                     getInventory().remove(getInventory().get(0));
-                                                    out.println("Fatto! Hai preso un caffè lungo.");
-                                                    getCurrentRoom().getNorth().getNorth().getWest().getNorth().getDown().setVisible(true);
+                                                    out.println("Fatto! Hai preso un caffè al cioccolato.");
+                                                    out.println("...");
+                                                    out.println("Mmh, buono questo caffè");
+                                                    out.println("...");
                                                     flag = false;
                                                     break;
                                                 case "0":
