@@ -41,10 +41,10 @@ public class Printings {
     }
     public static void printCoffeeMenu() {
         System.out.println("Premere: ");
-        System.out.println("12) Caffè");
-        System.out.println("13) Caffè cioccolato");
-        System.out.println("14) Caffè macchiato");
-        System.out.println("15) Caffè lungo");
-        System.out.println("Premere qualsiasi altro tasto per uscire");
+        System.out.println("1) Caffè");
+        System.out.println("2) Caffè cioccolato");
+        System.out.println("3) Caffè macchiato");
+        System.out.println("4) Caffè lungo");
+        System.out.println("0) Esci");
     }
 }

@@ -14,6 +14,7 @@ import di.uniba.map.b.uniperfida.type.CommandType;
 import di.uniba.map.b.uniperfida.type.Room;
 import java.io.PrintStream;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import static di.uniba.map.b.uniperfida.print.Printings.printCoffeeMenu;
 import static di.uniba.map.b.uniperfida.print.Printings.printHelp;
@@ -335,7 +336,7 @@ public class UniperfidaGame extends GameDescription {
         wardrobe.add(toy);
          */
         // definizione della stanza corrente
-        setCurrentRoom(laboratory);
+        setCurrentRoom(hall);
 
     }
 
@@ -424,11 +425,49 @@ public class UniperfidaGame extends GameDescription {
                         }
                         break;
                     case USE:
+                        boolean exit = false;
                         if (p.getObject() != null) {
                             if (p.getObject().getId() == 11) {
                                 if (p.getObject().isUseable()) {
-                                    out.println("Fatto caffe preso");
-                                    p.getObject().setUseable(false);
+                                    if (p.getObject() instanceof AdvObjectContainer) {
+                                        AdvObjectContainer c = (AdvObjectContainer) p.getObject();
+                                        printCoffeeMenu();
+                                        Scanner scanner2 = new Scanner(System.in);
+                                        String chooseCoffee = scanner2.nextLine();
+                                        while (!exit) {
+                                            switch (chooseCoffee) {
+                                                case "1":
+                                                    getInventory().add(c.getList().get(0));
+                                                    getInventory().remove(getInventory().get(0));
+                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    break;
+                                                case "2":
+                                                    getInventory().add(c.getList().get(1));
+                                                    getInventory().remove(getInventory().get(0));
+                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    break;
+                                                case "3":
+                                                    getInventory().add(c.getList().get(2));
+                                                    getInventory().remove(getInventory().get(0));
+                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    break;
+                                                case "4":
+                                                    getInventory().add(c.getList().get(3));
+                                                    getInventory().remove(getInventory().get(0));
+                                                    out.println("Fatto! Hai preso un caffè.");
+                                                    break;
+                                                case "0":
+                                                    out.println("Nessun caffè.");
+                                                    exit = true;
+                                                    break;
+                                                default:
+                                                    out.println("Inserisci un valore valido.");
+                                                    break;
+                                            }
+                                        }
+
+
+                                }
                                 } else {
                                     out.println("Spiacente, caffè terminati");
                                 }
