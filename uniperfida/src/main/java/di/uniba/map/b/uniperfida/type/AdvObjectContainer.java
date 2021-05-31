@@ -31,10 +31,6 @@ public class AdvObjectContainer extends AdvObject {
         super(id, name, description);
     }
 
-    public AdvObjectContainer(int id, String name, String description, boolean useable) {
-        super(id, name, description, useable);
-    }
-
     public AdvObjectContainer(int id, String name, String description, Set<String> alias) {
         super(id, name, description, alias);
     }

@@ -15,6 +15,7 @@ import di.uniba.map.b.uniperfida.type.Room;
 import java.io.PrintStream;
 import java.util.Iterator;
 
+import static di.uniba.map.b.uniperfida.print.Printings.printCoffeeMenu;
 import static di.uniba.map.b.uniperfida.print.Printings.printHelp;
 
 /**
@@ -90,22 +91,26 @@ public class UniperfidaGame extends GameDescription {
         getCommands().add(goDown);
 
         Command help = new Command(CommandType.HELP, "help");
-        help.setAlias(new String[] {"aiuto"});
+        help.setAlias(new String[]{"aiuto"});
         getCommands().add(help);
 
         Command use = new Command(CommandType.USE, "usa");
         use.setAlias(new String[]{"usare", "utilizza", "utilizzare"});
         getCommands().add(use);
 
+        Command insert = new Command(CommandType.INSERT, "inserisci");
+        insert.setAlias(new String[]{"metti"});
+        getCommands().add(insert);
+
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
         laboratory.setLook("Hai davanti la macchina, la porta è aperta");
-        Room machine = new Room(2, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager.", "Universo T-327");
-        machine.setLook("C'è una luce soffusa e un enorme tasto rosso");
+        Room machineFirst = new Room(2, "Navicella Space-Voyager. Ti trovi nel tuo universo.", "Ti trovi nella navicella Space-Voyager.", "Universo T-327");
+        machineFirst.setLook("C'è una luce soffusa. E' ora di partire!");
         Room courtyard = new Room(3, "Cortile", "Ti trovi nel cortile. C'è uno strano edificio pieno zeppo di finestre. C'è un cartello con incisa una scritta.", "Universo J-371");
         courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Fortunatamente qui si parla italiano. Di fronte a te c'è una porta aperta."); //Senti qualcosa nelle tasche vibrare
         Room hall = new Room(4, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.", "Universo J-371");
-        hall.setLook("C'è una macchinetta del caffè e una bacheca.");
+        hall.setLook("Un semplice atrio.");
         Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Sembra essere vuoto.", "Universo J-371");
         reception.setLook("C'è una scrivania con un computer ed un foglio.");
         Room firstBathroom = new Room(6, "Bagno del piano terra", "Ti trovi nei bagni del piano terra. Non noti nulla di strano.", "Universo J-371");
@@ -150,13 +155,17 @@ public class UniperfidaGame extends GameDescription {
         thirdBathroom.setLook("Questo bagno è molto meglio degli altri..." + "Sapone, carta igienica, persino un asciugamani ad aria!");
         Room waitingRoomBasilico = new Room(26, "Sala d'attesa del prof. Basilico", "Ti trovi nella sala d'attesa del prof. Basilico.", "Universo J-371");
         waitingRoomBasilico.setLook("C'è una porta, niente indovinelli questa volta.");
-        Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.", false, "Universo J-371");
+        Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.","Universo J-371");
         secretary.setLook("C'è uno sportello con un foglio.");
+        secretary.setVisible(false);
+        Room machineSecond = new Room(28, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager. Ti trovi nel nuovo universo.", "Universo J-371");
+        machineSecond.setLook("C'è una luce molto forte. Forse sei arrivato!");
         // definizione della mappa (collegamenti tra le stanze)
-        laboratory.setNorth(machine);
-        machine.setSouth(laboratory);
+        laboratory.setNorth(machineFirst);
+        machineFirst.setSouth(laboratory);
+        machineSecond.setNorth(courtyard);
         courtyard.setNorth(hall);
-        courtyard.setSouth(machine);
+        courtyard.setSouth(machineSecond);
         hall.setNorth(corridor);
         hall.setSouth(courtyard);
         hall.setEast(firstBathroom);
@@ -206,7 +215,7 @@ public class UniperfidaGame extends GameDescription {
         secretary.setUp(roomA);
         // aggiunte stanze alla mappa
         getRooms().add(laboratory);
-        getRooms().add(machine);
+        getRooms().add(machineFirst);
         getRooms().add(courtyard);
         getRooms().add(hall);
         getRooms().add(reception);
@@ -232,28 +241,39 @@ public class UniperfidaGame extends GameDescription {
         getRooms().add(thirdBathroom);
         getRooms().add(waitingRoomBasilico);
         getRooms().add(secretary);
+        getRooms().add(machineSecond);
 
         // definizione degli oggetti 
-        AdvObject buttonMachine = new AdvObject(1, "bottone", "Un enorme tasto rosso", true, false);
+        AdvObject buttonMachine = new AdvObject(1, "bottone", "Un enorme tasto rosso");
         buttonMachine.setAlias(new String[]{"tasto"});
-        machine.getObjects().add(buttonMachine);
+        buttonMachine.setPushable(true);
+        machineFirst.getObjects().add(buttonMachine);
+        machineSecond.getObjects().add(buttonMachine);
 
-        AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca", true);
+        AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca");
         boardsHall.setAlias(new String[]{"diario"});
+        boardsHall.setReadable(true);
         hall.getObjects().add(boardsHall);
 
-        AdvObject coin = new AdvObject(4, "moneta", false, true, "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        AdvObject coin = new AdvObject(4, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        coin.setPickupable(false);
+        coin.setDroppable(true);
+        coin.setInsertable(true);
         coin.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
 
-        AdvObject snack = new AdvObject(5, "snack",false,true, "Uno snack al cioccolato");
+        AdvObject snack = new AdvObject(5, "snack", "Uno snack al cioccolato");
+        snack.setPickupable(false);
+        snack.setDroppable(true);
         snack.setAlias(new String[]{"merendina", "cibo", "merenda", "dolce", "dolcetto"});
 
-        AdvObject receptionSheet = new AdvObject(6, "foglio", "'Sono al bar, torno tra cinque minuti'", true);
+        AdvObject receptionSheet = new AdvObject(6, "foglio", "'Sono al bar, torno tra cinque minuti'");
         receptionSheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
+        receptionSheet.setReadable(true);
         reception.getObjects().add(receptionSheet);
 
-        AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante", true);
+        AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante");
         boardsInfoPoint.setAlias(new String[]{"diario"});
+        boardsInfoPoint.setReadable(true);
         infoPoint.getObjects().add(boardsInfoPoint);
 
         AdvObject boardsWaitingRoom = new AdvObject(8, "bacheca", "Indovina indovinello \n"
@@ -263,9 +283,10 @@ public class UniperfidaGame extends GameDescription {
                 + "Non ti resta che pagare \n"
                 + "Un bel caffè da assaporare");
         boardsWaitingRoom.setAlias(new String[]{"diario"});
+        boardsWaitingRoom.setReadable(true);
         waitingRoom.getObjects().add(boardsWaitingRoom);
 
-        AdvObject buttonElev = new AdvObject(9, "bottone", "Un piccolo tasto", true, false);
+        AdvObject buttonElev = new AdvObject(9, "bottone", "Un piccolo tasto");
         buttonElev.setAlias(new String[]{"tasto", "pulsante"});
         firstElevator.getObjects().add(buttonElev);
         secondElevator.getObjects().add(buttonElev);
@@ -273,26 +294,27 @@ public class UniperfidaGame extends GameDescription {
         AdvObject secretarySheet = new AdvObject(10, "foglio", "Siamo al bar. Ci stiamo riposando."
                 + "La mole di lavoro è troppa. Chiamare il numero 3774480028");
         secretarySheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
+        secretarySheet.setReadable(true);
         secretary.getObjects().add(secretarySheet);
 
-        AdvObjectContainer coffeeDispenser = new AdvObjectContainer(11, "macchinetta del caffè", "Una semplice macchinetta del caffè", true);
+        AdvObjectContainer coffeeDispenser = new AdvObjectContainer(11, "macchinetta", "Una semplice macchinetta del caffè");
         coffeeDispenser.setAlias(new String[]{"dispenser", "macchinetta"});
         coffeeDispenser.setUseable(true);
         hall.getObjects().add(coffeeDispenser);
 
-        AdvObject coffee = new AdvObject(12, "caffè", true, false, "Un caffè caldo"); //costruttore da aggiungere
+        AdvObject coffee = new AdvObject(12, "caffè", "Un caffè caldo"); //costruttore da aggiungere
         coffee.setAlias(new String[]{"marocchino"});
         coffeeDispenser.add(coffee);
 
-        AdvObject chocolateCoffee = new AdvObject(13, "caffè con cioccolato", true, false, "Un caffè al cioccolato, caldo");
+        AdvObject chocolateCoffee = new AdvObject(13, "caffè con cioccolato", "Un caffè al cioccolato, caldo");
         chocolateCoffee.setAlias(new String[]{"cioccolata"});
         coffeeDispenser.add(chocolateCoffee);
 
-        AdvObject macchiatoCoffee = new AdvObject(14, "caffè macchiato", true, false, "Un caffè macchiato caldo");
+        AdvObject macchiatoCoffee = new AdvObject(14, "caffè macchiato", "Un caffè macchiato caldo");
         macchiatoCoffee.setAlias(new String[]{"macchiato"});
         coffeeDispenser.add(macchiatoCoffee);
 
-        AdvObject longCoffee = new AdvObject(15, "caffè lungo", true, false, "Un caffè lungo caldo");
+        AdvObject longCoffee = new AdvObject(15, "caffè lungo", "Un caffè lungo caldo");
         longCoffee.setAlias(new String[]{"lungo"});
         coffeeDispenser.add(longCoffee);
 
@@ -360,7 +382,7 @@ public class UniperfidaGame extends GameDescription {
                             noroom = true;
                         }
                         break;
-                       // case
+                    // case
                     case GO_UP:
                         // controlla se il comando è di tipo GO_UP
                         if (getCurrentRoom().getUp() != null) { // controlla se su si può andare
@@ -383,7 +405,7 @@ public class UniperfidaGame extends GameDescription {
                         // se il comando è di tipo INVENTORY
                         out.println("Nel tuo inventario ci sono:");
                         for (AdvObject o : getInventory()) { // ciclo sugli elementi dell'inventario
-                            out.println(o.getName() + ": " + o.getDescription()); // e stampo nome + descrizione
+                            out.println("- " + o.getName()); // e stampo nome + descrizione
                         }
                         break;
                     case LOOK:
@@ -402,34 +424,78 @@ public class UniperfidaGame extends GameDescription {
                         }
                         break;
                     case USE:
-                        if(p.getObject() != null){
-                            if(p.getObject().getId() == 11){
+                        if (p.getObject() != null) {
+                            if (p.getObject().getId() == 11) {
                                 if (p.getObject().isUseable()) {
-                                    out.println("Stai utilizzando la macchinetta.");
+                                    out.println("Fatto caffe preso");
                                     p.getObject().setUseable(false);
-                                    out.println("'Caffè terminati'. Che fortuna! Hai preso l'ultimo caffè");
                                 } else {
                                     out.println("Spiacente, caffè terminati");
                                 }
                             } else {
-                                out.println("no");
+                                out.println("Spiacente, caffè terminati");
                             }
 
                         } else {
                             out.println("Non c'è niente da usare.");
                         }
                         break;
+                    case INSERT:
+                        if (p.getInvObject() != null){
+                                if (getInventory().contains(p.getInvObject()) && p.getInvObject().isInsertable()) {
+                                    if (p.getObject() != null && getCurrentRoom().getObjects().contains(p.getObject())) {
+                                        if (p.getObject().getId() == 11)  {
+                                        out.println("Fatto! Hai inserito: " + p.getInvObject().getName() + "nella " + p.getObject().getName());
+                                        printCoffeeMenu();
+                                        switch (p.getInvObject().getId()){
+                                            case 12:
+                                                out.println("Hai preso un caffè");
+                                                getInventory().add(p.getObject());
+                                                break;
+                                            case 13:
+                                                out.println("Hai preso un caffè al cioccolato");
+                                                getInventory().add(p.getObject());
+                                                break;
+                                            case 14:
+                                                out.println("Hai preso un caffè macchiato");
+                                                getInventory().add(p.getObject());
+                                                break;
+                                            case 15:
+                                                out.println("Hai preso un caffè lungo");
+                                                getInventory().add(p.getObject());
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    } else {
+                                            out.println("Non puoi inserire " + p.getInvObject().getName() + "in " + p.getObject().getName());
+                                        }
+                                    }
+                                        else {
+                                        out.println("Non ho capito dove inserire " + p.getInvObject().getName());
+                                    }
+                                }
+                            else {
+                                out.println("Non puoi inserire " + p.getInvObject().getName());
+                            }
+                        }
+                        else {
+                            out.println("Inserire cosa? Sii più preciso.");
+                        }
+                        if (p.getObject() != null)
+                            out.println("ciao");
+                        break;
                     case PICK_UP:
                         //se il comando è di tipo PICK_UP
-                        if(p.getObject() != null){
-                            if(getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable()){
+                        if (p.getObject() != null) {
+                            if (getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable()) {
                                 p.getObject().setPickupable(false);
                                 p.getObject().setDroppable(true);
                                 getCurrentRoom().getObjects().remove(p.getObject());
                                 getInventory().add(p.getObject());
                                 out.println("Fatto! Hai preso: " + p.getObject().getName());
                             } else {
-                                out.println("Non puoi prendere questo oggetto.");
+                                out.println("Non puoi prendere " + p.getObject().getName());
                             }
                         } else {
                             out.println("Prendere cosa? Sii più preciso.");
@@ -445,7 +511,7 @@ public class UniperfidaGame extends GameDescription {
                                 getCurrentRoom().getObjects().add(p.getInvObject()); // e lo aggiungo alla stanza
                                 out.println("Fatto! Hai lasciato: " + p.getInvObject().getName());
                             } else {
-                                out.println("Non puoi lasciare questo oggetto.");
+                                out.println("Non puoi lasciare " + p.getInvObject().getName());
                             }
                         } else {
                             out.println("Lasciare cosa? Sii più preciso.");
@@ -518,38 +584,40 @@ public class UniperfidaGame extends GameDescription {
                         // controlla se il comando è di tipo PUSH
                         //ricerca oggetti pushabili
                         if (p.getObject() != null) { // se il parser ha interpretato il comando di tipo oggetto e se l'oggetto è premibile
-                            if (p.getObject().getId() == 1) { // istruzione per le volte dispari
-                                if (p.getObject().isPushable()) {
-                                    p.getObject().setPushable(false);
-                                    p.getObject().setPush(true);
-                                    setCurrentRoom(getRooms().get(2));
-                                    move = true; // booleano che serve a settare il fatto che mi sono mosso
-                                    // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
+                            if (p.getObject().isPushable()) {
+                                if (p.getObject().getId() == 1) { // istruzione per le volte dispari
+                                    if (p.getObject().isPushable()) {
+                                        p.getObject().setPushable(false);
+                                        setCurrentRoom(getRooms().get(27));
+                                        move = true; // booleano che serve a settare il fatto che mi sono mosso
+                                        // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
+                                        out.println("Fatto! Hai premuto: " + p.getObject().getName());
+                                        out.println();
+                                        out.println("...");
+                                        out.println("Sei in viaggio verso il nuovo universo");
+                                        out.println("...");
+                                        out.println();
+                                    } else {
+                                        p.getObject().setPushable(true);
+                                        setCurrentRoom(getRooms().get(1));
+                                        move = true; // booleano che serve a settare il fatto che mi sono mosso
+                                        // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
+                                        out.println("Fatto! Hai premuto: " + p.getObject().getName());
+                                        out.println();
+                                        out.println("...");
+                                        out.println("Sei in viaggio verso il tuo universo");
+                                        out.println("...");
+                                        out.println();
+                                    }
+                                } else if (p.getObject().getId() == 9) {
                                     out.println("Fatto! Hai premuto: " + p.getObject().getName());
                                     out.println();
-                                    out.println("...");
-                                    out.println("Sei in viaggio verso il nuovo universo");
-                                    out.println("...");
-                                    out.println();
-                                } else {
-                                    p.getObject().setPush(false);
-                                    p.getObject().setPushable(true);
-                                    setCurrentRoom(getRooms().get(0));
-                                    move = true; // booleano che serve a settare il fatto che mi sono mosso
-                                    // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
-                                    out.println("Fatto! Hai premuto: " + p.getObject().getName());
-                                    out.println();
-                                    out.println("...");
-                                    out.println("Sei in viaggio verso il tuo universo");
-                                    out.println("...");
-                                    out.println();
+                                    System.out.println("L'ascensore non è disponibile.");
                                 }
-                            } else if (p.getObject().getId() == 9) {
-                                out.println("Fatto! Hai premuto: " + p.getObject().getName());
-                                out.println();
-                                System.out.println("L'ascensore non è disponibile.");
+                            } else {
+                                out.println("Non puoi premere " + p.getObject().getName());
                             }
-                        } else {
+                        }else {
                             out.println("Premere cosa? Sii più preciso."); // se non ci sono oggetti o non si puo premere niente stampa questo
                         }
                         break;

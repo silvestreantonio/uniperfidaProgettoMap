@@ -39,4 +39,12 @@ public class Printings {
         System.out.println("Sta a te scoprire tutti gli altri comandi per proseguire nell'avventura. :)");
 
     }
+    public static void printCoffeeMenu() {
+        System.out.println("Premere: ");
+        System.out.println("12) Caffè");
+        System.out.println("13) Caffè cioccolato");
+        System.out.println("14) Caffè macchiato");
+        System.out.println("15) Caffè lungo");
+        System.out.println("Premere qualsiasi altro tasto per uscire");
+    }
 }

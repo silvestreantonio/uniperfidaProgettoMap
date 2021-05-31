@@ -39,6 +39,8 @@ public class AdvObject {
 
     private boolean useable = true;
 
+    private boolean insertable = false;
+
     // costruttore
     public AdvObject(int id) {
         this.id = id;
@@ -64,33 +66,6 @@ public class AdvObject {
         this.description = description;
         this.alias = alias;
     }
-
-    //costruttore
-    public AdvObject(int id, String name, String description, boolean pushable, boolean push) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.alias = alias;
-        this.pushable = pushable;
-        this.push = push;
-    }
-
-    //costruttore
-    public AdvObject(int id, String name, String description, boolean readable){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.readable = readable;
-    }
-    //costruttore
-    public AdvObject(int id, String name,boolean pickupable, boolean droppable, String description){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.pickupable = pickupable;
-        this.droppable = droppable;
-    }
-
 
     // metodi set e get
     public String getName() {
@@ -188,6 +163,10 @@ public class AdvObject {
     public void setUseable(boolean useable){
         this.useable = useable;
     }
+
+    public boolean isInsertable() { return insertable;}
+
+    public void setInsertable(boolean insertable) { this.insertable = insertable;}
 
     @Override
     public int hashCode() {

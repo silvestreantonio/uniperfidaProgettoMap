@@ -5,21 +5,19 @@
  */
 package di.uniba.map.b.uniperfida.parser;
 
-import di.uniba.map.b.uniperfida.type.AdvObject;
-import di.uniba.map.b.uniperfida.type.Command;
+        import di.uniba.map.b.uniperfida.type.AdvObject;
+        import di.uniba.map.b.uniperfida.type.Command;
 
 /**
  *
  * @author pierpaolo
  */
-
-// questa classe restituisce alla classe Parser un parser del tipo COMANDO OGGETTO o solo comandi tipo OSSERVA o comandi COMANDO OGGETTO OGGETTO_INVENTARIO
 public class ParserOutput {
 
     private Command command;
 
     private AdvObject object;
-    
+
     private AdvObject invObject;
 
     public ParserOutput(Command command, AdvObject object) {

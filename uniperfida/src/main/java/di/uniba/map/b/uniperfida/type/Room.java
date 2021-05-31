@@ -44,14 +44,6 @@ public class Room {
     private final List<AdvObject> objects=new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
 
     // costruttore
-    public Room(int id, String name, String description, boolean visible, String universe) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.visible = visible;
-        this.universe = universe;
-    }
-
     public Room(int id, String name, String description, String universe) {
         this.id = id;
         this.name = name;
