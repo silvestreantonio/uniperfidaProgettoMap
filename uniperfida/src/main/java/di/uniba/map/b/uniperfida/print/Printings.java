@@ -32,7 +32,7 @@ public class Printings {
         System.out.println("'S/Sud' per muoverti verso Sud.");
         System.out.println("'E/Est' per muoverti verso Est.");
         System.out.println("'O/Ovest' per muoverti verso Ovest.");
-        System.out.println("'Inventario' per visualizzare l'inventario.");
+        System.out.println("'Borsellino' per sapere quante monete hai.");
         System.out.println("'Osserva' per osservare l'ambiente circostante.");
         System.out.println("'Esci' per uscire dal gioco.");
         System.out.println("Potrei elencarti tutti i possibili comandi ma, ahime, ciò renderebbe il gioco troppo semplice.");

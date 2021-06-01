@@ -55,8 +55,8 @@ public class UniperfidaGame extends GameDescription {
         ovest.setAlias(new String[]{"o", "O", "Ovest", "OVEST"});
         getCommands().add(ovest);
 
-        Command inventory = new Command(CommandType.INVENTORY, "inventario");
-        inventory.setAlias(new String[]{"inv", "i", "I"});
+        Command inventory = new Command(CommandType.INVENTORY, "borsellino");
+        inventory.setAlias(new String[]{"portafogli", "portamonete", "b", "B"});
         getCommands().add(inventory);
 
         Command end = new Command(CommandType.END, "end");
@@ -98,10 +98,6 @@ public class UniperfidaGame extends GameDescription {
         Command use = new Command(CommandType.USE, "usa");
         use.setAlias(new String[]{"usare", "utilizza", "utilizzare"});
         getCommands().add(use);
-
-        Command insert = new Command(CommandType.INSERT, "inserisci");
-        insert.setAlias(new String[]{"metti"});
-        getCommands().add(insert);
 
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
@@ -259,15 +255,26 @@ public class UniperfidaGame extends GameDescription {
         AdvObject coin = new AdvObject(4, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
         coin.setPickupable(true);
         coin.setDroppable(false);
-        coin.setInsertable(true);
         coin.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
         thirdBathroom.getObjects().add(coin);
-        roomB.getObjects().add(coin);
 
-        AdvObject snack = new AdvObject(5, "snack", "Uno snack al cioccolato");
-        snack.setPickupable(false);
-        snack.setDroppable(true);
-        snack.setAlias(new String[]{"merendina", "cibo", "merenda", "dolce", "dolcetto"});
+        AdvObject coinTwo = new AdvObject(16, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        coinTwo.setPickupable(true);
+        coinTwo.setDroppable(false);
+        coinTwo.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
+        roomB.getObjects().add(coinTwo);
+
+        AdvObject coinThree = new AdvObject(17, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        coinThree.setPickupable(true);
+        coinThree.setDroppable(false);
+        coinThree.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
+        courtyard.getObjects().add(coinThree);
+
+        AdvObject coinFour = new AdvObject(17, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        coinFour.setPickupable(true);
+        coinFour.setDroppable(false);
+        coinFour.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
+        reception.getObjects().add(coinFour);
 
         AdvObject receptionSheet = new AdvObject(6, "foglio", "'Sono al bar, torno tra cinque minuti'");
         receptionSheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
@@ -321,21 +328,6 @@ public class UniperfidaGame extends GameDescription {
         longCoffee.setAlias(new String[]{"lungo"});
         coffeeDispenser.add(longCoffee);
 
-        // inventario
-        getInventory().add(coin);
-        /*
-        AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
-        wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
-        wardrobe.setOpenable(true);
-        wardrobe.setPickupable(false);
-        wardrobe.setOpen(false);
-        yourRoom.getObjects().add(wardrobe);
-        AdvObject toy = new AdvObject(3, "giocattolo", "Il gioco che ti ha regalato zia Lina.");
-        toy.setAlias(new String[]{"gioco", "robot"});
-        toy.setPushable(true);
-        toy.setPush(false);
-        wardrobe.add(toy);
-         */
         // definizione della stanza corrente
         setCurrentRoom(roomA);
 
@@ -409,9 +401,17 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case INVENTORY:
                         // se il comando è di tipo INVENTORY
-                        out.println("Nel tuo inventario ci sono:");
-                        for (AdvObject o : getInventory()) { // ciclo sugli elementi dell'inventario
-                            out.println("- " + o.getName()); // e stampo nome + descrizione
+                        int i = 0;
+                        if (!getInventory().isEmpty()) {
+                            for (AdvObject o : getInventory()) { // ciclo sugli elementi dell'inventario
+                                i++;
+                            } if (i==1) {
+                                out.println("Nel tuo borsellino c'è una moneta");
+                            } else {
+                                out.println("Nel tuo borsellino ci sono " + i + " monete");
+                            }
+                        } else {
+                            out.println("Sei un poveraccio, non hai monete!");
                         }
                         break;
                     case LOOK:
@@ -426,9 +426,9 @@ public class UniperfidaGame extends GameDescription {
                                 out.println("- " + o.getName());
                             }
                         } else if (p.getObject().getId()== 2 || p.getObject().getId()== 7 || p.getObject().getId()== 8) {
-                            out.println("La " + p.getObject().getName() + "cnon si osserva, si legge. Inserisci il comando giusto. (Es. leggi)");
+                            out.println("Nella bacheca c'è scritto: " + p.getObject().getDescription());
                         } else if (p.getObject().getId() == 6 || p.getObject().getId() == 10) {
-                            out.println("Il " + p.getObject().getName() + " non si osserva, si legge. Inserisci il comando giusto. (Es. leggi)");
+                            out.println("Il foglio recita: " + p.getObject().getDescription());
                         }
                         else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11){
                             out.println(p.getObject().getDescription());
@@ -510,12 +510,16 @@ public class UniperfidaGame extends GameDescription {
                         //se il comando è di tipo PICK_UP
                         boolean coinYes;
                         if (p.getObject() != null) {
-                            if (getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable() && p.getObject().getId() == 4) {
-                                p.getObject().setPickupable(false);
-                                p.getObject().setDroppable(true);
-                                getCurrentRoom().getObjects().remove(p.getObject());
-                                getInventory().add(p.getObject());
-                                out.println("Fatto! Hai preso: " + p.getObject().getName());
+                            if (getCurrentRoom().getObjects().contains(p.getObject()) && p.getObject().isPickupable()) {
+                                if (getCurrentRoom() != getRooms().get(4)) {
+                                    p.getObject().setPickupable(false);
+                                    p.getObject().setDroppable(true);
+                                    getCurrentRoom().getObjects().remove(p.getObject());
+                                    getInventory().add(p.getObject());
+                                    out.println("Fatto! Hai preso: " + p.getObject().getName());
+                                } else {
+                                    out.println("Non si ruba!");
+                                }
                             }
                             else {
                                 out.println("Non puoi prendere " + p.getObject().getName());
@@ -527,7 +531,7 @@ public class UniperfidaGame extends GameDescription {
                     case LEAVE:
                         // se il comando è di tipo LEAVE
                         if (p.getInvObject() != null) { // se ci sono oggetti
-                            if (getInventory().contains(p.getInvObject()) && p.getInvObject().isDroppable() && p.getObject().getId() == 4) { // se l'oggetto è presente nell'inventario
+                            if (getInventory().contains(p.getInvObject()) && p.getInvObject().isDroppable()) { // se l'oggetto è presente nell'inventario
                                 p.getInvObject().setDroppable(false);
                                 p.getInvObject().setPickupable(true);
                                 getInventory().remove(p.getInvObject()); // rimuovo l'oggetto dall'inventario

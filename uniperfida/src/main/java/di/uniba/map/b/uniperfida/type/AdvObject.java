@@ -37,9 +37,8 @@ public class AdvObject {
 
     private boolean readable = false;
 
-    private boolean useable = true;
+    private boolean useable = false;
 
-    private boolean insertable = false;
 
     // costruttore
     public AdvObject(int id) {
@@ -163,10 +162,6 @@ public class AdvObject {
     public void setUseable(boolean useable){
         this.useable = useable;
     }
-
-    public boolean isInsertable() { return insertable;}
-
-    public void setInsertable(boolean insertable) { this.insertable = insertable;}
 
     @Override
     public int hashCode() {
