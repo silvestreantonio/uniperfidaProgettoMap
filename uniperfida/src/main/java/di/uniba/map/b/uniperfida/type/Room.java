@@ -26,6 +26,8 @@ public class Room {
 
     private String universe;
 
+    private int count = 0;
+
     private boolean visible = true; // attributo che serve per nascondere la stanza (es. la segreteria)
 
     private Room south = null; // attributo che memorizza la stanza in cui si puo andare se si preme "sud"
@@ -40,7 +42,7 @@ public class Room {
 
     private Room down = null;
     // nord sud est e ovest è detto concetto di aggregazione 
-    
+
     private final List<AdvObject> objects=new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
 
     // costruttore
@@ -133,6 +135,10 @@ public class Room {
     public String getuniverse() {return universe; }
 
     public void setuniverse(String universe) {this.universe = universe; }
+
+    public int getCount(){return count;}
+
+    public void setCount(int count){this.count = count;}
 
     public List<AdvObject> getObjects() {
         return objects;

@@ -180,6 +180,8 @@ public class UniperfidaGame extends GameDescription {
 
         Room waitingRoomBasilico = new Room(26, "Sala d'attesa del prof. Basilico", "Ti trovi nella sala d'attesa del prof. Basilico.", "Universo J-371");
         waitingRoomBasilico.setLook("C'è una porta, niente indovinelli questa volta.");
+        waitingRoomBasilico.setCount(0);
+        waitingRoomBasilico.setVisible(false);
 
         Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.","Universo J-371");
         secretary.setLook("C'è uno sportello con un foglio.");
@@ -385,7 +387,7 @@ public class UniperfidaGame extends GameDescription {
         waitingRoomCinquanta.getObjects().add(fourthTablet);
 
         // definizione della stanza corrente
-        setCurrentRoom(secretary);
+        setCurrentRoom(thirdSector);
 
     }
 
@@ -425,10 +427,16 @@ public class UniperfidaGame extends GameDescription {
                         }
                         break;
                     case WEST:
-                        if (getCurrentRoom().getWest() != null) {
+                        if (getCurrentRoom().getWest() != null && getCurrentRoom() != getRooms().get(23)) {
                             setCurrentRoom(getCurrentRoom().getWest());
                             move = true;
-                        } else {
+                        } else if(getCurrentRoom() == getRooms().get(23) && getRooms().get(25).isVisible()) {
+                            setCurrentRoom(getCurrentRoom().getWest());
+                            move = true;
+                        } else if(getCurrentRoom() == getRooms().get(23) && !getRooms().get(25).isVisible()) {
+                            out.println("Per entrare dal prof. Basilico devi prima risolvere gli indovinelli.");
+                        }
+                            else {
                             noroom = true;
                         }
                         break;
@@ -506,12 +514,9 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case USE:
                         boolean flag = true;
-                        //boolean flagRossetto = true;
-                        //boolean flagImpavido = true;
-                        //boolean flagGatto = true;
-                        //boolean flagCinquanta = true;
                         if (p.getObject() != null) {
                             if (p.getObject().isUseable()) {
+                                int j=getRooms().get(25).getCount();
                             if (p.getObject().getId() == 11) {
                                     if (!getInventory().isEmpty()) {
                                         if (p.getObject() instanceof AdvObjectContainer) {
@@ -623,6 +628,7 @@ public class UniperfidaGame extends GameDescription {
                                             out.println();
                                             out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                                             out.println(getCurrentRoom().getDescription());
+                                            getRooms().get(25).setCount(++j);
                                             flag = false;
                                             break;
                                         case "0":
@@ -650,6 +656,7 @@ public class UniperfidaGame extends GameDescription {
                                             out.println();
                                             out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                                             out.println(getCurrentRoom().getDescription());
+                                            getRooms().get(25).setCount(++j);
                                             flag = false;
                                             break;
                                         case "0":
@@ -677,6 +684,7 @@ public class UniperfidaGame extends GameDescription {
                                             out.println();
                                             out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                                             out.println(getCurrentRoom().getDescription());
+                                            getRooms().get(25).setCount(++j);
                                             flag = false;
                                             break;
                                         case "0":
@@ -704,6 +712,7 @@ public class UniperfidaGame extends GameDescription {
                                             out.println();
                                             out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                                             out.println(getCurrentRoom().getDescription());
+                                            getRooms().get(25).setCount(++j);
                                             flag = false;
                                             break;
                                         case "0":
@@ -877,6 +886,9 @@ public class UniperfidaGame extends GameDescription {
                 // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
                 out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                 out.println(getCurrentRoom().getDescription());
+                if (getRooms().get(25).getCount() == 4){
+                    getRooms().get(25).setVisible(true);
+                }
             }
 
         }
