@@ -35,9 +35,11 @@ public class AdvObject {
 
     private boolean push = false; // l'oggetto è chiuso?
 
-    private boolean readable = false;
+    private boolean readable = false; //l'oggetto è leggibile?
 
-    private boolean useable = false;
+    private boolean useable = false; //l'oggetto è utilizzabile?
+
+    private boolean talkable = false; //si può parlare con l'oggetto?
 
 
     // costruttore
@@ -162,6 +164,10 @@ public class AdvObject {
     public void setUseable(boolean useable){
         this.useable = useable;
     }
+
+    public boolean isTalkable(){return talkable;}
+
+    public void setTalkable(boolean talkable){this.talkable = talkable;}
 
     @Override
     public int hashCode() {

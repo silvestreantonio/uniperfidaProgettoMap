@@ -102,6 +102,10 @@ public class UniperfidaGame extends GameDescription {
         read.setAlias(new String[]{"leggere", "analizza", "analizzare"});
         getCommands().add(read);
 
+        Command talk = new Command(CommandType.TALK_TO, "parla");
+        talk.setAlias(new String[]{"discuti", "parlare", "discutere"});
+        getCommands().add(talk);
+
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
         laboratory.setLook("Hai davanti la macchina, la porta è aperta");
@@ -309,11 +313,6 @@ public class UniperfidaGame extends GameDescription {
         coinFour.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
         reception.getObjects().add(coinFour);
 
-        AdvObject receptionSheet = new AdvObject(6, "foglio", "'Sono al bar, torno tra cinque minuti'");
-        receptionSheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
-        receptionSheet.setReadable(true);
-        reception.getObjects().add(receptionSheet);
-
         AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante");
         boardsInfoPoint.setAlias(new String[]{"diario"});
         boardsInfoPoint.setReadable(true);
@@ -386,8 +385,13 @@ public class UniperfidaGame extends GameDescription {
         fourthTablet.setUseable(true);
         waitingRoomCinquanta.getObjects().add(fourthTablet);
 
+        AdvObject collaborator = new AdvObject(21, "collaboratore", "Un uomo che lavora in università");
+        collaborator.setAlias(new String[]{"bidello", "custode", "assistente", "uomo"});
+        collaborator.setTalkable(true);
+        reception.getObjects().add(collaborator);
+
         // definizione della stanza corrente
-        setCurrentRoom(thirdSector);
+        setCurrentRoom(hall);
 
     }
 
@@ -490,10 +494,10 @@ public class UniperfidaGame extends GameDescription {
                             }
                         } else if (p.getObject().getId()== 2 || p.getObject().getId()== 7 || p.getObject().getId()== 8) {
                             out.println("Nella bacheca c'è scritto:\n" + p.getObject().getDescription());
-                        } else if (p.getObject().getId() == 6 || p.getObject().getId() == 10) {
+                        } else if (p.getObject().getId() == 10) {
                             out.println("Il foglio recita: " + p.getObject().getDescription());
                         }
-                        else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20){
+                        else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21){
                             out.println(p.getObject().getDescription());
                         }
                         break;
@@ -771,6 +775,16 @@ public class UniperfidaGame extends GameDescription {
                             out.println("Lasciare cosa? Sii più preciso.");
                         }
                         break;
+                    case TALK_TO:
+                        if (p.getObject() != null){
+                            if(p.getObject().isTalkable()){
+                                out.println("Ciao! Sono il collaboratore.");
+                            } else {
+                                out.println("Non puoi parlare con " + p.getObject().getName());
+                            }
+                        } else {
+                            out.println("Parlare con chi? Sii più preciso.");
+                        } break;
                     case OPEN:
                         // se il comando è di tipo apri
                         /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti
