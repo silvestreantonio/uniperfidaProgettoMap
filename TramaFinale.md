@@ -743,3 +743,4 @@ _(Comando nord) Ti trovi nel corridoio
 (Comando sud) Ti trovi nel cortile … …
 
 Corri verso la navicella. Ti volti e noti un ragazzo molto simile all'assistente Olivieri che preso dall'ansia esclama "Uff, non mi laureerò mai!". Sorridi. In cuor tuo sai che ha ragione. Intanto rientri nella tua dimensione. … … "Com'è stato? Com'erano le persone? C'erano guerre? Che lingua si parlava? La gente è davvero senza morale? E che mi dici delle..." "Non ricordo nulla. So solo che non mi pento di non aver fatto l'università!"
+

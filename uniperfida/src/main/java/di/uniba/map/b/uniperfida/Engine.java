@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Set;
 
-import static di.uniba.map.b.uniperfida.print.Printings.printInsertCommand;
-import static di.uniba.map.b.uniperfida.print.Printings.printIntro;
+import static di.uniba.map.b.uniperfida.print.Printings.*;
+
 /**
  * ATTENZIONE: l'Engine è molto spartano, in realtà demanda la logica alla
  * classe che implementa GameDescription e si occupa di gestire I/O sul
@@ -52,6 +52,8 @@ public class Engine {
         printIntro();
         //System.out.println(game.getCurrentRoom().getName());  // stampa il nome della stanza in cui si trova il giocatore
         //System.out.println();
+        // qui mettiamo un controllo, se si preme il tasto invio si continua
+        printIntro2();
         System.out.println("-----[" + game.getCurrentRoom().getuniverse() + "]-----");
         System.out.println(game.getCurrentRoom().getDescription()); // stampa la descrizione della stanza in cui si trova il giocatore
         printInsertCommand();

@@ -18,6 +18,18 @@ public class Printings {
                 + "\n“Ce l’ho, ce l’ho, conosco un tipo di nome Edoardo abbastanza sconsiderato da affrontare un viaggio da cui potrebbe non fare ritorno” "
                 + "\n“Okay, ci incontriamo qui giovedì alle 15”.\n\n");
     }
+    public static void printIntro2(){
+        System.out.println("**********DUE GIORNI DOPO**********");
+        System.out.println("\n\n“Buongiorno professor Silvestre, io sono Edoardo.”" +
+                "\n“Ciao Edoardo. Sono molto felice di conoscerti, prima di partire lascia che ti spieghi un paio di cose. Iniziamo subito, sei pronto?”" +
+                "\n“Sissignore!”" +
+                "\n“Come vedi questa è una macchina interdimensionale e serve per viaggiare attraverso i Multiversi. Il viaggio durerà qualche secondo e non ti accorgerai di nulla. Una volta dentro la macchina, premi il tasto rosso per partire. Ricorda: hai a disposizione solamente sessanta minuti. Passata l’ora ritorna esattamente nel punto in cui hai approdato”" +
+                "\n“Ho capito, ci sono rischi?”" +
+                "\n“No”." +
+                "\n…" +
+                "\n…" +
+                "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”.");
+    }
     public static void printInsertCommand(){
         System.out.println();
         System.out.println("Inserisci il comando qui sotto oppure premi 'help' per visualizzare la lista dei possibili comandi");
@@ -28,13 +40,13 @@ public class Printings {
         System.out.println("========================");
         System.out.println("Digita:");
         System.out.println("'help' per visualizzare i comandi.");
-        System.out.println("'N/Nord' per muoverti verso Nord.");
-        System.out.println("'S/Sud' per muoverti verso Sud.");
-        System.out.println("'E/Est' per muoverti verso Est.");
-        System.out.println("'O/Ovest' per muoverti verso Ovest.");
-        System.out.println("'Borsellino' per sapere quante monete hai.");
-        System.out.println("'Osserva' per osservare l'ambiente circostante.");
-        System.out.println("'Esci' per uscire dal gioco.");
+        System.out.println("'n/nord' per muoverti verso Nord.");
+        System.out.println("'s/sud' per muoverti verso Sud.");
+        System.out.println("'e/est' per muoverti verso Est.");
+        System.out.println("'o/ovest' per muoverti verso Ovest.");
+        System.out.println("'borsellino' per sapere quante monete hai.");
+        System.out.println("'osserva' per osservare l'ambiente circostante.");
+        System.out.println("'esci' per uscire dal gioco.");
         System.out.println("Potrei elencarti tutti i possibili comandi ma, ahime, ciò renderebbe il gioco troppo semplice.");
         System.out.println("Sta a te scoprire tutti gli altri comandi per proseguire nell'avventura. :)");
 
@@ -46,5 +58,69 @@ public class Printings {
         System.out.println("3) Caffè macchiato");
         System.out.println("4) Caffè al cioccolato");
         System.out.println("0) Esci");
+        System.out.println("Inserisci il numero qui sotto:");
+    }
+    public static void printEnd(){
+        System.out.println("A quanto pare verbalizzare i voti in questo universo è una cosa molto complessa.");
+        System.out.println("...");
+        System.out.println("Oh no, è gia tempo di andare. I sessanta minuti scadono tra pochissimo!");
+        System.out.println("...");
+        System.out.println("\nCorri verso la navicella. Ti volti e noti un ragazzo molto simile all'assistente Olivieri che preso dall'ansia esclama “Uff, non riuscirò mai a verbalizzare il mio voto!“." +
+                "\nSorridi. In cuor tuo sai che ha ragione."+
+                "\n..." +
+                "\n..." +
+                "\nIntanto rientri nella tua dimensione." +
+                "\n“Com'è stato? Com'erano le persone? C'erano guerre? Che lingua si parlava? La gente è davvero senza morale? E che mi dici delle...“"+
+                "\n“Non ricordo nulla. So solo che non mi pento di non aver fatto l'università!“");
+    }
+    public static void printScore(){
+        System.out.println("Complimenti il tuo punteggio è di: ");
+    }
+    public static void printRossetto(){
+        System.out.println("#1 Benvenuto nel menu di accettazione." +
+                "\nRisolvi l’indovinello per autenticarti:" +
+                "\n - a volte in delle situazioni sono fuori luogo" +
+                "\n - non lascio le tue labbra" +
+                "\n - resisto all’acqua" +
+                "\n - non sono rosso per forza." +
+                "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
+    }
+    public static void printImpavido(){
+        System.out.println("#2 Benvenuto nel menu di accettazione." +
+                "\nRisolvi l’indovinello per autenticarti:" +
+                "\n - sono un aggettivo" +
+                "\n - sono coraggioso" +
+                "\n - sono razionale di fronte ad una minaccia" +
+                "\n - letteralmente qualcosa in più di avido." +
+                "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
+    }
+    public static void printGatto(){
+        System.out.println("#3 Benvenuto nel menu di accettazione." +
+                "\nRisolvi l’indovinello per autenticarti:" +
+                "\n - notoriamente domestico;" +
+                "\n - i miei video sono divertenti;" +
+                "\n - duro a morire;" +
+                "\n - spesso in compagnia di una volpe." +
+                "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
+    }
+    public static void printCinquanta(){
+        System.out.println("#4 Benvenuto nel menu di accettazione." +
+                "\nRisolvi l’indovinello per autenticarti:" +
+                "\n - a questa età si va in crisi" +
+                "\n - a napoli sono il pane" +
+                "\n - arancione per le banche" +
+                "\n - sono un numero." +
+                "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
+    }
+    public static void printPhone(){
+        System.out.println("***TELEFONO***");
+        System.out.println("\nDigita il numero che vuoi chiamare." +
+                "\nInserisci il numero qui sotto oppure premi 0 per uscire.");
+    }
+    public static void printPhone2(){
+        System.out.println("“Benvenuto nella segreteria studenti dell'Università di Bari.“" +
+                "\n..." +
+                "\n..." +
+                "\n“Spiacente, i nostri operatori sono tutti occupati. È inutile riprovare.“");
     }
 }

@@ -16,8 +16,7 @@ import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import static di.uniba.map.b.uniperfida.print.Printings.printCoffeeMenu;
-import static di.uniba.map.b.uniperfida.print.Printings.printHelp;
+import static di.uniba.map.b.uniperfida.print.Printings.*;
 
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
@@ -159,19 +158,19 @@ public class UniperfidaGame extends GameDescription {
         firstSector.setLook("Ai lati ci sono due uffici.");
 
         Room waitingRoomRossetto = new Room(19, "Sala d'attesa della prof.ssa Rossetto", "Ti trovi nella sala d'attesa della prof.ssa *****", "Universo J-371");
-        waitingRoomRossetto.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        waitingRoomRossetto.setLook("Ci sono delle sedie.");
 
         Room waitingRoomImpavido = new Room(20, "Sala d'attesa del prof. Impavido", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
-        waitingRoomImpavido.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        waitingRoomImpavido.setLook("Ci sono delle sedie.");
 
         Room secondSector = new Room(21, "Secondo settore del corridoio", "Ti trovi nel secondo settore del corridoio. Intravedi la fine.", "Universo J-371");
         secondSector.setLook("Ai lati ci sono due uffici.");
 
         Room waitingRoomGatto = new Room(22, "Sala d'attesa del prof. Gatto", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
-        waitingRoomGatto.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        waitingRoomGatto.setLook("Ci sono delle sedie.");
 
         Room waitingRoomCinquanta = new Room(23, "Sala d'attesa del prof. Cinquanta", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
-        waitingRoomCinquanta.setLook("Ci sono delle sedie e una porta con uno schermo.");
+        waitingRoomCinquanta.setLook("Ci sono delle sedie.");
 
         Room thirdSector = new Room(24, "Terzo settore del corridoio", "Ti trovi nel terzo settore del corridoio. Dietro di te c'è un muro.", "Universo J-371");
         thirdSector.setLook("Ai lati c'è l'ennesimo ufficio e l'ennesimo bagno. Avranno problemi d'incontinenza.");
@@ -334,7 +333,7 @@ public class UniperfidaGame extends GameDescription {
         secondElevator.getObjects().add(buttonElev);
 
         AdvObject secretarySheet = new AdvObject(10, "foglio", "Siamo al bar. Ci stiamo riposando."
-                + "La mole di lavoro è troppa. Chiamare il numero 3774480028");
+                + " La mole di lavoro è troppa. Chiamare il numero 3774480028");
         secretarySheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
         secretarySheet.setReadable(true);
         secretary.getObjects().add(secretarySheet);
@@ -360,12 +359,33 @@ public class UniperfidaGame extends GameDescription {
         longCoffee.setAlias(new String[]{"lungo"});
         coffeeDispenser.add(longCoffee);
 
-        AdvObject secretaryPhone = new AdvObject(16, "telefono", "Il telefono della segreteria");
+        AdvObject secretaryPhone = new AdvObject(16, "telefono", "Un semplice telefono da usare");
         secretaryPhone.setAlias(new String[]{"cellulare", "telefonino", "smartphone"});
+        secretaryPhone.setUseable(true);
         secretary.getObjects().add(secretaryPhone);
 
+        AdvObject firstTablet = new AdvObject(17, "tablet", "Un semplice tablet da usare");
+        firstTablet.setAlias(new String[]{"telefono"});
+        firstTablet.setUseable(true);
+        waitingRoomRossetto.getObjects().add(firstTablet);
+
+        AdvObject secondTablet = new AdvObject(18, "tablet", "Un semplice tablet da usare");
+        secondTablet.setAlias(new String[]{"telefono"});
+        secondTablet.setUseable(true);
+        waitingRoomImpavido.getObjects().add(secondTablet);
+
+        AdvObject thirdTablet = new AdvObject(19, "tablet", "Un semplice tablet da usare");
+        thirdTablet.setAlias(new String[]{"telefono"});
+        thirdTablet.setUseable(true);
+        waitingRoomGatto.getObjects().add(thirdTablet);
+
+        AdvObject fourthTablet = new AdvObject(20, "tablet", "Un semplice tablet da usare");
+        fourthTablet.setAlias(new String[]{"telefono"});
+        fourthTablet.setUseable(true);
+        waitingRoomCinquanta.getObjects().add(fourthTablet);
+
         // definizione della stanza corrente
-        setCurrentRoom(roomA);
+        setCurrentRoom(secretary);
 
     }
 
@@ -465,7 +485,7 @@ public class UniperfidaGame extends GameDescription {
                         } else if (p.getObject().getId() == 6 || p.getObject().getId() == 10) {
                             out.println("Il foglio recita: " + p.getObject().getDescription());
                         }
-                        else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16){
+                        else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20){
                             out.println(p.getObject().getDescription());
                         }
                         break;
@@ -486,77 +506,223 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case USE:
                         boolean flag = true;
+                        //boolean flagRossetto = true;
+                        //boolean flagImpavido = true;
+                        //boolean flagGatto = true;
+                        //boolean flagCinquanta = true;
                         if (p.getObject() != null) {
+                            if (p.getObject().isUseable()) {
                             if (p.getObject().getId() == 11) {
-                                if (p.getObject().isUseable()) {
                                     if (!getInventory().isEmpty()) {
-                                    if (p.getObject() instanceof AdvObjectContainer) {
-                                        AdvObjectContainer c = (AdvObjectContainer) p.getObject();
-                                        while (flag) {
-                                        printCoffeeMenu();
-                                        Scanner scanner2 = new Scanner(System.in);
-                                        String chooseCoffee = scanner2.nextLine();
-                                            out.println();
-                                            switch (chooseCoffee) {
-                                                case "1":
-                                                    getInventory().remove(getInventory().get(0));
-                                                    out.println("Fatto! Hai preso un caffè.");
-                                                    out.println("...");
-                                                    out.println("Mmh, buono questo caffè");
-                                                    out.println("...");
-                                                    flag = false;
-                                                    break;
-                                                case "2":
-                                                    getInventory().remove(getInventory().get(0));
-                                                    out.println();
-                                                    out.println("Fatto! Hai preso un caffè lungo.");
-                                                    out.println("...");
-                                                    out.println("Mmh, buono questo caffè");
-                                                    out.println("...");
-                                                    getRooms().get(26).setVisible(true);
-                                                    out.println("Ma cos'è stato questo rumore? Proveniva dalla aula A.");
-                                                    flag = false;
-                                                    break;
-                                                case "3":
-                                                    getInventory().remove(getInventory().get(0));
-                                                    out.println();
-                                                    out.println("Fatto! Hai preso un caffè macchiato.");
-                                                    out.println("...");
-                                                    out.println("Mmh, buono questo caffè");
-                                                    out.println("...");
-                                                    flag = false;
-                                                    break;
-                                                case "4":
-                                                    getInventory().remove(getInventory().get(0));
-                                                    out.println();
-                                                    out.println("Fatto! Hai preso un caffè al cioccolato.");
-                                                    out.println("...");
-                                                    out.println("Mmh, buono questo caffè");
-                                                    out.println("...");
-                                                    flag = false;
-                                                    break;
-                                                case "0":
-                                                    out.println("Nessun caffè.");
-                                                    flag = false;
-                                                    break;
-                                                default:
-                                                    out.println("Inserisci un valore valido. \n");
-                                                    flag = true;
-                                                    break;
+                                        if (p.getObject() instanceof AdvObjectContainer) {
+                                            AdvObjectContainer c = (AdvObjectContainer) p.getObject();
+                                            while (flag) {
+                                                printCoffeeMenu();
+                                                Scanner scanner2 = new Scanner(System.in);
+                                                String chooseCoffee = scanner2.nextLine();
+                                                out.println();
+                                                switch (chooseCoffee) {
+                                                    case "1":
+                                                        getInventory().remove(getInventory().get(0));
+                                                        out.println("Fatto! Hai preso un caffè.");
+                                                        out.println("...");
+                                                        out.println("Mmh, buono questo caffè");
+                                                        out.println("...");
+                                                        out.println();
+                                                        out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                                        out.println(getCurrentRoom().getDescription());
+                                                        flag = false;
+                                                        break;
+                                                    case "2":
+                                                        getInventory().remove(getInventory().get(0));
+                                                        out.println("Fatto! Hai preso un caffè lungo.");
+                                                        out.println("...");
+                                                        out.println("Mmh, buono questo caffè lungo");
+                                                        out.println("...");
+                                                        getRooms().get(26).setVisible(true);
+                                                        out.println("Ma cos'è stato questo rumore? Proveniva dalla aula A.");
+                                                        out.println();
+                                                        out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                                        out.println(getCurrentRoom().getDescription());
+                                                        flag = false;
+                                                        break;
+                                                    case "3":
+                                                        getInventory().remove(getInventory().get(0));
+                                                        out.println("Fatto! Hai preso un caffè macchiato.");
+                                                        out.println("...");
+                                                        out.println("Mmh, buono questo caffè macchiato");
+                                                        out.println("...");
+                                                        out.println();
+                                                        out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                                        out.println(getCurrentRoom().getDescription());
+                                                        flag = false;
+                                                        break;
+                                                    case "4":
+                                                        getInventory().remove(getInventory().get(0));
+                                                        out.println("Fatto! Hai preso un caffè al cioccolato.");
+                                                        out.println("...");
+                                                        out.println("Mmh, buono questo caffè al cioccolato");
+                                                        out.println("...");
+                                                        out.println();
+                                                        out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                                        out.println(getCurrentRoom().getDescription());
+                                                        flag = false;
+                                                        break;
+                                                    case "0":
+                                                        out.println("Nessun caffè.");
+                                                        out.println();
+                                                        out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                                        out.println(getCurrentRoom().getDescription());
+                                                        flag = false;
+                                                        break;
+                                                    default:
+                                                        out.println("Inserisci un valore valido. \n");
+                                                        flag = true;
+                                                        break;
+                                                }
                                             }
                                         }
-                                } }
-                                    else {
+                                    } else {
                                         out.println("Non hai monete! Procurati una moneta");
                                     }
-                                } else {
-                                    out.println("Non puoi utilizzare " + p.getObject().getName());
-                                }
-                            } else if(p.getObject().getId() == 16){
-                                out.println("Sto usando il telefono.");
-                                end(out);
-                            }
 
+                            } else if (p.getObject().getId() == 16) {
+                                while (flag){
+                                    printPhone();
+                                    Scanner scanner7 = new Scanner(System.in);
+                                    String chooseNumber = scanner7.nextLine().toLowerCase();
+                                    out.println();
+                                    switch (chooseNumber){
+                                        case "1":
+                                            printPhone2();
+                                            flag = false;
+                                            end(out);
+                                            break;
+                                        case "0":
+                                            out.println("Fatto! Telefono lasciato.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        default:
+                                            out.println("Inserisci un valore valido. \n");
+                                            flag = true;
+                                            break;
+                                    }
+                                }
+                            } else if (p.getObject().getId() == 17) {
+                                while (flag) {
+                                    printRossetto();
+                                    Scanner scanner3 = new Scanner(System.in);
+                                    String chooseRossetto = scanner3.nextLine().toLowerCase();
+                                    out.println();
+                                    switch (chooseRossetto) {
+                                        case "rossetto":
+                                            out.println("Soluzione corretta, autenticazione #1 riuscita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        case "0":
+                                            out.println("Autenticazione #1 fallita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        default:
+                                            out.println("Inserisci un valore valido. \n");
+                                            flag = true;
+                                            break;
+                                    }
+                                }
+                            } else if (p.getObject().getId() == 18) {
+                                while (flag) {
+                                    printImpavido();
+                                    Scanner scanner4 = new Scanner(System.in);
+                                    String chooseImpavido = scanner4.nextLine().toLowerCase();
+                                    out.println();
+                                    switch (chooseImpavido) {
+                                        case "impavido":
+                                            out.println("Soluzione corretta, autenticazione #2 riuscita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        case "0":
+                                            out.println("Autenticazione #2 fallita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        default:
+                                            out.println("Inserisci un valore valido. \n");
+                                            flag = true;
+                                            break;
+                                    }
+                                }
+                            } else if (p.getObject().getId() == 19) {
+                                while (flag) {
+                                    printGatto();
+                                    Scanner scanner5 = new Scanner(System.in);
+                                    String chooseGatto = scanner5.nextLine().toLowerCase();
+                                    out.println();
+                                    switch (chooseGatto) {
+                                        case "gatto":
+                                            out.println("Soluzione corretta, autenticazione #3 riuscita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        case "0":
+                                            out.println("Autenticazione #3 fallita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        default:
+                                            out.println("Inserisci un valore valido. \n");
+                                            flag = true;
+                                            break;
+                                    }
+                                }
+                            } else if (p.getObject().getId() == 20) {
+                                while (flag) {
+                                    printCinquanta();
+                                    Scanner scanner6 = new Scanner(System.in);
+                                    String chooseCinquanta = scanner6.nextLine().toLowerCase();
+                                    out.println();
+                                    switch (chooseCinquanta) {
+                                        case "cinquanta":
+                                            out.println("Soluzione corretta, autenticazione #4 riuscita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        case "0":
+                                            out.println("Autenticazione #4 fallita.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            flag = false;
+                                            break;
+                                        default:
+                                            out.println("Inserisci un valore valido. \n");
+                                            flag = true;
+                                            break;
+                                    }
+                                }
+                            }
+                        } else {
+                                out.println("Non puoi utilizzare " + p.getObject().getName());
+                            }
                         } else {
                             out.println("Usare cosa? Sii più preciso.");
                         }
@@ -718,7 +884,10 @@ public class UniperfidaGame extends GameDescription {
 
     private void end(PrintStream out) {
         out.println();
-        out.println("Ti accorgi che è tardi. Gay");
+        printEnd();
+        out.println();
+        printScore();
+        out.println();
         System.exit(0);
     }
 }
