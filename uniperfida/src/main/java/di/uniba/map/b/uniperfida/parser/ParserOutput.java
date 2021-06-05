@@ -7,6 +7,7 @@ package di.uniba.map.b.uniperfida.parser;
 
         import di.uniba.map.b.uniperfida.type.AdvObject;
         import di.uniba.map.b.uniperfida.type.Command;
+        import di.uniba.map.b.uniperfida.type.Person;
 
 /**
  *
@@ -20,15 +21,17 @@ public class ParserOutput {
 
     private AdvObject invObject;
 
-    public ParserOutput(Command command, AdvObject object) {
+    private Person person;
+
+    public ParserOutput(Command command, AdvObject object, AdvObject invObject) {
         this.command = command;
         this.object = object;
+        this.invObject = invObject;
     }
 
-    public ParserOutput(Command command, AdvObject object, AdvObject invObejct) {
+    public ParserOutput(Command command, Person person) {
         this.command = command;
-        this.object = object;
-        this.invObject = invObejct;
+        this.person = person;
     }
 
     public Command getCommand() {
@@ -54,5 +57,14 @@ public class ParserOutput {
     public void setInvObject(AdvObject invObject) {
         this.invObject = invObject;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
 
 }

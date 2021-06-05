@@ -36,10 +36,14 @@ public class Utils {
         List<String> tokens = new ArrayList<>();
         String e = "e";
         String o = "o";
+        String con = "con";
         String[] split = string.toLowerCase().split("'|\\s+"); // fa lo split della stringa sugli spazi e sugli apostrofi (da vedere)
         for (String t : split) { // cicla sul risultato di questo split
             if (!stopwords.contains(t) || t.contains(e) || t.contains(o)) { // se la parola che trova non e' presente nelle stopwords
                 tokens.add(t); // la aggiunge al token
+                if (t.contains(con)) {
+                    tokens.remove(t);
+                }
             }
         }
         return tokens; // restituisce la lista di token restituisce la lista di token

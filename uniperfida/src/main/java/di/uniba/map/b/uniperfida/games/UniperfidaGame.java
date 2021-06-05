@@ -7,11 +7,8 @@ package di.uniba.map.b.uniperfida.games;
 
 import di.uniba.map.b.uniperfida.GameDescription;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
-import di.uniba.map.b.uniperfida.type.AdvObject;
-import di.uniba.map.b.uniperfida.type.AdvObjectContainer;
-import di.uniba.map.b.uniperfida.type.Command;
-import di.uniba.map.b.uniperfida.type.CommandType;
-import di.uniba.map.b.uniperfida.type.Room;
+import di.uniba.map.b.uniperfida.type.*;
+
 import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -83,11 +80,11 @@ public class UniperfidaGame extends GameDescription {
         getCommands().add(push);
 
         Command goUp = new Command(CommandType.GO_UP, "sopra");
-        goUp.setAlias(new String[]{"salire", "sali scale", "salire scale", "sali", "su", "sù"});
+        goUp.setAlias(new String[]{"salire", "sali", "sali", "su", "sù"});
         getCommands().add(goUp);
 
         Command goDown = new Command(CommandType.GO_DOWN, "sotto");
-        goDown.setAlias(new String[]{"scendere", "scendi scale", "scendere scale", "scendi", "giu", "giù"});
+        goDown.setAlias(new String[]{"scendere", "scendi", "scendere", "giu", "giù"});
         getCommands().add(goDown);
 
         Command help = new Command(CommandType.HELP, "help");
@@ -102,7 +99,7 @@ public class UniperfidaGame extends GameDescription {
         read.setAlias(new String[]{"leggere", "analizza", "analizzare"});
         getCommands().add(read);
 
-        Command talk = new Command(CommandType.TALK_TO, "parla");
+        Command talk = new Command(CommandType.TALK, "parla");
         talk.setAlias(new String[]{"discuti", "parlare", "discutere"});
         getCommands().add(talk);
 
@@ -119,7 +116,7 @@ public class UniperfidaGame extends GameDescription {
         Room hall = new Room(4, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.", "Universo J-371");
         hall.setLook("Un semplice atrio.");
 
-        Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Sembra essere vuoto.", "Universo J-371");
+        Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Non ti ha sentito entrare.", "Universo J-371");
         reception.setLook("C'è una scrivania con un computer ed un foglio.");
 
         Room firstBathroom = new Room(6, "Bagno del piano terra", "Ti trovi nei bagni del piano terra. Non noti nulla di strano.", "Universo J-371");
@@ -385,10 +382,10 @@ public class UniperfidaGame extends GameDescription {
         fourthTablet.setUseable(true);
         waitingRoomCinquanta.getObjects().add(fourthTablet);
 
-        AdvObject collaborator = new AdvObject(21, "collaboratore", "Un uomo che lavora in università");
+        Person collaborator = new Person(1, "collaboratore", "Un uomo che lavora in università");
         collaborator.setAlias(new String[]{"bidello", "custode", "assistente", "uomo"});
         collaborator.setTalkable(true);
-        reception.getObjects().add(collaborator);
+        reception.getPeople().add(collaborator);
 
         // definizione della stanza corrente
         setCurrentRoom(hall);
@@ -775,16 +772,17 @@ public class UniperfidaGame extends GameDescription {
                             out.println("Lasciare cosa? Sii più preciso.");
                         }
                         break;
-                    case TALK_TO:
-                        if (p.getObject() != null){
-                            if(p.getObject().isTalkable()){
+                    case TALK:
+                        if (p.getPerson() != null){
+                            if(p.getPerson().isTalkable()){
                                 out.println("Ciao! Sono il collaboratore.");
                             } else {
                                 out.println("Non puoi parlare con " + p.getObject().getName());
                             }
                         } else {
                             out.println("Parlare con chi? Sii più preciso.");
-                        } break;
+                        }
+                        break;
                     case OPEN:
                         // se il comando è di tipo apri
                         /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti

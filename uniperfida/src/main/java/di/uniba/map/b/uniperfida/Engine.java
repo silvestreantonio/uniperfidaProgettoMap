@@ -61,7 +61,7 @@ public class Engine {
         while (scanner.hasNextLine()) {
             System.out.println();
             String command = scanner.nextLine(); // legge i comandi dello scanner
-            ParserOutput p = parser.parse(command, game.getCommands(), game.getCurrentRoom().getObjects(), game.getInventory()); // ogni volta che legge un comando, lo interpreta con il parser
+            ParserOutput p = parser.parse(command, game.getCommands(), game.getCurrentRoom().getObjects(), game.getInventory(), game.getCurrentRoom().getPeople()); // ogni volta che legge un comando, lo interpreta con il parser
             if (p.getCommand() != null && p.getCommand().getType() == CommandType.END) { // se il comando è diverso da null ed è di tipo END ti fa uscire
                 System.out.println("Addio!");
                 break;

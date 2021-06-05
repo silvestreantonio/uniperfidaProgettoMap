@@ -39,7 +39,6 @@ public class AdvObject {
 
     private boolean useable = false; //l'oggetto è utilizzabile?
 
-    private boolean talkable = false; //si può parlare con l'oggetto?
 
 
     // costruttore
@@ -165,9 +164,6 @@ public class AdvObject {
         this.useable = useable;
     }
 
-    public boolean isTalkable(){return talkable;}
-
-    public void setTalkable(boolean talkable){this.talkable = talkable;}
 
     @Override
     public int hashCode() {
