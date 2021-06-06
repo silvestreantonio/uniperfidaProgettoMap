@@ -12,8 +12,6 @@ public class Person {
 
     private String description; // descrizione
 
-    private boolean talkable = false;
-
     private Set<String> alias; // set di string che contiene tutti i sinonimi di quell'oggetto
 
     // costruttore
@@ -42,10 +40,6 @@ public class Person {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public boolean isTalkable() { return talkable;}
-
-    public void setTalkable(boolean talkable){ this.talkable = talkable;}
 
     public Set<String> getAlias() {
         return alias;

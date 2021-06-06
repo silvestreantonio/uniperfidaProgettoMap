@@ -39,6 +39,8 @@ public class AdvObject {
 
     private boolean useable = false; //l'oggetto è utilizzabile?
 
+    private boolean available = false;
+
 
 
     // costruttore
@@ -162,6 +164,14 @@ public class AdvObject {
 
     public void setUseable(boolean useable){
         this.useable = useable;
+    }
+
+    public boolean isAvailable(){
+        return available;
+    }
+
+    public void setAvailable(boolean available){
+        this.available = available;
     }
 
 

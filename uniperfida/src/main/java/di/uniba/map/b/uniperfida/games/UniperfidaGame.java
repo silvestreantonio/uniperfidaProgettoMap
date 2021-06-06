@@ -360,6 +360,7 @@ public class UniperfidaGame extends GameDescription {
         AdvObject secretaryPhone = new AdvObject(16, "telefono", "Un semplice telefono da usare");
         secretaryPhone.setAlias(new String[]{"cellulare", "telefonino", "smartphone"});
         secretaryPhone.setUseable(true);
+        secretaryPhone.setAvailable(false);
         secretary.getObjects().add(secretaryPhone);
 
         AdvObject firstTablet = new AdvObject(17, "tablet", "Un semplice tablet da usare");
@@ -384,11 +385,14 @@ public class UniperfidaGame extends GameDescription {
 
         Person collaborator = new Person(1, "collaboratore", "Un uomo che lavora in università");
         collaborator.setAlias(new String[]{"bidello", "custode", "assistente", "uomo"});
-        collaborator.setTalkable(true);
         reception.getPeople().add(collaborator);
 
+        Person basilico = new Person(2, "Basilico", "Il professor Basilico");
+        basilico.setAlias(new String[]{"prof", "professor", "professore", "prof."});
+        waitingRoomBasilico.getPeople().add(basilico);
+
         // definizione della stanza corrente
-        setCurrentRoom(hall);
+        setCurrentRoom(secretary);
 
     }
 
@@ -593,6 +597,7 @@ public class UniperfidaGame extends GameDescription {
                                     }
 
                             } else if (p.getObject().getId() == 16) {
+                                if (p.getObject().isAvailable()){
                                 while (flag){
                                     printPhone();
                                     Scanner scanner7 = new Scanner(System.in);
@@ -616,6 +621,9 @@ public class UniperfidaGame extends GameDescription {
                                             flag = true;
                                             break;
                                     }
+                                }
+                                } else {
+                                    out.println("Per poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico");
                                 }
                             } else if (p.getObject().getId() == 17) {
                                 while (flag) {
@@ -773,13 +781,56 @@ public class UniperfidaGame extends GameDescription {
                         }
                         break;
                     case TALK:
-                        if (p.getPerson() != null){
-                            if(p.getPerson().isTalkable()){
-                                out.println("Ciao! Sono il collaboratore.");
-                            } else {
-                                out.println("Non puoi parlare con " + p.getObject().getName());
+                        boolean accept = true;
+                        if (p.getPerson() != null) {
+                            if (p.getPerson().getId() == 1) {
+                                out.println("“Salve sono Pomarico Edoardo, sto cercando il professor Basilico.”" +
+                                        "\n“Ciao Edoardo, il professor Basilico si trova al primo piano. Devi sapere, però, che il professor basilico recentemente è diventato il coordinatore di questo dipartimento." +
+                                        "\nEssendo una personalità molto diligente, ha introdotto un nuovo sistema di ricevimento." +
+                                        "\nPer evitare inutili perdite di tempo, si è deciso di introdurre degli indovinelli affinché solo gli studenti più motivati possano essere ricevuti." +
+                                        "\nGli indovinelli riguardano alcuni tra i cognomi dei professori di questo dipartimento, in questo momento in smart-working." +
+                                        "\nUna volta risolti, ti basterà recarti nell’ufficio del coordinatore che si trova in fondo al corridoio sulla est. Buona fortuna.”" +
+                                        "\n“Questo mondo è strano”" +
+                                        "\n“Cosa?”" +
+                                        "\n“Niente, niente, grazie mille!”");
+                            } else if (p.getPerson().getId() == 2) {
+                                out.println("“Salve professore”" +
+                                        "\n“Buona sera, chi è lei? Ho sentito dei rumori, come mai ci hai impiegato cosi tanto tempo?”" +
+                                        "\n“Sono Edoardo Pomarico. Ho risolto gli indovinelli. Cosi mi ha spiegato il collaboratore”" +
+                                        "\n“*risata*" +
+                                        "\nVedi Edoardo, il vero problema della nostra società è la mancanza di dialogo. Ho introdotto gli indovinelli per mettere alla prova il nostro sistema interno e non gli studenti." +
+                                        "\nNon ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perché hanno paura della mia autorità!”" +
+                                        "\n“Mh…”" +
+                                        "\n“Tornando a noi, perché sei qui?”" +
+                                        "\n“Per conoscere l’esito dell’ultimo esame”" +
+                                        "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”");
+                                while (accept) {
+                                    printVote();
+                                    Scanner scanner8 = new Scanner(System.in);
+                                    String chooseAccept = scanner8.nextLine().toLowerCase();
+                                    out.println();
+                                    switch (chooseAccept) {
+                                        case "si":
+                                            out.println("Ottima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.");
+                                            out.println();
+                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                            out.println(getCurrentRoom().getDescription());
+                                            getRooms().get(26).getObjects().get(1).setAvailable(true);
+                                            accept = false;
+                                            break;
+                                        case "no":
+                                            out.println("Sei pazzo! Come si suol dire trenta 18 fanno una laurea e non diciotto 30\n");
+                                            accept = true;
+                                            break;
+                                        default:
+                                            out.println("Inserisci un valore valido. \n");
+                                            accept = true;
+                                            break;
+                                    }
+                                }
+
                             }
-                        } else {
+                        }else {
                             out.println("Parlare con chi? Sii più preciso.");
                         }
                         break;

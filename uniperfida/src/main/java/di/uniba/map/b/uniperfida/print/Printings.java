@@ -123,4 +123,10 @@ public class Printings {
                 "\n..." +
                 "\n“Spiacente, i nostri operatori sono tutti occupati. È inutile riprovare.“");
     }
+    public static void printVote() {
+        System.out.println("Accetti?" +
+                "\nSI" +
+                "\nNO" +
+                "\nInserisci la tua scelta qui sotto:");
+    }
 }
