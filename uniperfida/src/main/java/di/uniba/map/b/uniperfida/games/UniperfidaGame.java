@@ -529,7 +529,6 @@ public class UniperfidaGame extends GameDescription {
                             }
                             for (AdvObject o : getCurrentRoom().getObjects()) {
                                 out.println("- " + o.getName());
-                                out.println();
                                 move = true;
                             }
                         } else if (p.getObject().getId()== 2 || p.getObject().getId()== 7 || p.getObject().getId()== 8) {
