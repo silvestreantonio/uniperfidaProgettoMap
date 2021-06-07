@@ -41,6 +41,8 @@ public class AdvObject {
 
     private boolean available = false;
 
+    private boolean used = false;
+
 
 
     // costruttore
@@ -174,6 +176,13 @@ public class AdvObject {
         this.available = available;
     }
 
+    public boolean isUsed(){
+        return used;
+    }
+
+    public void setUsed(boolean used){
+        this.used = used;
+    }
 
     @Override
     public int hashCode() {

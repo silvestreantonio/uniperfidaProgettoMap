@@ -23,7 +23,8 @@ public class Printings {
         System.out.println("\n\n“Buongiorno professor Silvestre, io sono Edoardo.”" +
                 "\n“Ciao Edoardo. Sono molto felice di conoscerti, prima di partire lascia che ti spieghi un paio di cose. Iniziamo subito, sei pronto?”" +
                 "\n“Sissignore!”" +
-                "\n“Come vedi questa è una macchina interdimensionale e serve per viaggiare attraverso i Multiversi. Il viaggio durerà qualche secondo e non ti accorgerai di nulla. Una volta dentro la macchina, premi il tasto rosso per partire. Ricorda: hai a disposizione solamente sessanta minuti. Passata l’ora ritorna esattamente nel punto in cui hai approdato”" +
+                "\n“Come vedi questa è una macchina interdimensionale e serve per viaggiare attraverso i Multiversi. Il viaggio durerà qualche secondo e non ti accorgerai di nulla. Una volta dentro la macchina, premi il tasto rosso per partire. " +
+                "\nRicorda: hai a disposizione solamente sessanta minuti. Passata l’ora ritorna esattamente nel punto in cui hai approdato”" +
                 "\n“Ho capito, ci sono rischi?”" +
                 "\n“No”." +
                 "\n…" +
@@ -39,7 +40,7 @@ public class Printings {
         System.out.println("**********HELP**********");
         System.out.println("========================");
         System.out.println("Digita:");
-        System.out.println("'help' per visualizzare i comandi.");
+        System.out.println("'h/help' per visualizzare i comandi.");
         System.out.println("'n/nord' per muoverti verso Nord.");
         System.out.println("'s/sud' per muoverti verso Sud.");
         System.out.println("'e/est' per muoverti verso Est.");
@@ -79,18 +80,18 @@ public class Printings {
     public static void printRossetto(){
         System.out.println("#1 Benvenuto nel menu di accettazione." +
                 "\nRisolvi l’indovinello per autenticarti:" +
-                "\n - a volte in delle situazioni sono fuori luogo" +
-                "\n - non lascio le tue labbra" +
-                "\n - resisto all’acqua" +
+                "\n - a volte in delle situazioni sono fuori luogo;" +
+                "\n - non lascio le tue labbra;" +
+                "\n - resisto all’acqua;" +
                 "\n - non sono rosso per forza." +
                 "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
     }
     public static void printImpavido(){
         System.out.println("#2 Benvenuto nel menu di accettazione." +
                 "\nRisolvi l’indovinello per autenticarti:" +
-                "\n - sono un aggettivo" +
-                "\n - sono coraggioso" +
-                "\n - sono razionale di fronte ad una minaccia" +
+                "\n - sono un aggettivo;" +
+                "\n - sono coraggioso;" +
+                "\n - sono razionale di fronte ad una minaccia;" +
                 "\n - letteralmente qualcosa in più di avido." +
                 "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
     }
@@ -106,9 +107,9 @@ public class Printings {
     public static void printCinquanta(){
         System.out.println("#4 Benvenuto nel menu di accettazione." +
                 "\nRisolvi l’indovinello per autenticarti:" +
-                "\n - a questa età si va in crisi" +
-                "\n - a napoli sono il pane" +
-                "\n - arancione per le banche" +
+                "\n - a questa età si va in crisi;" +
+                "\n - a napoli sono il pane;" +
+                "\n - arancione per le banche;" +
                 "\n - sono un numero." +
                 "\nInserisci la soluzione qui sotto oppure premi 0 per uscire.");
     }
@@ -125,8 +126,13 @@ public class Printings {
     }
     public static void printVote() {
         System.out.println("Accetti?" +
-                "\nSI" +
-                "\nNO" +
+                "\nsi" +
+                "\nno" +
                 "\nInserisci la tua scelta qui sotto:");
+    }
+    public static void printMessage(){
+        System.out.println("All'improvviso, a causa del vento, ti capita tra le mani un fogliettino che recita:" +
+                "\nMessaggio per l'Edoardo Pomarico del futuro: aiutami a verbalizzare il voto, non riesco a prenotare il ricevimento con il prof. Basilico perchè l'app MyUni fa schifo!" +
+                "\nChe coincidenza! Nel tuo primo passo sul nuovo universo hai scoperto due cose: il tuo obiettivo e il fatto che il tuo alter ego sia uno svitato!");
     }
 }
