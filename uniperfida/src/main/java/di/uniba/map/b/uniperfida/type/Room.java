@@ -41,7 +41,9 @@ public class Room {
     private Room up = null;
 
     private Room down = null;
-    // nord sud est e ovest è detto concetto di aggregazione 
+    // nord sud est e ovest è detto concetto di aggregazione
+
+    private boolean print = false;
 
     private final List<AdvObject> objects=new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
 
@@ -148,6 +150,14 @@ public class Room {
 
     public List<Person> getPeople() {
         return people;
+    }
+
+    public boolean isPrint() {
+        return print;
+    }
+
+    public void setPrint(boolean print) {
+        this.print = print;
     }
 
 

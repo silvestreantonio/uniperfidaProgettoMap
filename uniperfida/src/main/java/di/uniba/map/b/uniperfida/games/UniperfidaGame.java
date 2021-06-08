@@ -5,6 +5,7 @@
  */
 package di.uniba.map.b.uniperfida.games;
 
+import di.uniba.map.b.uniperfida.Engine;
 import di.uniba.map.b.uniperfida.GameDescription;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import di.uniba.map.b.uniperfida.type.*;
@@ -116,6 +117,7 @@ public class UniperfidaGame extends GameDescription {
 
         Room hall = new Room(4, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.", "Universo J-371");
         hall.setLook("Un semplice atrio.");
+        hall.setCount(0);
 
         Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Non ti ha sentito entrare.", "Universo J-371");
         reception.setLook("C'è una scrivania con un computer ed un foglio.");
@@ -191,6 +193,7 @@ public class UniperfidaGame extends GameDescription {
 
         Room secondMachine = new Room(28, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager. Ti trovi nel nuovo universo.", "Universo J-371");
         secondMachine.setLook("C'è una luce molto forte. Forse sei arrivato!");
+        secondMachine.setPrint(false);
 
         Room basilicoOffice = new Room(29, "Ufficio del prof. Basilico", "Ti trovi nell'ufficio del prof. Basilico", "Universo J-371");
         basilicoOffice.setLook("C'è il prof. Basilico davanti al suo computer. Non ti ha sentito entrare");
@@ -429,11 +432,15 @@ public class UniperfidaGame extends GameDescription {
                         if (getCurrentRoom().getNorth() != null && getCurrentRoom() != getRooms().get(27)) {
                             setCurrentRoom(getCurrentRoom().getNorth());
                             move = true;
-                        } else if (getCurrentRoom() == getRooms().get(27)) {
+                        } else if (getCurrentRoom() == getRooms().get(27) && !getRooms().get(27).isPrint()) {
                             setCurrentRoom(getCurrentRoom().getNorth());
                             move = true;
                             printMessage();
+                            getRooms().get(27).setPrint(true);
                             out.println();
+                        }  else if (getCurrentRoom() == getRooms().get(27) && getRooms().get(27).isPrint()) {
+                            setCurrentRoom(getCurrentRoom().getNorth());
+                            move = true;
                         }
                             else {
                             noroom = true;
@@ -524,6 +531,7 @@ public class UniperfidaGame extends GameDescription {
                         // se il comando è di tipo LOOK_AT
                         if (p.getObject() == null) { // se la stanza corrente ha l'attributo look
                             out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
+                            getRooms().get(2).setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'.");
                             if (!getCurrentRoom().getObjects().isEmpty()) {
                                 out.println("Sono presenti inoltre i seguenti oggetti:");
                             }
@@ -573,7 +581,8 @@ public class UniperfidaGame extends GameDescription {
                         boolean flag = true;
                         if (p.getObject() != null) {
                             if (p.getObject().isUseable()) {
-                                int j=getRooms().get(25).getCount();
+                                int j = getRooms().get(25).getCount();
+                                int a = getRooms().get(3).getCount();
                             if (p.getObject().getId() == 11) {
                                     if (!getInventory().isEmpty()) {
                                         if (p.getObject() instanceof AdvObjectContainer) {
@@ -591,6 +600,7 @@ public class UniperfidaGame extends GameDescription {
                                                         out.println("Mmh, buono questo caffè");
                                                         out.println("...");
                                                         out.println();
+                                                        getRooms().get(3).setCount(++a);
                                                         move = true;
                                                         flag = false;
                                                         break;
@@ -601,6 +611,7 @@ public class UniperfidaGame extends GameDescription {
                                                         out.println("Mmh, buono questo caffè lungo");
                                                         out.println("...");
                                                         getRooms().get(26).setVisible(true);
+                                                        getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
                                                         out.println("Ma cos'è stato questo rumore? Proveniva dalla aula A.");
                                                         out.println();
                                                         move = true;
@@ -613,6 +624,7 @@ public class UniperfidaGame extends GameDescription {
                                                         out.println("Mmh, buono questo caffè macchiato");
                                                         out.println("...");
                                                         out.println();
+                                                        getRooms().get(3).setCount(++a);
                                                         move = true;
                                                         flag = false;
                                                         break;
@@ -623,6 +635,7 @@ public class UniperfidaGame extends GameDescription {
                                                         out.println("Mmh, buono questo caffè al cioccolato");
                                                         out.println("...");
                                                         out.println();
+                                                        getRooms().get(3).setCount(++a);
                                                         move = true;
                                                         flag = false;
                                                         break;
@@ -1003,6 +1016,9 @@ public class UniperfidaGame extends GameDescription {
             if (noroom) { // se noroom = true
                 out.println("Verso " + p.getCommand().getName().toLowerCase() + " non puoi andare");
             } else if (move) { // se move = true
+                if (getRooms().get(3).getCount() == 3) {
+                    end1(out);
+                }
                 // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
                 out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                 out.println(getCurrentRoom().getDescription());
@@ -1020,6 +1036,10 @@ public class UniperfidaGame extends GameDescription {
         out.println();
         printScore();
         out.println();
+        System.exit(0);
+    }
+    private void end1(PrintStream out) {
+        out.println("Hai perso!! Hai utilizzato tutte le monete senza riuscire a terminare il gioco.");
         System.exit(0);
     }
 }

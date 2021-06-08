@@ -30,6 +30,7 @@ public class Printings {
                 "\n…" +
                 "\n…" +
                 "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”.");
+        System.out.println();
     }
     public static void printInsertCommand(){
         System.out.println();
@@ -48,7 +49,8 @@ public class Printings {
         System.out.println("'borsellino' per sapere quante monete hai.");
         System.out.println("'osserva' per osservare l'ambiente circostante.");
         System.out.println("'esci' per uscire dal gioco.");
-        System.out.println("Potrei elencarti tutti i possibili comandi ma, ahime, ciò renderebbe il gioco troppo semplice.");
+        System.out.println("Potrei elencarti tutti i possibili comandi ma, ahime, ciò renderebbe il gioco troppo semplice." +
+                "\nL'unico consiglio che posso darti è: non esagerare con i caffè.");
         System.out.println("Sta a te scoprire tutti gli altri comandi per proseguire nell'avventura. :)");
 
     }
