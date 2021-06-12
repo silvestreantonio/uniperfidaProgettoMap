@@ -64,6 +64,7 @@ public class Engine {
             ParserOutput p = parser.parse(command, game.getCommands(), game.getCurrentRoom().getObjects(), game.getInventory(), game.getCurrentRoom().getPeople()); // ogni volta che legge un comando, lo interpreta con il parser
             if (p.getCommand() != null && p.getCommand().getType() == CommandType.END) { // se il comando è diverso da null ed è di tipo END ti fa uscire
                 System.out.println("Addio!");
+                System.out.println("Hai totalizzato 0 punti.");
                 break;
             } else {
                 game.nextMove(p, System.out); // altrimenti chiama il metodo nextMove che permette di fare una mossa e andare allo step successivo e viene chiamato ogni volta che viene interpretato un comando

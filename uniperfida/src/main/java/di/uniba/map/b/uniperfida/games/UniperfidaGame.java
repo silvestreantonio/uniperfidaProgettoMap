@@ -32,10 +32,11 @@ import static di.uniba.map.b.uniperfida.print.Printings.*;
  */
 // all'interno di questa classe deve andare tutta la logica del gioco possiamo mettere la logica del gioco ovvero tutta questa classe all'interno di un file o un DB e creare una classe che richiami il file o il DB
 public class UniperfidaGame extends GameDescription {
-
     @Override
     public void init() throws Exception { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
+
+        startTime = System.currentTimeMillis();
         Command nord = new Command(CommandType.NORTH, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
@@ -669,6 +670,7 @@ public class UniperfidaGame extends GameDescription {
                                         case "1":
                                             printPhone2();
                                             flag = false;
+                                            endTime = System.currentTimeMillis();
                                             end(out);
                                             break;
                                         case "0":
@@ -914,8 +916,6 @@ public class UniperfidaGame extends GameDescription {
                                             out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                                             out.println(getCurrentRoom().getDescription());
                                             getRooms().get(26).getObjects().get(1).setAvailable(true);
-                                            out.println();
-                                            move = true;
                                             accept = false;
                                             break;
                                         case "no":
@@ -1034,12 +1034,14 @@ public class UniperfidaGame extends GameDescription {
         out.println();
         printEnd();
         out.println();
-        printScore();
         out.println();
+        seconds = (endTime - startTime) / 1000;
+        System.out.println("Programma eseguito in " + seconds + " secondi");
         System.exit(0);
     }
     private void end1(PrintStream out) {
         out.println("Hai perso!! Hai utilizzato tutte le monete senza riuscire a terminare il gioco.");
+        out.println("Hai totalizzato 0 punti.");
         System.exit(0);
     }
 }

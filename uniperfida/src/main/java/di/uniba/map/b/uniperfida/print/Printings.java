@@ -1,6 +1,10 @@
 package di.uniba.map.b.uniperfida.print;
 
 public class Printings {
+
+    public static long startTime;
+    public static long endTime;
+    public static long seconds;
     public static void printIntro(){
         System.out.println("================================");
         System.out.println("* Uniperfida v. 1.1 - 2020-2021 *");
@@ -75,9 +79,6 @@ public class Printings {
                 "\nIntanto rientri nella tua dimensione." +
                 "\n“Com'è stato? Com'erano le persone? C'erano guerre? Che lingua si parlava? La gente è davvero senza morale? E che mi dici delle...“"+
                 "\n“Non ricordo nulla. So solo che non mi pento di non aver fatto l'università!“");
-    }
-    public static void printScore(){
-        System.out.println("Complimenti il tuo punteggio è di: ");
     }
     public static void printRossetto(){
         System.out.println("#1 Benvenuto nel menu di accettazione." +
