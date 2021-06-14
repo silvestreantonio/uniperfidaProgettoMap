@@ -32,6 +32,7 @@ import static di.uniba.map.b.uniperfida.print.Printings.*;
  */
 // all'interno di questa classe deve andare tutta la logica del gioco possiamo mettere la logica del gioco ovvero tutta questa classe all'interno di un file o un DB e creare una classe che richiami il file o il DB
 public class UniperfidaGame extends GameDescription {
+
     @Override
     public void init() throws Exception { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
@@ -58,8 +59,12 @@ public class UniperfidaGame extends GameDescription {
         getCommands().add(inventory);
 
         Command end = new Command(CommandType.END, "end");
-        end.setAlias(new String[]{"end", "fine", "finire", "esci", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
+        end.setAlias(new String[]{"end", "fine", "finire", "termina", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
         getCommands().add(end);
+
+        Command enter = new Command(CommandType.ENTER, "entra");
+        enter.setAlias(new String[]{"entrare", "esci", "uscire"});
+        getCommands().add(enter);
 
         Command look = new Command(CommandType.LOOK, "osserva");
         look.setAlias(new String[]{"guarda", "guardare", "vedi", "vedere", "trova", "trovare", "cerca", "cercare", "fissa", "fissare"});
@@ -113,15 +118,15 @@ public class UniperfidaGame extends GameDescription {
         firstMachine.setLook("C'è una luce soffusa. E' ora di partire!");
 
         Room courtyard = new Room(3, "Cortile", "Ti trovi nel cortile. C'è uno strano edificio pieno zeppo di finestre. C'è un cartello con incisa una scritta.", "Universo J-371");
-        courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta." +
-                "\nNel frattempo butti a terra il foglietto, che con il vento vola via, perchè è risaputo che a Bari ci si comporta così.");
+        courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta."
+                + "\nNel frattempo butti a terra il foglietto, che con il vento vola via, perchè è risaputo che a Bari ci si comporta così.");
 
         Room hall = new Room(4, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.", "Universo J-371");
         hall.setLook("Un semplice atrio.");
         hall.setCount(0);
 
-        Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore. Non ti ha sentito entrare.", "Universo J-371");
-        reception.setLook("C'è una scrivania con un computer ed un foglio.");
+        Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore.", "Universo J-371");
+        reception.setLook("C'è una scrivania con un computer ed un foglio. Il collaboratore non ti ha sentito entrare.");
 
         Room firstBathroom = new Room(6, "Bagno del piano terra", "Ti trovi nei bagni del piano terra. Non noti nulla di strano.", "Universo J-371");
         firstBathroom.setLook("Un semplice bagno universitario, senza carta igienica e sapone..." + "ovviamente.");
@@ -188,7 +193,7 @@ public class UniperfidaGame extends GameDescription {
         waitingRoomBasilico.setCount(0);
         waitingRoomBasilico.setVisible(false);
 
-        Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.","Universo J-371");
+        Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.", "Universo J-371");
         secretary.setLook("C'è uno sportello con un foglio.");
         secretary.setVisible(false);
 
@@ -294,7 +299,7 @@ public class UniperfidaGame extends GameDescription {
         secondMachine.getObjects().add(buttonMachine);
 
         AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca");
-        boardsHall.setAlias(new String[]{"diario"});
+        boardsHall.setAlias(new String[]{"diario", "bacheche"});
         boardsHall.setReadable(true);
         hall.getObjects().add(boardsHall);
 
@@ -323,7 +328,7 @@ public class UniperfidaGame extends GameDescription {
         reception.getObjects().add(coinFour);
 
         AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante");
-        boardsInfoPoint.setAlias(new String[]{"diario"});
+        boardsInfoPoint.setAlias(new String[]{"diario", "bacheche"});
         boardsInfoPoint.setReadable(true);
         infoPoint.getObjects().add(boardsInfoPoint);
 
@@ -333,7 +338,7 @@ public class UniperfidaGame extends GameDescription {
                 + "Ed il voto verbalizzare \n"
                 + "Non ti resta che pagare \n"
                 + "Un bel caffè lungo da assaporare");
-        boardsWaitingRoom.setAlias(new String[]{"diario"});
+        boardsWaitingRoom.setAlias(new String[]{"diario", "bacheche"});
         boardsWaitingRoom.setReadable(true);
         waitingRoom.getObjects().add(boardsWaitingRoom);
 
@@ -407,10 +412,12 @@ public class UniperfidaGame extends GameDescription {
 
         Person collaborator = new Person(1, "collaboratore", "Un uomo che lavora in università");
         collaborator.setAlias(new String[]{"bidello", "custode", "assistente", "uomo"});
+        collaborator.setTalkable(true);
         reception.getPeople().add(collaborator);
 
         Person basilico = new Person(2, "Basilico", "Il professor Basilico");
         basilico.setAlias(new String[]{"prof", "professor", "professore", "prof.", "basilico"});
+        basilico.setTalkable(true);
         basilicoOffice.getPeople().add(basilico);
 
         // definizione della stanza corrente
@@ -439,11 +446,10 @@ public class UniperfidaGame extends GameDescription {
                             printMessage();
                             getRooms().get(27).setPrint(true);
                             out.println();
-                        }  else if (getCurrentRoom() == getRooms().get(27) && getRooms().get(27).isPrint()) {
+                        } else if (getCurrentRoom() == getRooms().get(27) && getRooms().get(27).isPrint()) {
                             setCurrentRoom(getCurrentRoom().getNorth());
                             move = true;
-                        }
-                            else {
+                        } else {
                             noroom = true;
                         }
                         break;
@@ -467,23 +473,35 @@ public class UniperfidaGame extends GameDescription {
                         if (getCurrentRoom().getWest() != null && getCurrentRoom() != getRooms().get(23) && getCurrentRoom() != getRooms().get(25)) {
                             setCurrentRoom(getCurrentRoom().getWest());
                             move = true;
-                        } else if(getCurrentRoom() == getRooms().get(23) && getRooms().get(25).isVisible()) {
+                        } else if (getCurrentRoom() == getRooms().get(23) && getRooms().get(25).isVisible()) {
                             setCurrentRoom(getCurrentRoom().getWest());
                             move = true;
-                        } else if(getCurrentRoom() == getRooms().get(23) && !getRooms().get(25).isVisible()) {
+                        } else if (getCurrentRoom() == getRooms().get(23) && !getRooms().get(25).isVisible()) {
                             out.println("Per entrare dal prof. Basilico devi prima risolvere gli indovinelli.");
                             out.println();
                             move = true;
-                        } else if(getCurrentRoom() == getRooms().get(25) && !getRooms().get(28).isVisible()) {
+                        } else if (getCurrentRoom() == getRooms().get(25) && !getRooms().get(28).isVisible()) {
                             out.println("Devi aprire la porta per entrare!");
                             out.println();
                             move = true;
-                        } else if(getCurrentRoom() == getRooms().get(25) && getRooms().get(28).isVisible()) {
+                        } else if (getCurrentRoom() == getRooms().get(25) && getRooms().get(28).isVisible()) {
                             setCurrentRoom(getCurrentRoom().getWest());
                             move = true;
                         } else {
                             noroom = true;
                         }
+                        break;
+                    case ENTER:
+                        out.println("Questo tipo di comando non è supportato, le direzioni disponibili sono:"
+                                + "\nNORD"
+                                + "\nSUD"
+                                + "\nEST"
+                                + "\nOVEST"
+                                + "\nSALI"
+                                + "\nSCENDI");
+                        out.println();
+                        move = true;
+
                         break;
                     // case
                     case GO_UP:
@@ -500,12 +518,12 @@ public class UniperfidaGame extends GameDescription {
                         if (getCurrentRoom().getDown() != null && getCurrentRoom() != getRooms().get(11)) { // controlla se su si può andare
                             setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente
                             move = true; // booleano che serve a settare il fatto che mi sono mosso
-                        } else if (getCurrentRoom() == getRooms().get(11) && getRooms().get(26).isVisible()){
-                           setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente
+                        } else if (getCurrentRoom() == getRooms().get(11) && getRooms().get(26).isVisible()) {
+                            setCurrentRoom(getCurrentRoom().getDown()); // se su si può andare setto la nuova stanza corrente
                             move = true; // booleano che serve a settare il fatto che mi sono mosso
                         } else {
                             noroom = true; // booleano che serve a memorizzare che su non c'è nulla
-                             }
+                        }
                         break;
                     case INVENTORY:
                         // se il comando è di tipo INVENTORY
@@ -513,7 +531,8 @@ public class UniperfidaGame extends GameDescription {
                         if (!getInventory().isEmpty()) {
                             for (AdvObject o : getInventory()) { // ciclo sugli elementi dell'inventario
                                 i++;
-                            } if (i==1) {
+                            }
+                            if (i == 1) {
                                 out.println("Nel tuo borsellino c'è una moneta");
                                 out.println();
                                 move = true;
@@ -538,9 +557,10 @@ public class UniperfidaGame extends GameDescription {
                             }
                             for (AdvObject o : getCurrentRoom().getObjects()) {
                                 out.println("- " + o.getName());
-                                move = true;
                             }
-                        } else if (p.getObject().getId()== 2 || p.getObject().getId()== 7 || p.getObject().getId()== 8) {
+                            out.println();
+                            move = true;
+                        } else if (p.getObject().getId() == 2 || p.getObject().getId() == 7 || p.getObject().getId() == 8) {
                             out.println("Nella bacheca c'è scritto:\n" + p.getObject().getDescription());
                             out.println();
                             move = true;
@@ -548,17 +568,16 @@ public class UniperfidaGame extends GameDescription {
                             out.println("Il foglio recita: " + p.getObject().getDescription());
                             out.println();
                             move = true;
-                        }
-                        else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21){
+                        } else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21) {
                             out.println(p.getObject().getDescription());
                             out.println();
                             move = true;
                         }
                         break;
                     case READ:
-                        if(p.getObject() != null){
-                            if(p.getObject().isReadable()){
-                                if(p.getObject().getId()== 2 || p.getObject().getId()== 7 || p.getObject().getId()== 8){
+                        if (p.getObject() != null) {
+                            if (p.getObject().isReadable()) {
+                                if (p.getObject().getId() == 2 || p.getObject().getId() == 7 || p.getObject().getId() == 8) {
                                     out.println("Nella bacheca c'è scritto:\n" + p.getObject().getDescription());
                                     out.println();
                                     move = true;
@@ -584,7 +603,7 @@ public class UniperfidaGame extends GameDescription {
                             if (p.getObject().isUseable()) {
                                 int j = getRooms().get(25).getCount();
                                 int a = getRooms().get(3).getCount();
-                            if (p.getObject().getId() == 11) {
+                                if (p.getObject().getId() == 11) {
                                     if (!getInventory().isEmpty()) {
                                         if (p.getObject() instanceof AdvObjectContainer) {
                                             AdvObjectContainer c = (AdvObjectContainer) p.getObject();
@@ -659,168 +678,171 @@ public class UniperfidaGame extends GameDescription {
                                         move = true;
                                     }
 
-                            } else if (p.getObject().getId() == 16) {
-                                if (p.getObject().isAvailable()){
-                                while (flag){
-                                    printPhone();
-                                    Scanner scanner7 = new Scanner(System.in);
-                                    String chooseNumber = scanner7.nextLine().toLowerCase();
-                                    out.println();
-                                    switch (chooseNumber){
-                                        case "1":
-                                            printPhone2();
-                                            flag = false;
-                                            endTime = System.currentTimeMillis();
-                                            end(out);
-                                            break;
-                                        case "0":
-                                            out.println("Fatto! Telefono lasciato.");
+                                } else if (p.getObject().getId() == 16) {
+                                    if (p.getObject().isAvailable()) {
+                                        while (flag) {
+                                            printPhone();
+                                            Scanner scanner7 = new Scanner(System.in);
+                                            String chooseNumber = scanner7.nextLine().toLowerCase();
                                             out.println();
-                                            move = true;
-                                            flag = false;
-                                            break;
-                                        default:
-                                            out.println("Inserisci un valore valido. \n");
-                                            flag = true;
-                                            break;
-                                    }
-                                }
-                                } else {
-                                    out.println("Per poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico");
-                                    out.println();
-                                    move = true;
-                                }
-                            } else if (p.getObject().getId() == 17) {
-                                if (!p.getObject().isUsed()) {
-                                    while (flag) {
-                                        printRossetto();
-                                        Scanner scanner3 = new Scanner(System.in);
-                                        String chooseRossetto = scanner3.nextLine().toLowerCase();
+                                            switch (chooseNumber) {
+                                                case "3774480028":
+                                                    printPhone2();
+                                                    flag = false;
+                                                    endTime = System.currentTimeMillis();
+                                                    end(out);
+                                                    break;
+                                                case "0":
+                                                    out.println("Fatto! Telefono lasciato.");
+                                                    out.println();
+                                                    move = true;
+                                                    flag = false;
+                                                    break;
+                                                default:
+                                                    out.println("Inserisci un valore valido. \n");
+                                                    flag = true;
+                                                    break;
+                                            }
+                                        }
+                                    } else {
+                                        out.println("Per poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico");
                                         out.println();
-                                        switch (chooseRossetto) {
-                                            case "rossetto":
-                                                out.println("Soluzione corretta, autenticazione #1 riuscita.");
-                                                p.getObject().setUsed(true);
-                                                out.println();
-                                                move = true;
-                                                getRooms().get(25).setCount(++j);
-                                                flag = false;
-                                                break;
-                                            case "0":
-                                                out.println("Autenticazione #1 fallita.");
-                                                out.println();
-                                                move = true;
-                                                flag = false;
-                                                break;
-                                            default:
-                                                out.println("Inserisci un valore valido. \n");
-                                                flag = true;
-                                                break;
+                                        move = true;
+                                    }
+                                } else if (p.getObject().getId() == 17) {
+                                    if (!p.getObject().isUsed()) {
+                                        while (flag) {
+                                            printRossetto();
+                                            Scanner scanner3 = new Scanner(System.in);
+                                            String chooseRossetto = scanner3.nextLine().toLowerCase();
+                                            out.println();
+                                            switch (chooseRossetto) {
+                                                case "rossetto":
+                                                    out.println("Soluzione corretta, autenticazione #1 riuscita.");
+                                                    p.getObject().setUsed(true);
+                                                    out.println();
+                                                    move = true;
+                                                    getRooms().get(25).setCount(++j);
+                                                    flag = false;
+                                                    break;
+                                                case "0":
+                                                    out.println("Autenticazione #1 fallita.");
+                                                    out.println();
+                                                    move = true;
+                                                    flag = false;
+                                                    break;
+                                                default:
+                                                    out.println("Inserisci un valore valido. \n");
+                                                    flag = true;
+                                                    break;
+                                            }
+                                        }
+                                    } else {
+                                        out.println("Qui ti sei già autenticato!");
+                                        out.println();
+                                        move = true;
+                                    }
+                                } else if (p.getObject().getId() == 18) {
+                                    if (!p.getObject().isUsed()) {
+                                        while (flag) {
+                                            printImpavido();
+                                            Scanner scanner4 = new Scanner(System.in);
+                                            String chooseImpavido = scanner4.nextLine().toLowerCase();
+                                            out.println();
+                                            switch (chooseImpavido) {
+                                                case "impavido":
+                                                    out.println("Soluzione corretta, autenticazione #2 riuscita.");
+                                                    p.getObject().setUsed(true);
+                                                    out.println();
+                                                    move = true;
+                                                    getRooms().get(25).setCount(++j);
+                                                    flag = false;
+                                                    break;
+                                                case "0":
+                                                    out.println("Autenticazione #2 fallita.");
+                                                    out.println();
+                                                    move = true;
+                                                    flag = false;
+                                                    break;
+                                                default:
+                                                    out.println("Inserisci un valore valido. \n");
+                                                    flag = true;
+                                                    break;
+                                            }
+                                        }
+                                    } else {
+                                        out.println("Qui ti sei già autenticato!");
+                                        out.println();
+                                        move = true;
+                                    }
+                                } else if (p.getObject().getId() == 19) {
+                                    if (!p.getObject().isUsed()) {
+                                        while (flag) {
+                                            printGatto();
+                                            Scanner scanner5 = new Scanner(System.in);
+                                            String chooseGatto = scanner5.nextLine().toLowerCase();
+                                            out.println();
+                                            switch (chooseGatto) {
+                                                case "gatto":
+                                                    out.println("Soluzione corretta, autenticazione #3 riuscita.");
+                                                    p.getObject().setUsed(true);
+                                                    out.println();
+                                                    move = true;
+                                                    getRooms().get(25).setCount(++j);
+                                                    flag = false;
+                                                    break;
+                                                case "0":
+                                                    out.println("Autenticazione #3 fallita.");
+                                                    out.println();
+                                                    move = true;
+                                                    flag = false;
+                                                    break;
+                                                default:
+                                                    out.println("Inserisci un valore valido. \n");
+                                                    flag = true;
+                                                    break;
+                                            }
+                                        }
+                                    } else {
+                                        out.println("Qui ti sei già autenticato!");
+                                        out.println();
+                                        move = true;
+                                    }
+                                } else if (p.getObject().getId() == 20) {
+                                    if (!p.getObject().isUsed()) {
+                                        while (flag) {
+                                            printCinquanta();
+                                            Scanner scanner6 = new Scanner(System.in);
+                                            String chooseCinquanta = scanner6.nextLine().toLowerCase();
+                                            out.println();
+                                            switch (chooseCinquanta) {
+                                                case "cinquanta":
+                                                    out.println("Soluzione corretta, autenticazione #4 riuscita.");
+                                                    p.getObject().setUsed(true);
+                                                    out.println();
+                                                    move = true;
+                                                    getRooms().get(25).setCount(++j);
+                                                    flag = false;
+                                                    break;
+                                                case "0":
+                                                    out.println("Autenticazione #4 fallita.");
+                                                    out.println();
+                                                    move = true;
+                                                    flag = false;
+                                                    break;
+                                                default:
+                                                    out.println("Inserisci un valore valido. \n");
+                                                    flag = true;
+                                                    break;
+                                            }
                                         }
                                     }
                                 } else {
                                     out.println("Qui ti sei già autenticato!");
                                     out.println();
                                     move = true;
-                                }
-                            } else if (p.getObject().getId() == 18) {
-                                if (!p.getObject().isUsed()) {
-                                    while (flag) {
-                                        printImpavido();
-                                        Scanner scanner4 = new Scanner(System.in);
-                                        String chooseImpavido = scanner4.nextLine().toLowerCase();
-                                        out.println();
-                                        switch (chooseImpavido) {
-                                            case "impavido":
-                                                out.println("Soluzione corretta, autenticazione #2 riuscita.");
-                                                out.println();
-                                                move = true;
-                                                getRooms().get(25).setCount(++j);
-                                                flag = false;
-                                                break;
-                                            case "0":
-                                                out.println("Autenticazione #2 fallita.");
-                                                out.println();
-                                                move = true;
-                                                flag = false;
-                                                break;
-                                            default:
-                                                out.println("Inserisci un valore valido. \n");
-                                                flag = true;
-                                                break;
-                                        }
-                                    }
-                                } else {
-                                    out.println("Qui ti sei già autenticato!");
-                                    out.println();
-                                    move = true;
-                                }
-                            } else if (p.getObject().getId() == 19) {
-                                if (!p.getObject().isUsed()) {
-                                    while (flag) {
-                                        printGatto();
-                                        Scanner scanner5 = new Scanner(System.in);
-                                        String chooseGatto = scanner5.nextLine().toLowerCase();
-                                        out.println();
-                                        switch (chooseGatto) {
-                                            case "gatto":
-                                                out.println("Soluzione corretta, autenticazione #3 riuscita.");
-                                                out.println();
-                                                move = true;
-                                                getRooms().get(25).setCount(++j);
-                                                flag = false;
-                                                break;
-                                            case "0":
-                                                out.println("Autenticazione #3 fallita.");
-                                                out.println();
-                                                move = true;
-                                                flag = false;
-                                                break;
-                                            default:
-                                                out.println("Inserisci un valore valido. \n");
-                                                flag = true;
-                                                break;
-                                        }
-                                    }
-                                } else {
-                                    out.println("Qui ti sei già autenticato!");
-                                    out.println();
-                                    move = true;
-                                }
-                            } else if (p.getObject().getId() == 20) {
-                                if (!p.getObject().isUsed()) {
-                                    while (flag) {
-                                        printCinquanta();
-                                        Scanner scanner6 = new Scanner(System.in);
-                                        String chooseCinquanta = scanner6.nextLine().toLowerCase();
-                                        out.println();
-                                        switch (chooseCinquanta) {
-                                            case "cinquanta":
-                                                out.println("Soluzione corretta, autenticazione #4 riuscita.");
-                                                out.println();
-                                                move = true;
-                                                getRooms().get(25).setCount(++j);
-                                                flag = false;
-                                                break;
-                                            case "0":
-                                                out.println("Autenticazione #4 fallita.");
-                                                out.println();
-                                                move = true;
-                                                flag = false;
-                                                break;
-                                            default:
-                                                out.println("Inserisci un valore valido. \n");
-                                                flag = true;
-                                                break;
-                                        }
-                                    }
                                 }
                             } else {
-                                out.println("Qui ti sei già autenticato!");
-                                out.println();
-                                move = true;
-                            }
-                        } else {
                                 out.println("Non puoi utilizzare " + p.getObject().getName());
                                 out.println();
                                 move = true;
@@ -848,6 +870,8 @@ public class UniperfidaGame extends GameDescription {
                                     out.println();
                                     move = true;
                                 }
+                            } else if (p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20) {
+                                out.println("Non puoi prendere il tablet. Limitati ad usarlo.");
                             }
                             else {
                                 out.println("Non puoi prendere " + p.getObject().getName());
@@ -881,63 +905,72 @@ public class UniperfidaGame extends GameDescription {
                     case TALK:
                         boolean accept = true;
                         if (p.getPerson() != null) {
-                            if (p.getPerson().getId() == 1) {
-                                out.println("“Salve sono Pomarico Edoardo, sto cercando il professor Basilico.”" +
-                                        "\n“Ciao Edoardo, il professor Basilico si trova al primo piano. Devi sapere, però, che il professor basilico recentemente è diventato il coordinatore di questo dipartimento." +
-                                        "\nEssendo una personalità molto diligente, ha introdotto un nuovo sistema di ricevimento." +
-                                        "\nPer evitare inutili perdite di tempo, si è deciso di introdurre degli indovinelli affinché solo gli studenti più motivati possano essere ricevuti." +
-                                        "\nGli indovinelli riguardano alcuni tra i cognomi dei professori di questo dipartimento, in questo momento in smart-working." +
-                                        "\nUna volta risolti, ti basterà recarti nell’ufficio del coordinatore che si trova in fondo al corridoio sulla est. Buona fortuna.”" +
-                                        "\n“Questo mondo è strano”" +
-                                        "\n“Cosa?”" +
-                                        "\n“Niente, niente, grazie mille!”");
-                                out.println();
-                                move = true;
-                            } else if (p.getPerson().getId() == 2) {
-                                out.println("“Salve professore”" +
-                                        "\n“Buona sera, chi è lei? Ho sentito dei rumori, come mai ci hai impiegato cosi tanto tempo?”" +
-                                        "\n“Sono Edoardo Pomarico. Ho risolto gli indovinelli. Cosi mi ha spiegato il collaboratore”" +
-                                        "\n“*risata*" +
-                                        "\nVedi Edoardo, il vero problema della nostra società è la mancanza di dialogo. Ho introdotto gli indovinelli per mettere alla prova il nostro sistema interno e non gli studenti." +
-                                        "\nNon ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perché hanno paura della mia autorità!”" +
-                                        "\n“Mh…”" +
-                                        "\n“Tornando a noi, perché sei qui?”" +
-                                        "\n“Per conoscere l’esito dell’ultimo esame”" +
-                                        "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”");
-                                while (accept) {
-                                    printVote();
-                                    Scanner scanner8 = new Scanner(System.in);
-                                    String chooseAccept = scanner8.nextLine().toLowerCase();
+                            if (p.getPerson().isTalkable()) {
+                                if (p.getPerson().getId() == 1) {
+                                    out.println("“Salve sono Pomarico Edoardo, sto cercando il professor Basilico.”"
+                                            + "\n“Ciao Edoardo, il professor Basilico si trova al primo piano. Devi sapere, però, che il professor basilico recentemente è diventato il coordinatore di questo dipartimento."
+                                            + "\nEssendo una personalità molto diligente, ha introdotto un nuovo sistema di ricevimento."
+                                            + "\nPer evitare inutili perdite di tempo, si è deciso di introdurre degli indovinelli affinché solo gli studenti più motivati possano essere ricevuti."
+                                            + "\nGli indovinelli riguardano alcuni tra i cognomi dei professori di questo dipartimento, in questo momento in smart-working."
+                                            + "\nUna volta risolti, ti basterà recarti nell’ufficio del coordinatore che si trova in fondo al corridoio sulla est. Buona fortuna.”"
+                                            + "\n“Questo mondo è strano”"
+                                            + "\n“Cosa?”"
+                                            + "\n“Niente, niente, grazie mille!”");
+                                    getRooms().get(4).setLook("C'è una scrivania con un computer ed un foglio. Il collaboratore è impegnato e non può parlare. Esci dall'ufficio e non disturbarlo.");
+                                    getCurrentRoom().getPeople().get(0).setTalkable(false);
                                     out.println();
-                                    switch (chooseAccept) {
-                                        case "si":
-                                            out.println("Ottima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.");
-                                            out.println();
-                                            out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
-                                            out.println(getCurrentRoom().getDescription());
-                                            getRooms().get(26).getObjects().get(1).setAvailable(true);
-                                            accept = false;
-                                            break;
-                                        case "no":
-                                            out.println("Sei pazzo! Come si suol dire trenta 18 fanno una laurea e non diciotto 30\n");
-                                            accept = true;
-                                            break;
-                                        default:
-                                            out.println("Inserisci un valore valido. \n");
-                                            accept = true;
-                                            break;
-                                    }
-                                }
+                                    move = true;
+                                } else if (p.getPerson().getId() == 2) {
+                                    out.println("“Salve professore”"
+                                            + "\n“Buona sera, chi è lei? Ho sentito dei rumori, come mai ci hai impiegato cosi tanto tempo?”"
+                                            + "\n“Sono Edoardo Pomarico. Ho risolto gli indovinelli. Cosi mi ha spiegato il collaboratore”"
+                                            + "\n“*risata*"
+                                            + "\nVedi Edoardo, il vero problema della nostra società è la mancanza di dialogo. Ho introdotto gli indovinelli per mettere alla prova il nostro sistema interno e non gli studenti."
+                                            + "\nNon ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perché hanno paura della mia autorità!”"
+                                            + "\n“Mh…”"
+                                            + "\n“Tornando a noi, perché sei qui?”"
+                                            + "\n“Per conoscere l’esito dell’ultimo esame”"
+                                            + "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”");
+                                    getRooms().get(28).setLook("C'è il professor Basilico che è impegnato e non può parlare. Esci dall'aula e non disturbarlo.");
+                                    getCurrentRoom().getPeople().get(0).setTalkable(false);
 
+                                    while (accept) {
+                                        printVote();
+                                        Scanner scanner8 = new Scanner(System.in);
+                                        String chooseAccept = scanner8.nextLine().toLowerCase();
+                                        out.println();
+                                        switch (chooseAccept) {
+                                            case "si":
+                                                out.println("Ottima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.");
+                                                out.println();
+                                                out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
+                                                out.println(getCurrentRoom().getDescription());
+                                                getRooms().get(26).getObjects().get(1).setAvailable(true);
+                                                accept = false;
+                                                break;
+                                            case "no":
+                                                out.println("Sei pazzo! Come si suol dire trenta 18 fanno una laurea e non diciotto 30\n");
+                                                accept = true;
+                                                break;
+                                            default:
+                                                out.println("Inserisci un valore valido. \n");
+                                                accept = true;
+                                                break;
+                                        }
+                                    }
+
+                                }
+                            } else {
+                                out.println("Non disturbare!");
                             }
-                        }else {
+                        } else {
                             out.println("Parlare con chi? Sii più preciso.");
                             out.println();
                             move = true;
                         }
                         break;
                     case OPEN:
-                        if (p.getObject() != null){
+                        if (p.getObject() != null) {
                             if (p.getObject().isOpenable()) {
                                 p.getObject().setOpenable(false);
                                 p.getObject().setOpen(true);
@@ -945,6 +978,8 @@ public class UniperfidaGame extends GameDescription {
                                 out.println();
                                 move = true;
                                 getRooms().get(28).setVisible(true);
+                            } else if (!p.getObject().isOpenable()) {
+                                out.println("La porta è già aperta.");
                             } else {
                                 out.println("Non puoi aprire " + p.getObject().getName());
                                 out.println();
@@ -1002,7 +1037,7 @@ public class UniperfidaGame extends GameDescription {
                                 out.println();
                                 move = true;
                             }
-                        }else {
+                        } else {
                             out.println("Premere cosa? Sii più preciso."); // se non ci sono oggetti o non si puo premere niente stampa questo
                             out.println();
                             move = true;
@@ -1022,7 +1057,7 @@ public class UniperfidaGame extends GameDescription {
                 // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
                 out.println("-----[" + getCurrentRoom().getuniverse() + "]-----");
                 out.println(getCurrentRoom().getDescription());
-                if (getRooms().get(25).getCount() == 4){
+                if (getRooms().get(25).getCount() == 4) {
                     getRooms().get(25).setVisible(true);
                 }
             }
@@ -1039,6 +1074,7 @@ public class UniperfidaGame extends GameDescription {
         System.out.println("Programma eseguito in " + seconds + " secondi");
         System.exit(0);
     }
+
     private void end1(PrintStream out) {
         out.println("Hai perso!! Hai utilizzato tutte le monete senza riuscire a terminare il gioco.");
         out.println("Hai totalizzato 0 punti.");
