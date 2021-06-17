@@ -63,7 +63,7 @@ public class Engine {
             String command = scanner.nextLine(); // legge i comandi dello scanner
             ParserOutput p = parser.parse(command, game.getCommands(), game.getCurrentRoom().getObjects(), game.getInventory(), game.getCurrentRoom().getPeople()); // ogni volta che legge un comando, lo interpreta con il parser
             if (p.getCommand() != null && p.getCommand().getType() == CommandType.END) { // se il comando è diverso da null ed è di tipo END ti fa uscire
-                System.out.println("Addio!");
+                System.out.println("Ti sei arreso!");
                 System.out.println("Hai totalizzato 0 punti.");
                 break;
             } else {

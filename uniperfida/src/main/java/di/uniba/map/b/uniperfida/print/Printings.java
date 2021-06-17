@@ -50,6 +50,7 @@ public class Printings {
         System.out.println("'s/sud' per muoverti verso Sud.");
         System.out.println("'e/est' per muoverti verso Est.");
         System.out.println("'o/ovest' per muoverti verso Ovest.");
+        System.out.println("'m/mappa' per visualizzare la mappa.");
         System.out.println("'borsellino' per sapere quante monete hai.");
         System.out.println("'osserva' per osservare l'ambiente circostante.");
         System.out.println("'termina' per uscire dal gioco.");
@@ -138,5 +139,9 @@ public class Printings {
         System.out.println("All'improvviso, a causa del vento, ti capita tra le mani un fogliettino che recita:" +
                 "\nMessaggio per l'Edoardo Pomarico del futuro: aiutami a verbalizzare il voto, non riesco a prenotare il ricevimento con il prof. Basilico perchè l'app MyUni fa schifo!" +
                 "\nChe coincidenza! Nel tuo primo passo sul nuovo universo hai scoperto due cose: il tuo obiettivo e il fatto che il tuo alter ego sia uno svitato!");
+    }
+
+    public static void printMap(){
+        System.out.println("Qui ci sarà la mappa.");
     }
 }

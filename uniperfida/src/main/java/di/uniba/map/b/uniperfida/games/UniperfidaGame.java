@@ -58,8 +58,8 @@ public class UniperfidaGame extends GameDescription {
         inventory.setAlias(new String[]{"portafogli", "portamonete", "b", "B"});
         getCommands().add(inventory);
 
-        Command end = new Command(CommandType.END, "end");
-        end.setAlias(new String[]{"end", "fine", "finire", "termina", "uscire", "muori", "morire", "ammazzati", "ucciditi", "suicidati", "exit"});
+        Command end = new Command(CommandType.END, "termina");
+        end.setAlias(new String[]{"fine", "finire", "terminare", "muori", "morire"});
         getCommands().add(end);
 
         Command enter = new Command(CommandType.ENTER, "entra");
@@ -109,6 +109,10 @@ public class UniperfidaGame extends GameDescription {
         Command talk = new Command(CommandType.TALK, "parla");
         talk.setAlias(new String[]{"discuti", "parlare", "discutere"});
         getCommands().add(talk);
+
+        Command mappa = new Command(CommandType.MAPPA, "mappa");
+        mappa.setAlias(new String[]{"map", "cartina", "m"});
+        getCommands().add(mappa);
 
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
@@ -293,7 +297,7 @@ public class UniperfidaGame extends GameDescription {
 
         // definizione degli oggetti 
         AdvObject buttonMachine = new AdvObject(1, "bottone", "Un enorme tasto rosso");
-        buttonMachine.setAlias(new String[]{"tasto"});
+        buttonMachine.setAlias(new String[]{"tasto", "pulsante"});
         buttonMachine.setPushable(true);
         firstMachine.getObjects().add(buttonMachine);
         secondMachine.getObjects().add(buttonMachine);
@@ -409,6 +413,11 @@ public class UniperfidaGame extends GameDescription {
         door.setOpenable(true);
         door.setOpen(false);
         waitingRoomBasilico.getObjects().add(door);
+
+        AdvObject sign = new AdvObject(22, "cartello", "'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta.");
+        sign.setAlias(new String[] {"cartellone"});
+        sign.setReadable(true);
+        courtyard.getObjects().add(sign);
 
         Person collaborator = new Person(1, "collaboratore", "Un uomo che lavora in università");
         collaborator.setAlias(new String[]{"bidello", "custode", "assistente", "uomo"});
@@ -551,7 +560,6 @@ public class UniperfidaGame extends GameDescription {
                         // se il comando è di tipo LOOK_AT
                         if (p.getObject() == null) { // se la stanza corrente ha l'attributo look
                             out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
-                            getRooms().get(2).setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'.");
                             if (!getCurrentRoom().getObjects().isEmpty()) {
                                 out.println("Sono presenti inoltre i seguenti oggetti:");
                             }
@@ -568,7 +576,13 @@ public class UniperfidaGame extends GameDescription {
                             out.println("Il foglio recita: " + p.getObject().getDescription());
                             out.println();
                             move = true;
-                        } else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21) {
+                        } else if (p.getObject().getId() == 22) {
+                            out.println("Il cartello recita:\n" + p.getObject().getDescription());
+                            out.println();
+                            move = true;
+                            getRooms().get(2).getObjects().get(1).setDescription("'Università di Bari Aldo Moro, Facoltà di Informatica'.");
+                        }
+                            else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21) {
                             out.println(p.getObject().getDescription());
                             out.println();
                             move = true;
@@ -581,7 +595,13 @@ public class UniperfidaGame extends GameDescription {
                                     out.println("Nella bacheca c'è scritto:\n" + p.getObject().getDescription());
                                     out.println();
                                     move = true;
-                                } else {
+                                } else if (p.getObject().getId() == 22) {
+                                    out.println("Il cartello recita:\n" + p.getObject().getDescription());
+                                    out.println();
+                                    move = true;
+                                    getRooms().get(2).getObjects().get(1).setDescription("'Università di Bari Aldo Moro, Facoltà di Informatica'.");
+                                }
+                                else {
                                     out.println("Il foglio recita: " + p.getObject().getDescription());
                                     out.println();
                                     move = true;
@@ -993,6 +1013,11 @@ public class UniperfidaGame extends GameDescription {
                         break;
                     case HELP:
                         printHelp();
+                        out.println();
+                        move = true;
+                        break;
+                    case MAPPA:
+                        printMap();
                         out.println();
                         move = true;
                         break;
