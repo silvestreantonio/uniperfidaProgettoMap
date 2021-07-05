@@ -8,11 +8,10 @@ package di.uniba.map.b.uniperfida;
 import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
-import di.uniba.map.b.uniperfida.print.Printings;
 import di.uniba.map.b.uniperfida.type.CommandType;
+import di.uniba.map.b.uniperfida.type.Room;
 
 import java.io.*;
-import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Set;
 import java.io.BufferedReader;
@@ -52,6 +51,26 @@ public class Engine {
         }
     }
 
+    // questo metodo carica da file tutte le descrizioni
+   /* public void useFile () {
+        try {
+            BufferedReader inputStream = new BufferedReader(new FileReader("resources\\Stanza.txt"));
+            for (int i = 0; i<30; i++) {
+                String a;
+                while ((a = inputStream.readLine()) != null) {
+                    game.getRooms().get(i).setDescription(a);
+                    System.out.println(a);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("Okay");
+        }
+    } */
+
     // questo metodo gestisce l'interazione con l'utente
     public void execute() {
         printIntro();
@@ -82,20 +101,8 @@ public class Engine {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /*try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("resources\\Stanza.txt"));
-            String a;
-            while((a = inputStream.readLine()) != null){
-                System.out.println(a);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println("Okay");
-        }*/
         Engine engine = new Engine(new UniperfidaGame());// crea una istanza di Engine a cui passiamo un'istanza di GameDescription (in questo caso UniperfidaGame che estende GameDescription)
+        // engine.useFile();
         engine.execute();
     }
 
