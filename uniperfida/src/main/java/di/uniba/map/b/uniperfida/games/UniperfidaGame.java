@@ -116,12 +116,12 @@ public class UniperfidaGame extends GameDescription {
 
         // definizione delle stanze
         Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
-        laboratory.setLook("Hai davanti la macchina, la porta è aperta");
+        laboratory.setLook("Hai davanti la macchina, la porta è aperta.");
 
         Room firstMachine = new Room(2, "Navicella Space-Voyager. Ti trovi nel tuo universo.", "Ti trovi nella navicella Space-Voyager.", "Universo T-327");
         firstMachine.setLook("C'è una luce soffusa. E' ora di partire!");
 
-        Room courtyard = new Room(3, "Cortile", "Ti trovi nel cortile. C'è uno strano edificio pieno zeppo di finestre. C'è un cartello con incisa una scritta.", "Universo J-371");
+        Room courtyard = new Room(3, "Cortile", "Ti trovi nella navicella Space-Voyager.", "Universo J-371");
         courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta."
                 + "\nNel frattempo butti a terra il foglietto, che con il vento vola via, perchè è risaputo che a Bari ci si comporta così.");
 
@@ -142,7 +142,7 @@ public class UniperfidaGame extends GameDescription {
         infoPoint.setLook("Nelle bacheche non c'è nulla infisso. Come sempre d'altronde.");
 
         Room firstElevator = new Room(9, "Ascensore", "Ti trovi nell'ascensore. E' molto grande.", "Universo J-371");
-        firstElevator.setLook("'Capienza massima: 8 persone'");
+        firstElevator.setLook("'Capienza massima: 8 persone.'");
 
         Room stairs = new Room(10, "Scale piano terra", "Ti trovi nel pianerottolo delle scale del piano terra.", "Universo J-371");
         stairs.setLook("C'è un'enorme scalinata che sale.");
@@ -205,8 +205,8 @@ public class UniperfidaGame extends GameDescription {
         secondMachine.setLook("C'è una luce molto forte. Forse sei arrivato!");
         secondMachine.setPrint(false);
 
-        Room basilicoOffice = new Room(29, "Ufficio del prof. Basilico", "Ti trovi nell'ufficio del prof. Basilico", "Universo J-371");
-        basilicoOffice.setLook("C'è il prof. Basilico davanti al suo computer. Non ti ha sentito entrare");
+        Room basilicoOffice = new Room(29, "Ufficio del prof. Basilico", "Ti trovi nell'ufficio del prof. Basilico.", "Universo J-371");
+        basilicoOffice.setLook("C'è il prof. Basilico davanti al suo computer. Non ti ha sentito entrare. ");
         basilicoOffice.setVisible(false);
 
         // definizione della mappa (collegamenti tra le stanze)

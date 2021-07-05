@@ -1,4 +1,29 @@
-prova
-prova 1
-prova 2
-prova 3
+Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.
+Ti trovi nella navicella Space-Voyager.
+Ti trovi nella navicella Space-Voyager.
+Ti trovi nell'atrio principale. C'è molto eco.
+Ti trovi nell'ufficio del collaboratore.
+Ti trovi nei bagni del piano terra. Non noti nulla di strano.
+Sei nel corridoio. C'è un cartellone in onore di 'Accendino', un ragazzo fantastico.
+Ti trovi nella zona delle bacheche.
+Ti trovi nell'ascensore. E' molto grande.
+Ti trovi nel pianerottolo delle scale del piano terra.
+Ti trovi nella sala d'attesa delle aule.
+Ti trovi nell'aula A.
+Ti trovi nell'aula B.
+Ti trovi nel pianerottolo delle scale del primo piano.
+Ti trovi nell'atrio del primo piano. C'è molto eco.
+Ti trovi nell'ascensore. E' molto grande.
+Ti trovi nel bagno del primo piano. Non noti nulla di strano.
+Ti trovi nel primo settore del corridoio. Sembra non finisca mai.
+Ti trovi nella sala d'attesa della prof.ssa *****
+Ti trovi nella sala d'attesa del prof. *****
+Ti trovi nel secondo settore del corridoio. Intravedi la fine.
+Ti trovi nella sala d'attesa del prof. *****
+Ti trovi nella sala d'attesa del prof. *****
+Ti trovi nel terzo settore del corridoio. Dietro di te c'è un muro.
+Ti trovi nel bagno dei professori.
+Ti trovi nella sala d'attesa del prof. Basilico.
+Ti trovi nella segreteria.
+Ti trovi nella navicella Space-Voyager. Ti trovi nel nuovo universo.
+Ti trovi nell'ufficio del prof. Basilico
