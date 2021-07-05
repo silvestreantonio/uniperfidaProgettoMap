@@ -141,7 +141,7 @@ public class Printings {
                 "\nChe coincidenza! Nel tuo primo passo sul nuovo universo hai scoperto due cose: il tuo obiettivo e il fatto che il tuo alter ego sia uno svitato!");
     }
 
-    public static void printMap(){
+    public static void  printMap(){
         System.out.println("Qui ci sarà la mappa.");
     }
 }
