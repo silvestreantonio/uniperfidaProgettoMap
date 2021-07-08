@@ -1,10 +1,10 @@
 Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.
 Ti trovi nella navicella Space-Voyager.
-Ti trovi nella navicella Space-Voyager.
+Ti trovi nel cortile.
 Ti trovi nell'atrio principale. C'è molto eco.
 Ti trovi nell'ufficio del collaboratore.
 Ti trovi nei bagni del piano terra. Non noti nulla di strano.
-Sei nel corridoio. C'è un cartellone in onore di 'Accendino', un ragazzo fantastico.
+Ti trovi nel corridoio. C'è un cartellone in onore di 'Accendino', un ragazzo fantastico.
 Ti trovi nella zona delle bacheche.
 Ti trovi nell'ascensore. E' molto grande.
 Ti trovi nel pianerottolo delle scale del piano terra.

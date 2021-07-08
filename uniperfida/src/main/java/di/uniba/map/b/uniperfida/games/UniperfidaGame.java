@@ -115,98 +115,97 @@ public class UniperfidaGame extends GameDescription {
         getCommands().add(mappa);
 
         // definizione delle stanze
-        Room laboratory = new Room(1, "Laboratorio del professor Silvestre", "Ti trovi nel laboratorio del professor Silvestre. Il professore ed il suo assistente stanno attendendo una tua mossa.", "Universo T-237");
-        laboratory.setLook("Hai davanti la macchina, la porta è aperta.");
+        Room laboratory = new Room(1);
+        laboratory.setuniverse("Universo T-237");
 
-        Room firstMachine = new Room(2, "Navicella Space-Voyager. Ti trovi nel tuo universo.", "Ti trovi nella navicella Space-Voyager.", "Universo T-327");
-        firstMachine.setLook("C'è una luce soffusa. E' ora di partire!");
+        Room firstMachine = new Room(2);
+        firstMachine.setuniverse("Universo T-237");
 
-        Room courtyard = new Room(3, "Cortile", "Ti trovi nella navicella Space-Voyager.", "Universo J-371");
-        courtyard.setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta."
-                + "\nNel frattempo butti a terra il foglietto, che con il vento vola via, perchè è risaputo che a Bari ci si comporta così.");
+        Room courtyard = new Room(3);
+        courtyard.setuniverse("Universo J-371");
 
-        Room hall = new Room(4, "Atrio principale", "Ti trovi nell'atrio principale. C'è molto eco.", "Universo J-371");
-        hall.setLook("Un semplice atrio.");
+        Room hall = new Room(4);
         hall.setCount(0);
+        hall.setuniverse("Universo J-371");
 
-        Room reception = new Room(5, "Ufficio del collaboratore", "Ti trovi nell'ufficio del collaboratore.", "Universo J-371");
-        reception.setLook("C'è una scrivania con un computer ed un foglio. Il collaboratore non ti ha sentito entrare.");
+        Room reception = new Room(5);
+        reception.setuniverse("Universo J-371");
 
-        Room firstBathroom = new Room(6, "Bagno del piano terra", "Ti trovi nei bagni del piano terra. Non noti nulla di strano.", "Universo J-371");
-        firstBathroom.setLook("Un semplice bagno universitario, senza carta igienica e sapone..." + "ovviamente.");
+        Room firstBathroom = new Room(6);
+        firstBathroom.setuniverse("Universo J-371");
 
-        Room corridor = new Room(7, "Corridoio del piano terra", "Sei nel corridoio. C'è un cartellone in onore di 'Accendino', un ragazzo fantastico.", "Universo J-371");
-        corridor.setLook("Non c'è niente di particolare.");
+        Room corridor = new Room(7);
+        corridor.setuniverse("Universo J-371");
 
-        Room infoPoint = new Room(8, "Zona delle bacheche", "Ti trovi nella zona delle bacheche.", "Universo J-371");
-        infoPoint.setLook("Nelle bacheche non c'è nulla infisso. Come sempre d'altronde.");
+        Room infoPoint = new Room(8);
+        infoPoint.setuniverse("Universo J-371");
 
-        Room firstElevator = new Room(9, "Ascensore", "Ti trovi nell'ascensore. E' molto grande.", "Universo J-371");
-        firstElevator.setLook("'Capienza massima: 8 persone.'");
+        Room firstElevator = new Room(9);
+        firstElevator.setuniverse("Universo J-371");
 
-        Room stairs = new Room(10, "Scale piano terra", "Ti trovi nel pianerottolo delle scale del piano terra.", "Universo J-371");
-        stairs.setLook("C'è un'enorme scalinata che sale.");
+        Room stairs = new Room(10);
+        stairs.setuniverse("Universo J-371");
 
-        Room waitingRoom = new Room(11, "Sala d'attesa aule", "Ti trovi nella sala d'attesa delle aule.", "Universo J-371");
-        waitingRoom.setLook("Ci sono un paio di sedie. Sopra le sedie c'è una bacheca, l'ennesima bacheca.");
+        Room waitingRoom = new Room(11);
+        waitingRoom.setuniverse("Universo J-371");
 
-        Room roomA = new Room(12, "Aula A", "Ti trovi nell'aula A.", "Universo J-371");
-        roomA.setLook("Ci sono file di banchi. L'aula è vuota.");
+        Room roomA = new Room(12);
+        roomA.setuniverse("Universo J-371");
 
-        Room roomB = new Room(13, "Aula B", "Ti trovi nell'aula B.", "Universo J-371");
-        roomB.setLook("Ci sono file di banchi. L'aula è vuota.");
+        Room roomB = new Room(13);
+        roomB.setuniverse("Universo J-371");
 
-        Room upStairs = new Room(14, "Scale primo piano", "Ti trovi nel pianerottolo delle scale del primo piano.", "Universo J-371");
-        upStairs.setLook("C'è un'enorme scalinata che scende.");
+        Room upStairs = new Room(14);
+        upStairs.setuniverse("Universo J-371");
 
-        Room upStairsHall = new Room(15, "Atrio del primo piano", "Ti trovi nell'atrio del primo piano. C'è molto eco.", "Universo J-371");
-        upStairsHall.setLook("C'è un enorme corridoio ed una mezza dozzina di uffici.");
+        Room upStairsHall = new Room(15);
+        upStairsHall.setuniverse("Universo J-371");
 
-        Room secondElevator = new Room(16, "Ascensore", "Ti trovi nell'ascensore. E' molto grande.", "Universo J-371");
-        secondElevator.setLook("C'è un bottone.");
+        Room secondElevator = new Room(16);
+        secondElevator.setuniverse("Universo J-371");
 
-        Room secondBathroom = new Room(17, "Bagno del primo piano", "Ti trovi nel bagno del primo piano. Non noti nulla di strano.", "Universo J-371");
-        secondBathroom.setLook("Un semplice bagno universitario, senza carta igienica e sapone..." + "ovviamente.");
+        Room secondBathroom = new Room(17);
+        secondBathroom.setuniverse("Universo J-371");
 
-        Room firstSector = new Room(18, "Primo settore del corridoio", "Ti trovi nel primo settore del corridoio. Sembra non finisca mai.", "Universo J-371");
-        firstSector.setLook("Ai lati ci sono due uffici.");
+        Room firstSector = new Room(18);
+        firstSector.setuniverse("Universo J-371");
 
-        Room waitingRoomRossetto = new Room(19, "Sala d'attesa della prof.ssa Rossetto", "Ti trovi nella sala d'attesa della prof.ssa *****", "Universo J-371");
-        waitingRoomRossetto.setLook("Ci sono delle sedie.");
+        Room waitingRoomRossetto = new Room(19);
+        waitingRoomRossetto.setuniverse("Universo J-371");
 
-        Room waitingRoomImpavido = new Room(20, "Sala d'attesa del prof. Impavido", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
-        waitingRoomImpavido.setLook("Ci sono delle sedie.");
+        Room waitingRoomImpavido = new Room(20);
+        waitingRoomImpavido.setuniverse("Universo J-371");
 
-        Room secondSector = new Room(21, "Secondo settore del corridoio", "Ti trovi nel secondo settore del corridoio. Intravedi la fine.", "Universo J-371");
-        secondSector.setLook("Ai lati ci sono due uffici.");
+        Room secondSector = new Room(21);
+        secondSector.setuniverse("Universo J-371");
 
-        Room waitingRoomGatto = new Room(22, "Sala d'attesa del prof. Gatto", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
-        waitingRoomGatto.setLook("Ci sono delle sedie.");
+        Room waitingRoomGatto = new Room(22);
+        waitingRoomGatto.setuniverse("Universo J-371");
 
-        Room waitingRoomCinquanta = new Room(23, "Sala d'attesa del prof. Cinquanta", "Ti trovi nella sala d'attesa del prof. *****", "Universo J-371");
-        waitingRoomCinquanta.setLook("Ci sono delle sedie.");
+        Room waitingRoomCinquanta = new Room(23);
+        waitingRoomCinquanta.setuniverse("Universo J-371");
 
-        Room thirdSector = new Room(24, "Terzo settore del corridoio", "Ti trovi nel terzo settore del corridoio. Dietro di te c'è un muro.", "Universo J-371");
-        thirdSector.setLook("Ai lati c'è l'ennesimo ufficio e l'ennesimo bagno. Avranno problemi d'incontinenza.");
+        Room thirdSector = new Room(24);
+        thirdSector.setuniverse("Universo J-371");
 
-        Room thirdBathroom = new Room(25, "Bagno dei professori", "Ti trovi nel bagno dei professori.", "Universo J-371");
-        thirdBathroom.setLook("Questo bagno è molto meglio degli altri..." + "Sapone, carta igienica, persino un asciugamani ad aria!");
+        Room thirdBathroom = new Room(25);
+        thirdBathroom.setuniverse("Universo J-371");
 
-        Room waitingRoomBasilico = new Room(26, "Sala d'attesa del prof. Basilico", "Ti trovi nella sala d'attesa del prof. Basilico.", "Universo J-371");
-        waitingRoomBasilico.setLook("C'è una porta, niente indovinelli questa volta.");
+        Room waitingRoomBasilico = new Room(26);
+        waitingRoomBasilico.setuniverse("Universo J-371");
         waitingRoomBasilico.setCount(0);
         waitingRoomBasilico.setVisible(false);
 
-        Room secretary = new Room(27, "Segreteria", "Ti trovi nella segreteria.", "Universo J-371");
-        secretary.setLook("C'è uno sportello con un foglio.");
+        Room secretary = new Room(27);
+        secretary.setuniverse("Universo J-371");
         secretary.setVisible(false);
 
-        Room secondMachine = new Room(28, "Navicella Space-Voyager", "Ti trovi nella navicella Space-Voyager. Ti trovi nel nuovo universo.", "Universo J-371");
-        secondMachine.setLook("C'è una luce molto forte. Forse sei arrivato!");
+        Room secondMachine = new Room(28);
+        secondMachine.setuniverse("Universo J-371");
         secondMachine.setPrint(false);
 
-        Room basilicoOffice = new Room(29, "Ufficio del prof. Basilico", "Ti trovi nell'ufficio del prof. Basilico.", "Universo J-371");
-        basilicoOffice.setLook("C'è il prof. Basilico davanti al suo computer. Non ti ha sentito entrare. ");
+        Room basilicoOffice = new Room(29);
+        basilicoOffice.setuniverse("Universo J-371");
         basilicoOffice.setVisible(false);
 
         // definizione della mappa (collegamenti tra le stanze)
@@ -302,7 +301,7 @@ public class UniperfidaGame extends GameDescription {
         firstMachine.getObjects().add(buttonMachine);
         secondMachine.getObjects().add(buttonMachine);
 
-        AdvObject boardsHall = new AdvObject(2, "bacheca", "Una semplice bacheca");
+        AdvObject boardsHall = new AdvObject(2, "bacheca", "Pubblicato bando per corso d'hacking.");
         boardsHall.setAlias(new String[]{"diario", "bacheche"});
         boardsHall.setReadable(true);
         hall.getObjects().add(boardsHall);
@@ -331,7 +330,7 @@ public class UniperfidaGame extends GameDescription {
         coinFour.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
         reception.getObjects().add(coinFour);
 
-        AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Nulla di interessante");
+        AdvObject boardsInfoPoint = new AdvObject(7, "bacheca", "Anche oggi non ci sono novità.");
         boardsInfoPoint.setAlias(new String[]{"diario", "bacheche"});
         boardsInfoPoint.setReadable(true);
         infoPoint.getObjects().add(boardsInfoPoint);
@@ -559,7 +558,12 @@ public class UniperfidaGame extends GameDescription {
                     case LOOK:
                         // se il comando è di tipo LOOK_AT
                         if (p.getObject() == null) { // se la stanza corrente ha l'attributo look
-                            out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
+                            if (getCurrentRoom() == getRooms().get(2)){
+                                out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
+                                getCurrentRoom().setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta.");
+                            } else {
+                                out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
+                            }
                             if (!getCurrentRoom().getObjects().isEmpty()) {
                                 out.println("Sono presenti inoltre i seguenti oggetti:");
                             }
@@ -580,8 +584,7 @@ public class UniperfidaGame extends GameDescription {
                             out.println("Il cartello recita:\n" + p.getObject().getDescription());
                             out.println();
                             move = true;
-                            getRooms().get(2).getObjects().get(1).setDescription("'Università di Bari Aldo Moro, Facoltà di Informatica'.");
-                        }
+                            }
                             else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21) {
                             out.println(p.getObject().getDescription());
                             out.println();

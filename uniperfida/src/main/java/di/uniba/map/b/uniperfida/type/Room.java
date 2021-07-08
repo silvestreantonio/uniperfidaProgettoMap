@@ -50,17 +50,8 @@ public class Room {
     private final List<Person> people=new ArrayList<>();// la stanza puo contenere delle persone, queste persone sono una lista di Person
 
     // costruttore
-    public Room(int id, String name, String description, String universe) {
+     public Room(int id) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.universe = universe;
-    }
-
-       public Room(int id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
     }
     
     // metodi set e get

@@ -52,24 +52,60 @@ public class Engine {
     }
 
     // questo metodo carica da file tutte le descrizioni
-   /* public void useFile () {
+    public void useFileRoomsDescription(){
         try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("resources\\Stanza.txt"));
-            for (int i = 0; i<30; i++) {
-                String a;
-                while ((a = inputStream.readLine()) != null) {
-                    game.getRooms().get(i).setDescription(a);
-                    System.out.println(a);
-                }
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomDescription.txt"));
+            String a;
+            int i = 0;
+            while ((a = inputStream.readLine())!= null){
+                game.getRooms().get(i).setDescription(a);
+                System.out.println(game.getRooms().get(i).getName());
+                System.out.println(game.getRooms().get(i).getDescription());
+                i++;
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e){
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
-        } finally {
-            System.out.println("Okay");
         }
-    } */
+    }
+
+    public void useFileRoomsLook(){
+        try {
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomLook.txt"));
+            String a;
+            int i = 0;
+            while ((a = inputStream.readLine())!= null){
+                game.getRooms().get(i).setLook(a);
+                System.out.println(game.getRooms().get(i).getName());
+                System.out.println(game.getRooms().get(i).getLook());
+                System.out.println();
+                i++;
+            }
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void useFileRoomsName(){
+        try {
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomName.txt"));
+            String a;
+            int i = 0;
+            while ((a = inputStream.readLine())!= null){
+                game.getRooms().get(i).setName(a);
+                System.out.println(game.getRooms().get(i).getName());
+                System.out.println();
+                i++;
+            }
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
     // questo metodo gestisce l'interazione con l'utente
     public void execute() {
@@ -102,7 +138,9 @@ public class Engine {
      */
     public static void main(String[] args) {
         Engine engine = new Engine(new UniperfidaGame());// crea una istanza di Engine a cui passiamo un'istanza di GameDescription (in questo caso UniperfidaGame che estende GameDescription)
-        // engine.useFile();
+        engine.useFileRoomsName();
+        engine.useFileRoomsDescription();
+        engine.useFileRoomsLook();
         engine.execute();
     }
 
