@@ -34,7 +34,7 @@ import static di.uniba.map.b.uniperfida.print.Printings.*;
 public class UniperfidaGame extends GameDescription {
 
     @Override
-    public void init() throws Exception { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
+    public void init(){ // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
 
         startTime = System.currentTimeMillis();
