@@ -9,7 +9,6 @@ import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import di.uniba.map.b.uniperfida.type.CommandType;
-import di.uniba.map.b.uniperfida.type.Room;
 
 import java.io.*;
 import java.util.Scanner;
@@ -59,8 +58,6 @@ public class Engine {
             int i = 0;
             while ((a = inputStream.readLine())!= null){
                 game.getRooms().get(i).setDescription(a);
-                System.out.println(game.getRooms().get(i).getName());
-                System.out.println(game.getRooms().get(i).getDescription());
                 i++;
             }
         } catch (FileNotFoundException e){
@@ -77,9 +74,6 @@ public class Engine {
             int i = 0;
             while ((a = inputStream.readLine())!= null){
                 game.getRooms().get(i).setLook(a);
-                System.out.println(game.getRooms().get(i).getName());
-                System.out.println(game.getRooms().get(i).getLook());
-                System.out.println();
                 i++;
             }
         } catch (FileNotFoundException e){
@@ -96,8 +90,6 @@ public class Engine {
             int i = 0;
             while ((a = inputStream.readLine())!= null){
                 game.getRooms().get(i).setName(a);
-                System.out.println(game.getRooms().get(i).getName());
-                System.out.println();
                 i++;
             }
         } catch (FileNotFoundException e){
