@@ -15,6 +15,10 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import static di.uniba.map.b.uniperfida.print.Printings.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
@@ -34,10 +38,62 @@ import static di.uniba.map.b.uniperfida.print.Printings.*;
 public class UniperfidaGame extends GameDescription {
 
     @Override
-    public void init(){ // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
+    public void useFileRoomsDescription() {
+        try {
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomDescription.txt"));
+            String a;
+            int i = 0;
+            while ((a = inputStream.readLine()) != null) {
+                this.getRooms().get(i).setDescription(a);
+                i++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void useFileRoomsLook() {
+        try {
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomLook.txt"));
+            String a;
+            int i = 0;
+            while ((a = inputStream.readLine()) != null) {
+                this.getRooms().get(i).setLook(a);
+                i++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void useFileRoomsName() {
+        try {
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomName.txt"));
+            String a;
+            int i = 0;
+            while ((a = inputStream.readLine()) != null) {
+                this.getRooms().get(i).setName(a);
+                i++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void init() { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
 
         startTime = System.currentTimeMillis();
+
         Command nord = new Command(CommandType.NORTH, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
@@ -414,7 +470,7 @@ public class UniperfidaGame extends GameDescription {
         waitingRoomBasilico.getObjects().add(door);
 
         AdvObject sign = new AdvObject(22, "cartello", "'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta.");
-        sign.setAlias(new String[] {"cartellone"});
+        sign.setAlias(new String[]{"cartellone"});
         sign.setReadable(true);
         courtyard.getObjects().add(sign);
 
@@ -435,7 +491,7 @@ public class UniperfidaGame extends GameDescription {
 
     // questo metodo in base alla stanza in cui mi trovo deve interpretare un comando 
     @Override
-    public void nextMove(ParserOutput p, PrintStream out) {
+public void nextMove(ParserOutput p, PrintStream out) {
         if (p.getCommand() == null) {
             out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
         } else {
@@ -1092,8 +1148,7 @@ public class UniperfidaGame extends GameDescription {
 
         }
     }
-
-    private void end(PrintStream out) {
+private void end(PrintStream out) {
         out.println();
         printEnd();
         out.println();

@@ -30,7 +30,7 @@ import static di.uniba.map.b.uniperfida.print.Printings.*;
 // classe che rappresenta il motore del gioco
 public class Engine {
 
-    private final GameDescription game; // oggetto che contiene la descrizione del gioco
+    private GameDescription game; // oggetto che contiene la descrizione del gioco
 
     private Parser parser; // oggetto che deve interpretare i comandi
 
@@ -39,6 +39,9 @@ public class Engine {
         this.game = game; // imposta l'attributo game
         try {
             this.game.init(); // inizializza il gioco
+            this.game.useFileRoomsDescription();
+            this.game.useFileRoomsLook();
+            this.game.useFileRoomsName();
         } catch (Exception ex) {
             System.err.println(ex);
         }
@@ -51,54 +54,6 @@ public class Engine {
     }
 
     // questo metodo carica da file tutte le descrizioni
-    public void useFileRoomsDescription(){
-        try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomDescription.txt"));
-            String a;
-            int i = 0;
-            while ((a = inputStream.readLine())!= null){
-                game.getRooms().get(i).setDescription(a);
-                i++;
-            }
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void useFileRoomsLook(){
-        try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomLook.txt"));
-            String a;
-            int i = 0;
-            while ((a = inputStream.readLine())!= null){
-                game.getRooms().get(i).setLook(a);
-                i++;
-            }
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void useFileRoomsName(){
-        try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomName.txt"));
-            String a;
-            int i = 0;
-            while ((a = inputStream.readLine())!= null){
-                game.getRooms().get(i).setName(a);
-                i++;
-            }
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     // questo metodo gestisce l'interazione con l'utente
     public void execute() {
         printIntro();
@@ -130,9 +85,6 @@ public class Engine {
      */
     public static void main(String[] args) {
         Engine engine = new Engine(new UniperfidaGame());// crea una istanza di Engine a cui passiamo un'istanza di GameDescription (in questo caso UniperfidaGame che estende GameDescription)
-        engine.useFileRoomsName();
-        engine.useFileRoomsDescription();
-        engine.useFileRoomsLook();
         engine.execute();
     }
 

@@ -144,4 +144,7 @@ public class Printings {
     public static void  printMap(){
         System.out.println("Qui ci sarà la mappa.");
     }
+    public static void printName(){
+        System.out.println("Benvenuto!\nInserisci il tuo nome utente.");
+    }
 }
