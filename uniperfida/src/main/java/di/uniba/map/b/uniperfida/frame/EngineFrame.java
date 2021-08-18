@@ -42,30 +42,36 @@ public class EngineFrame extends javax.swing.JFrame {
         if (noroom) { // se noroom = true
             GameTextArea.append("\nVerso questa direzione non puoi andare");
         } else if (move) { // se move = true
-            if (game.getRooms().get(3).getCount() == 3) {
-                //end1(out);
-                GameTextArea.append("\nHai perso, 0 punti");
-            }
             // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
             GameTextArea.append("\n");
             GameTextArea.append("\n-----[" + game.getCurrentRoom().getuniverse() + "]-----\n");
             GameTextArea.append(game.getCurrentRoom().getDescription());
             GameTextArea.append("\n");
-            if (!game.getCurrentRoom().getObjects().isEmpty()) {
-                ObjectsTextArea.setText("");
-                ObjectsTextArea.append("Sono presenti inoltre i seguenti oggetti:");
-            } else {
-                ObjectsTextArea.setText("");
-                ObjectsTextArea.append("In questa stanza non ci sono oggetti.");
-            }
-            for (AdvObject o : game.getCurrentRoom().getObjects()) {
-                ObjectsTextArea.append("\n- " + o.getName());
-            }
-            if (game.getRooms().get(25).getCount() == 4) {
-                game.getRooms().get(25).setVisible(true);
-            }
         }
+        controlObjects();
         controlInventory();
+        controlButton();
+        if (game.getRooms().get(3).getCount() == 3) {
+            //end1(out);
+            PickUp.setVisible(false);
+            North.setVisible(false);
+            South.setVisible(false);
+            East.setVisible(false);
+            West.setVisible(false);
+            Push.setVisible(false);
+            Open.setVisible(false);
+            Talk.setVisible(false);
+            Up.setVisible(false);
+            Use.setVisible(false);
+            Down.setVisible(false);
+            Read.setVisible(false);
+            Insert.setVisible(false);
+            ProfessorsName.setVisible(false);
+            InventoryTextArea.setVisible(false);
+            ObjectsTextArea.setVisible(false);
+            GameTextArea.setText("");
+            GameTextArea.append("\nHai perso, 0 punti");
+        }
     }
 
     private void controlButton() {
@@ -79,7 +85,7 @@ public class EngineFrame extends javax.swing.JFrame {
         } else {
             Read.setVisible(false);
         }
-        if (game.getCurrentRoom() == game.getRooms().get(9) || game.getCurrentRoom() == game.getRooms().get(13)) {
+        if (game.getCurrentRoom() == game.getRooms().get(9) || game.getCurrentRoom() == game.getRooms().get(13) || game.getCurrentRoom() == game.getRooms().get(11) || game.getCurrentRoom() == game.getRooms().get(26)) {
             Up.setVisible(true);
             Down.setVisible(true);
         } else {
@@ -87,9 +93,44 @@ public class EngineFrame extends javax.swing.JFrame {
             Down.setVisible(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(24) || game.getCurrentRoom() == game.getRooms().get(12) || game.getCurrentRoom() == game.getRooms().get(2) || game.getCurrentRoom() == game.getRooms().get(4)) {
-            PickUp.setVisible(true);
+            if (game.getCurrentRoom().isCoin()) {
+                PickUp.setVisible(true);
+            } else {
+                PickUp.setVisible(false);
+            }
         } else {
             PickUp.setVisible(false);
+        }
+        if (game.getCurrentRoom() == game.getRooms().get(18) || game.getCurrentRoom() == game.getRooms().get(19) || game.getCurrentRoom() == game.getRooms().get(21) || game.getCurrentRoom() == game.getRooms().get(22) || game.getCurrentRoom() == game.getRooms().get(3) || game.getCurrentRoom() == game.getRooms().get(26)) {
+            Use.setVisible(true);
+        } else {
+            Use.setVisible(false);
+        }
+        if (game.getCurrentRoom() == game.getRooms().get(25) && !game.getRooms().get(28).isVisible()) {
+            Open.setVisible(true);
+        } else {
+            Open.setVisible(false);
+        }
+        if (game.getCurrentRoom() == game.getRooms().get(4) || game.getCurrentRoom() == game.getRooms().get(28)) {
+            Talk.setVisible(true);
+        } else {
+            Talk.setVisible(false);
+        }
+    }
+
+    public void controlObjects() {
+        if (!game.getCurrentRoom().getObjects().isEmpty()) {
+            ObjectsTextArea.setText("");
+            ObjectsTextArea.append("Sono presenti inoltre i seguenti oggetti:");
+        } else {
+            ObjectsTextArea.setText("");
+            ObjectsTextArea.append("In questa stanza non ci sono oggetti.");
+        }
+        for (AdvObject o : game.getCurrentRoom().getObjects()) {
+            ObjectsTextArea.append("\n- " + o.getName());
+        }
+        if (game.getRooms().get(25).getCount() == 4) {
+            game.getRooms().get(25).setVisible(true);
         }
     }
 
@@ -207,6 +248,11 @@ public class EngineFrame extends javax.swing.JFrame {
         });
 
         Talk.setText("Parla");
+        Talk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TalkActionPerformed(evt);
+            }
+        });
 
         Use.setText("Usa");
         Use.addActionListener(new java.awt.event.ActionListener() {
@@ -382,7 +428,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 + "\n“No”."
                 + "\n..."
                 + "\n..."
-                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”.");
+                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”\n");
         GameTextArea.append("\n-----[" + game.getCurrentRoom().getuniverse() + "]-----\n");
         GameTextArea.append(game.getCurrentRoom().getDescription());
         NewGame.setVisible(false);
@@ -390,10 +436,7 @@ public class EngineFrame extends javax.swing.JFrame {
         South.setVisible(true);
         East.setVisible(true);
         West.setVisible(true);
-        Open.setVisible(true);
-        PickUp.setVisible(true);
-        Talk.setVisible(true);
-        Use.setVisible(true);
+        control();
     }//GEN-LAST:event_NewGameActionPerformed
 
     private void EastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EastActionPerformed
@@ -407,7 +450,6 @@ public class EngineFrame extends javax.swing.JFrame {
             move = false;
         }
         control();
-        controlButton();
     }//GEN-LAST:event_EastActionPerformed
 
     private void NorthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NorthActionPerformed
@@ -433,7 +475,6 @@ public class EngineFrame extends javax.swing.JFrame {
             move = false;
         }
         control();
-        controlButton();
     }//GEN-LAST:event_NorthActionPerformed
 
     private void SouthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SouthActionPerformed
@@ -447,7 +488,6 @@ public class EngineFrame extends javax.swing.JFrame {
             move = false;
         }
         control();
-        controlButton();
     }//GEN-LAST:event_SouthActionPerformed
 
     private void WestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WestActionPerformed
@@ -479,7 +519,6 @@ public class EngineFrame extends javax.swing.JFrame {
             move = false;
         }
         control();
-        controlButton();
     }//GEN-LAST:event_WestActionPerformed
 
     private void PushActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PushActionPerformed
@@ -525,7 +564,6 @@ public class EngineFrame extends javax.swing.JFrame {
             move = false;
         }
         control();
-        controlButton();
     }//GEN-LAST:event_UpActionPerformed
 
     private void DownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownActionPerformed
@@ -543,45 +581,42 @@ public class EngineFrame extends javax.swing.JFrame {
             move = true;
         }
         control();
-        controlButton();
     }//GEN-LAST:event_DownActionPerformed
 
     private void ReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(2)) { //cartello in cortile
-            GameTextArea.append("\nIl cartello recita:\n" + game.getCurrentRoom().getObjects().get(1).getDescription());
-            GameTextArea.append("\n");
+            GameTextArea.append("\nIl cartello recita:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
             move = true;
             noroom = false;
-            game.getRooms().get(2).getObjects().get(1).setDescription("'Università di Bari Aldo Moro, Facoltà di Informatica'.");
+            game.getRooms().get(2).getObjects().get(0).setDescription("'Università di Bari Aldo Moro, Facoltà di Informatica'.");
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) { //bacheca in hall
             GameTextArea.append("\nNella bacheca c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
-            GameTextArea.append("\n");
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(7)) {
             GameTextArea.append("\nNella bacheca c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
-            GameTextArea.append("\n");
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(10)) {
             GameTextArea.append("\nNella bacheca c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
-            GameTextArea.append("\n");
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
             GameTextArea.append("\nIl foglio recita:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
-            GameTextArea.append("\n");
             move = true;
             noroom = false;
         }
+        control();
     }//GEN-LAST:event_ReadActionPerformed
 
     private void InsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertActionPerformed
         // TODO add your handling code here:
         int j = game.getRooms().get(25).getCount();
+        int a = game.getRooms().get(3).getCount();
         if (game.getCurrentRoom() == game.getRooms().get(18)) {
             String rossetto = ProfessorsName.getText();
+            rossetto = rossetto.toLowerCase();
             switch (rossetto) {
                 case "rossetto":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #1 riuscita.\n");
@@ -594,6 +629,8 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "0":
                     GameTextArea.append("Autenticazione #1 fallita.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
                     move = true;
                     noroom = false;
                     break;
@@ -603,6 +640,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(19)) {
             String impavido = ProfessorsName.getText();
+            impavido = impavido.toLowerCase();
             switch (impavido) {
                 case "impavido":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #2 riuscita.\n");
@@ -615,6 +653,8 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "0":
                     GameTextArea.append("Autenticazione #2 fallita.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
                     move = true;
                     noroom = false;
                     break;
@@ -624,6 +664,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(21)) {
             String gatto = ProfessorsName.getText();
+            gatto = gatto.toLowerCase();
             switch (gatto) {
                 case "gatto":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #3 riuscita.\n");
@@ -636,6 +677,8 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "0":
                     GameTextArea.append("Autenticazione #3 fallita.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
                     move = true;
                     noroom = false;
                     break;
@@ -645,6 +688,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(22)) {
             String cinquanta = ProfessorsName.getText();
+            cinquanta = cinquanta.toLowerCase();
             switch (cinquanta) {
                 case "cinquanta":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #4 riuscita.\n");
@@ -657,6 +701,8 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "0":
                     GameTextArea.append("Autenticazione #4 fallita.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
                     move = true;
                     noroom = false;
                     break;
@@ -664,16 +710,126 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("Il nome non è corretto. \nInserisci di nuovo il nome:");
                     break;
             }
+        } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
+            String number = ProfessorsName.getText();
+            switch (number) {
+                case "1":
+                    GameTextArea.append("\nprintPhone2\n");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    endTime = System.currentTimeMillis();
+                    seconds = (endTime - startTime) / 1000;
+                    GameTextArea.setText("");
+                    GameTextArea.append("\nprintEnd\n");
+                    GameTextArea.append("Programma eseguito in " + seconds + " secondi\n");
+                    GameTextArea.append("\nVedi come far finire il gioco");
+                    break;
+                case "0":
+                    GameTextArea.append("Fatto! Telefono lasciato.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    move = true;
+                    noroom = false;
+                    break;
+                default:
+                    GameTextArea.append("Inserisci un valore valido. \n");
+                    break;
+            }
+        } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
+            String chooseCoffee = ProfessorsName.getText();
+            switch (chooseCoffee) {
+                case "1":
+                    game.getInventory().remove(game.getInventory().get(0));
+                    GameTextArea.append("\nFatto! Hai preso un caffè.\n");
+                    GameTextArea.append("...\n");
+                    GameTextArea.append("Mmh, buono questo caffè\n");
+                    GameTextArea.append("...");
+                    game.getRooms().get(3).setCount(++a);
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    move = true;
+                    noroom = false;
+                    break;
+                case "2":
+                    game.getInventory().remove(game.getInventory().get(0));
+                    GameTextArea.append("\nFatto! Hai preso un caffè lungo.\n");
+                    GameTextArea.append("...\n");
+                    GameTextArea.append("Mmh, buono questo caffè lungo\n");
+                    GameTextArea.append("...");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    game.getRooms().get(26).setVisible(true);
+                    game.getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
+                    GameTextArea.append("Ma cos'è stato questo rumore? Proveniva dalla aula A.\n");
+                    move = true;
+                    noroom = false;
+                    break;
+                case "3":
+                    game.getInventory().remove(game.getInventory().get(0));
+                    GameTextArea.append("\nFatto! Hai preso un caffè macchiato.\n");
+                    GameTextArea.append("...\n");
+                    GameTextArea.append("Mmh, buono questo caffè macchiato\n");
+                    GameTextArea.append("...");
+                    game.getRooms().get(3).setCount(++a);
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    move = true;
+                    noroom = false;
+                    break;
+                case "4":
+                    game.getInventory().remove(game.getInventory().get(0));
+                    GameTextArea.append("\nFatto! Hai preso un caffè al cioccolato.\n");
+                    GameTextArea.append("...\n");
+                    GameTextArea.append("Mmh, buono questo caffè al cioccolato\n");
+                    GameTextArea.append("...");
+                    game.getRooms().get(3).setCount(++a);
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    move = true;
+                    noroom = false;
+                    break;
+                case "0":
+                    GameTextArea.append("\nNessun caffè.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    move = true;
+                    noroom = false;
+                    break;
+                default:
+                    GameTextArea.append("Inserisci un valore valido.\n");
+                    break;
+            }
+        } else if (game.getCurrentRoom() == game.getRooms().get(28)) {
+            String chooseVote = ProfessorsName.getText();
+            chooseVote = chooseVote.toLowerCase();
+            switch (chooseVote) {
+                case "si":
+                    GameTextArea.append("\nOttima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.s");
+                    game.getRooms().get(26).getObjects().get(1).setAvailable(true);
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    move = true;
+                    noroom = false;
+                    break;
+                default:
+                    GameTextArea.append("\nDevi accettare per forza! Non ti laureerai mai altrimenti.\n");
+                    break;
+            }
         }
         control();
-        controlButton();
     }//GEN-LAST:event_InsertActionPerformed
 
     private void UseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UseActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(18)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\nMenu Rossetto\n");
+                GameTextArea.append("\n#1 Benvenuto nel menu di accettazione."
+                        + "\nRisolvi l’indovinello per autenticarti:"
+                        + "\n- a volte in delle situazioni sono fuori luogo;"
+                        + "\n- non lascio le tue labbra;"
+                        + "\n- resisto all’acqua;"
+                        + "\n- non sono rosso per forza."
+                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
@@ -686,7 +842,13 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(19)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\nMenu Impavido\n");
+                GameTextArea.append("\n#2 Benvenuto nel menu di accettazione."
+                        + "\nRisolvi l’indovinello per autenticarti:"
+                        + "\n- sono un aggettivo;"
+                        + "\n- sono coraggioso;"
+                        + "\n- sono razionale di fronte ad una minaccia;"
+                        + "\n- letteralmente qualcosa in più di avido."
+                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
@@ -699,7 +861,13 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(21)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\nMenu Gatto\n");
+                GameTextArea.append("\n#3 Benvenuto nel menu di accettazione."
+                        + "\nRisolvi l’indovinello per autenticarti:"
+                        + "\n- notoriamente domestico;"
+                        + "\n- i miei video sono divertenti;"
+                        + "\n- duro a morire;"
+                        + "\n- spesso in compagnia di una volpe."
+                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
@@ -712,7 +880,13 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(22)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\nMenu Cinquanta\n");
+                GameTextArea.append("\n#4 Benvenuto nel menu di accettazione."
+                        + "\nRisolvi l’indovinello per autenticarti:"
+                        + "\n- a questa età si va in crisi;"
+                        + "\n- a napoli sono il pane;"
+                        + "\n- arancione per le banche;"
+                        + "\n- sono un numero."
+                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
@@ -723,55 +897,139 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = true;
                 noroom = false;
             }
+        } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
+            if (!game.getCurrentRoom().getObjects().get(0).isAvailable()) {
+                GameTextArea.append("\nprintPhone\n");
+                Insert.setVisible(true);
+                ProfessorsName.setVisible(true);
+                move = false;
+                noroom = false;
+            } else {
+                GameTextArea.append("Per poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico");
+                GameTextArea.append("\n");
+                move = true;
+                noroom = false;
+            }
+        } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
+            if (!game.getInventory().isEmpty()) {
+                GameTextArea.append("\nprintCoffeeMenu\n");
+                Insert.setVisible(true);
+                ProfessorsName.setVisible(true);
+                move = false;
+                noroom = false;
+            } else {
+                GameTextArea.append("Non hai monete! Procurati una moneta");
+                GameTextArea.append("\n");
+                move = true;
+                noroom = false;
+            }
         }
         control();
-        controlButton();
     }//GEN-LAST:event_UseActionPerformed
 
     private void PickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUpActionPerformed
         // TODO add your handling code here:
-        int i = 0;
-        if (game.getCurrentRoom() == game.getRooms().get(24)) { //cartello in cortile
+        if (game.getCurrentRoom() == game.getRooms().get(24)) {
             GameTextArea.append("\nFatto, hai preso la moneta!");
-            GameTextArea.append("\n");
             game.getCurrentRoom().getObjects().get(0).setPickupable(false);
             game.getCurrentRoom().getObjects().get(0).setDroppable(true);
+            game.getCurrentRoom().setCoin(false);
             game.getInventory().add(game.getCurrentRoom().getObjects().get(0));
             game.getCurrentRoom().getObjects().remove(0);
-            controlInventory();
             move = true;
             noroom = false;
-        } else if (game.getCurrentRoom() == game.getRooms().get(12)) { //bacheca in hall
+            PickUp.setVisible(false);
+            controlInventory();
+            controlObjects();
+        } else if (game.getCurrentRoom() == game.getRooms().get(12)) {
             GameTextArea.append("\nFatto, hai preso la moneta!");
-            GameTextArea.append("\n");
             game.getCurrentRoom().getObjects().get(0).setPickupable(false);
             game.getCurrentRoom().getObjects().get(0).setDroppable(true);
+            game.getCurrentRoom().setCoin(false);
             game.getInventory().add(game.getCurrentRoom().getObjects().get(0));
             game.getCurrentRoom().getObjects().remove(0);
-            controlInventory();
             move = true;
             noroom = false;
+            PickUp.setVisible(false);
+            controlInventory();
+            controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(2)) {
             GameTextArea.append("\nFatto, hai preso la moneta!");
-            GameTextArea.append("\n");
-            game.getCurrentRoom().getObjects().get(0).setPickupable(false);
-            game.getCurrentRoom().getObjects().get(0).setDroppable(true);
-            game.getInventory().add(game.getCurrentRoom().getObjects().get(0));
-            game.getCurrentRoom().getObjects().remove(0);
-            controlInventory();
+            game.getCurrentRoom().getObjects().get(1).setPickupable(false);
+            game.getCurrentRoom().getObjects().get(1).setDroppable(true);
+            game.getCurrentRoom().setCoin(false);
+            game.getInventory().add(game.getCurrentRoom().getObjects().get(1));
+            game.getCurrentRoom().getObjects().remove(1);
             move = true;
             noroom = false;
+            PickUp.setVisible(false);
+            controlInventory();
+            controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(4)) {
             GameTextArea.append("\nNon si ruba!");
-            GameTextArea.append("\n");
             move = true;
             noroom = false;
         }
+        control();
     }//GEN-LAST:event_PickUpActionPerformed
 
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
+        if (game.getCurrentRoom() == game.getRooms().get(25)) {
+            GameTextArea.append("\nFatto! Porta aperta.\n");
+            move = true;
+            noroom = false;
+            game.getCurrentRoom().setDescription("Ti trovi nella sala d'attesa del prof. Basilico. La porta è aperta.");
+            Open.setVisible(false);
+            game.getCurrentRoom().getObjects().remove(0);
+            controlObjects();
+            game.getRooms().get(28).setVisible(true);
+        }
+        control();
     }//GEN-LAST:event_OpenActionPerformed
+
+    private void TalkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TalkActionPerformed
+        // TODO add your handling code here:
+        if (game.getCurrentRoom().getPeople().get(0).isTalkable()) {
+            if (game.getCurrentRoom() == game.getRooms().get(4)) {
+                GameTextArea.append("\n“Salve sono Pomarico Edoardo, sto cercando il professor Basilico.”"
+                        + "\n“Ciao Edoardo, il professor Basilico si trova al primo piano. Devi sapere, però, che il professor basilico recentemente è diventato il coordinatore di questo dipartimento."
+                        + "\nEssendo una personalità molto diligente, ha introdotto un nuovo sistema di ricevimento."
+                        + "\nPer evitare inutili perdite di tempo, si è deciso di introdurre degli indovinelli affinché solo gli studenti più motivati possano essere ricevuti."
+                        + "\nGli indovinelli riguardano alcuni tra i cognomi dei professori di questo dipartimento, in questo momento in smart-working."
+                        + "\nUna volta risolti, ti basterà recarti nell’ufficio del coordinatore che si trova in fondo al corridoio sulla est. Buona fortuna.”"
+                        + "\n“Questo mondo è strano”"
+                        + "\n“Cosa?”"
+                        + "\n“Niente, niente, grazie mille!”\n");
+                game.getCurrentRoom().getPeople().get(0).setTalkable(false);
+                move = true;
+                noroom = false;
+            } else if (game.getCurrentRoom() == game.getRooms().get(28)) {
+                GameTextArea.append("“Salve professore”"
+                        + "\n“Buona sera, chi è lei? Ho sentito dei rumori, come mai ci hai impiegato cosi tanto tempo?”"
+                        + "\n“Sono Edoardo Pomarico. Ho risolto gli indovinelli. Cosi mi ha spiegato il collaboratore”"
+                        + "\n“*risata*"
+                        + "\n“Vedi Edoardo, il vero problema della nostra società è la mancanza di dialogo. Ho introdotto gli indovinelli per mettere alla prova il nostro sistema interno e non gli studenti.“"
+                        + "\n“Non ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perché hanno paura della mia autorità!”"
+                        + "\n“Mh…”"
+                        + "\n“Tornando a noi, perché sei qui?”"
+                        + "\n“Per conoscere l’esito dell’ultimo esame”"
+                        + "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”");
+                GameTextArea.append("\nAccetti?\n");
+                game.getCurrentRoom().getPeople().get(0).setTalkable(false);
+                Talk.setVisible(false);
+                Insert.setVisible(true);
+                ProfessorsName.setVisible(true);
+                move = false;
+                noroom = false;
+            }
+        } else {
+            GameTextArea.append("\nNon disturbare!\n");
+            move = true;
+            noroom = false;
+        }
+        control();
+    }//GEN-LAST:event_TalkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -783,13 +1041,13 @@ public class EngineFrame extends javax.swing.JFrame {
             this.game.useFileRoomsDescription();
             this.game.useFileRoomsLook();
             this.game.useFileRoomsName();
+            PickUp.setVisible(false);
             North.setVisible(false);
             South.setVisible(false);
             East.setVisible(false);
             West.setVisible(false);
             Push.setVisible(false);
             Open.setVisible(false);
-            PickUp.setVisible(false);
             Talk.setVisible(false);
             Up.setVisible(false);
             Use.setVisible(false);

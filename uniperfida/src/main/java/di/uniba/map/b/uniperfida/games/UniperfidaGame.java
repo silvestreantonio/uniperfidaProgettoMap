@@ -374,12 +374,6 @@ public class UniperfidaGame extends GameDescription {
         coinTwo.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
         roomB.getObjects().add(coinTwo);
 
-        AdvObject coinThree = new AdvObject(17, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
-        coinThree.setPickupable(true);
-        coinThree.setDroppable(false);
-        coinThree.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
-        courtyard.getObjects().add(coinThree);
-
         AdvObject coinFour = new AdvObject(18, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
         coinFour.setPickupable(true);
         coinFour.setDroppable(false);
@@ -474,6 +468,12 @@ public class UniperfidaGame extends GameDescription {
         sign.setReadable(true);
         courtyard.getObjects().add(sign);
 
+        AdvObject coinThree = new AdvObject(17, "moneta", "Una moneta da 50 cents, perfetta per comprare cinque goleador");
+        coinThree.setPickupable(true);
+        coinThree.setDroppable(false);
+        coinThree.setAlias(new String[]{"soldi", "soldo", "monete", "capitale", "denaro"});
+        courtyard.getObjects().add(coinThree);
+
         Person collaborator = new Person(1, "collaboratore", "Un uomo che lavora in università");
         collaborator.setAlias(new String[]{"bidello", "custode", "assistente", "uomo"});
         collaborator.setTalkable(true);
@@ -491,7 +491,7 @@ public class UniperfidaGame extends GameDescription {
 
     // questo metodo in base alla stanza in cui mi trovo deve interpretare un comando 
     @Override
-public void nextMove(ParserOutput p, PrintStream out) {
+    public void nextMove(ParserOutput p, PrintStream out) {
         if (p.getCommand() == null) {
             out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
         } else {
@@ -614,7 +614,7 @@ public void nextMove(ParserOutput p, PrintStream out) {
                     case LOOK:
                         // se il comando è di tipo LOOK_AT
                         if (p.getObject() == null) { // se la stanza corrente ha l'attributo look
-                            if (getCurrentRoom() == getRooms().get(2)){
+                            if (getCurrentRoom() == getRooms().get(2)) {
                                 out.println(getCurrentRoom().getLook()); // stampo cio' che c'e' nell'attributo look
                                 getCurrentRoom().setLook("Il cartello recita: 'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta.");
                             } else {
@@ -640,8 +640,7 @@ public void nextMove(ParserOutput p, PrintStream out) {
                             out.println("Il cartello recita:\n" + p.getObject().getDescription());
                             out.println();
                             move = true;
-                            }
-                            else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21) {
+                        } else if (p.getObject().getId() == 1 || p.getObject().getId() == 3 || p.getObject().getId() == 4 || p.getObject().getId() == 5 || p.getObject().getId() == 9 || p.getObject().getId() == 11 || p.getObject().getId() == 16 || p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20 || p.getObject().getId() == 21) {
                             out.println(p.getObject().getDescription());
                             out.println();
                             move = true;
@@ -659,8 +658,7 @@ public void nextMove(ParserOutput p, PrintStream out) {
                                     out.println();
                                     move = true;
                                     getRooms().get(2).getObjects().get(1).setDescription("'Università di Bari Aldo Moro, Facoltà di Informatica'.");
-                                }
-                                else {
+                                } else {
                                     out.println("Il foglio recita: " + p.getObject().getDescription());
                                     out.println();
                                     move = true;
@@ -951,8 +949,7 @@ public void nextMove(ParserOutput p, PrintStream out) {
                                 }
                             } else if (p.getObject().getId() == 17 || p.getObject().getId() == 18 || p.getObject().getId() == 19 || p.getObject().getId() == 20) {
                                 out.println("Non puoi prendere il tablet. Limitati ad usarlo.");
-                            }
-                            else {
+                            } else {
                                 out.println("Non puoi prendere " + p.getObject().getName());
                                 out.println();
                                 move = true;
@@ -1148,7 +1145,8 @@ public void nextMove(ParserOutput p, PrintStream out) {
 
         }
     }
-private void end(PrintStream out) {
+
+    private void end(PrintStream out) {
         out.println();
         printEnd();
         out.println();

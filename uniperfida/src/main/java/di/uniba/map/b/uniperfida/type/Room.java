@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author pierpaolo
  */
-
 // classe che astrae il concetto di stanza
 public class Room {
 
@@ -45,15 +44,17 @@ public class Room {
 
     private boolean print = false;
 
-    private final List<AdvObject> objects=new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
+    private boolean coin = true;
 
-    private final List<Person> people=new ArrayList<>();// la stanza puo contenere delle persone, queste persone sono una lista di Person
+    private final List<AdvObject> objects = new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
+
+    private final List<Person> people = new ArrayList<>();// la stanza puo contenere delle persone, queste persone sono una lista di Person
 
     // costruttore
-     public Room(int id) {
+    public Room(int id) {
         this.id = id;
     }
-    
+
     // metodi set e get
     public String getName() {
         return name;
@@ -127,13 +128,21 @@ public class Room {
         this.down = down;
     }
 
-    public String getuniverse() {return universe; }
+    public String getuniverse() {
+        return universe;
+    }
 
-    public void setuniverse(String universe) {this.universe = universe; }
+    public void setuniverse(String universe) {
+        this.universe = universe;
+    }
 
-    public int getCount(){return count;}
+    public int getCount() {
+        return count;
+    }
 
-    public void setCount(int count){this.count = count;}
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public List<AdvObject> getObjects() {
         return objects;
@@ -151,7 +160,13 @@ public class Room {
         this.print = print;
     }
 
+    public boolean isCoin() {
+        return coin;
+    }
 
+    public void setCoin(boolean coin) {
+        this.coin = coin;
+    }
 
     @Override
     public int hashCode() {
