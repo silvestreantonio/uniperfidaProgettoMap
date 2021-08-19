@@ -179,10 +179,12 @@ public class UniperfidaGame extends GameDescription {
 
         Room courtyard = new Room(3);
         courtyard.setuniverse("Universo J-371");
+        courtyard.setTwoObjects(true);
 
         Room hall = new Room(4);
         hall.setCount(0);
         hall.setuniverse("Universo J-371");
+        hall.setTwoObjects(true);
 
         Room reception = new Room(5);
         reception.setuniverse("Universo J-371");
@@ -255,6 +257,7 @@ public class UniperfidaGame extends GameDescription {
         Room secretary = new Room(27);
         secretary.setuniverse("Universo J-371");
         secretary.setVisible(false);
+        secretary.setTwoObjects(true);
 
         Room secondMachine = new Room(28);
         secondMachine.setuniverse("Universo J-371");

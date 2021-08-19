@@ -46,6 +46,8 @@ public class Room {
 
     private boolean coin = true;
 
+    private boolean twoObjects = false;
+
     private final List<AdvObject> objects = new ArrayList<>();// la stanza puo contenere degli oggetti, questi oggetti sono una lista di AdvObjects
 
     private final List<Person> people = new ArrayList<>();// la stanza puo contenere delle persone, queste persone sono una lista di Person
@@ -166,6 +168,14 @@ public class Room {
 
     public void setCoin(boolean coin) {
         this.coin = coin;
+    }
+
+    public boolean isTwoObjects() {
+        return twoObjects;
+    }
+
+    public void setTwoObjects(boolean twoObjects) {
+        this.twoObjects = twoObjects;
     }
 
     @Override

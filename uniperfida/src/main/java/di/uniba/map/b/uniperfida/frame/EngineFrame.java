@@ -11,11 +11,13 @@ import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -67,8 +69,9 @@ public class EngineFrame extends javax.swing.JFrame {
             Read.setVisible(false);
             Insert.setVisible(false);
             ProfessorsName.setVisible(false);
-            InventoryTextArea.setVisible(false);
-            ObjectsTextArea.setVisible(false);
+            ObjectsLabel1.setVisible(false);
+            ObjectsLabel2.setVisible(false);
+            ObjectsLabel3.setVisible(false);
             GameTextArea.setText("");
             GameTextArea.append("\nHai perso, 0 punti");
         }
@@ -76,58 +79,63 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void controlButton() {
         if (game.getCurrentRoom() == game.getRooms().get(1) || game.getCurrentRoom() == game.getRooms().get(27) || game.getCurrentRoom() == game.getRooms().get(8) || game.getCurrentRoom() == game.getRooms().get(15)) {
-            Push.setVisible(true);
+            Push.setEnabled(true);
         } else {
-            Push.setVisible(false);
+            Push.setEnabled(false);
+
         }
         if (game.getCurrentRoom() == game.getRooms().get(2) || game.getCurrentRoom() == game.getRooms().get(3) || game.getCurrentRoom() == game.getRooms().get(7) || game.getCurrentRoom() == game.getRooms().get(10) || game.getCurrentRoom() == game.getRooms().get(26)) {
-            Read.setVisible(true);
+            Read.setEnabled(true);
         } else {
-            Read.setVisible(false);
+            Read.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(9) || game.getCurrentRoom() == game.getRooms().get(13) || game.getCurrentRoom() == game.getRooms().get(11) || game.getCurrentRoom() == game.getRooms().get(26)) {
-            Up.setVisible(true);
-            Down.setVisible(true);
+            Up.setEnabled(true);
+            Down.setEnabled(true);
         } else {
-            Up.setVisible(false);
-            Down.setVisible(false);
+            Up.setEnabled(false);
+            Down.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(24) || game.getCurrentRoom() == game.getRooms().get(12) || game.getCurrentRoom() == game.getRooms().get(2) || game.getCurrentRoom() == game.getRooms().get(4)) {
             if (game.getCurrentRoom().isCoin()) {
-                PickUp.setVisible(true);
+                PickUp.setEnabled(true);
             } else {
-                PickUp.setVisible(false);
+                PickUp.setEnabled(false);
             }
         } else {
-            PickUp.setVisible(false);
+            PickUp.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(18) || game.getCurrentRoom() == game.getRooms().get(19) || game.getCurrentRoom() == game.getRooms().get(21) || game.getCurrentRoom() == game.getRooms().get(22) || game.getCurrentRoom() == game.getRooms().get(3) || game.getCurrentRoom() == game.getRooms().get(26)) {
-            Use.setVisible(true);
+            Use.setEnabled(true);
         } else {
-            Use.setVisible(false);
+            Use.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(25) && !game.getRooms().get(28).isVisible()) {
-            Open.setVisible(true);
+            Open.setEnabled(true);
         } else {
-            Open.setVisible(false);
+            Open.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(4) || game.getCurrentRoom() == game.getRooms().get(28)) {
-            Talk.setVisible(true);
+            Talk.setEnabled(true);
         } else {
-            Talk.setVisible(false);
+            Talk.setEnabled(false);
         }
     }
 
     public void controlObjects() {
         if (!game.getCurrentRoom().getObjects().isEmpty()) {
-            ObjectsTextArea.setText("");
-            ObjectsTextArea.append("Sono presenti inoltre i seguenti oggetti:");
+            ObjectsLabel1.setText("");
+            ObjectsLabel1.setText("Sono presenti inoltre i seguenti oggetti:");
+            ObjectsLabel2.setText("\n- " + game.getCurrentRoom().getObjects().get(0).getName());
+            ObjectsLabel3.setText("");
+            if (game.getCurrentRoom().isTwoObjects()) {
+                ObjectsLabel3.setText("\n- " + game.getCurrentRoom().getObjects().get(1).getName());
+            }
         } else {
-            ObjectsTextArea.setText("");
-            ObjectsTextArea.append("In questa stanza non ci sono oggetti.");
-        }
-        for (AdvObject o : game.getCurrentRoom().getObjects()) {
-            ObjectsTextArea.append("\n- " + o.getName());
+            ObjectsLabel1.setText("");
+            ObjectsLabel1.setText("In questa stanza non ci sono oggetti.");
+            ObjectsLabel2.setText("");
+            ObjectsLabel3.setText("");
         }
         if (game.getRooms().get(25).getCount() == 4) {
             game.getRooms().get(25).setVisible(true);
@@ -136,20 +144,34 @@ public class EngineFrame extends javax.swing.JFrame {
 
     public void controlInventory() {
         int i = 0;
+        ImageIcon image = new ImageIcon("resources/coin.png");
         if (!game.getInventory().isEmpty()) {
             for (AdvObject o : game.getInventory()) { // ciclo sugli elementi dell'inventario
                 i++;
             }
             if (i == 1) {
-                InventoryTextArea.setText("");
-                InventoryTextArea.append("Nel tuo borsellino c'è una moneta");
-            } else {
-                InventoryTextArea.setText("");
-                InventoryTextArea.append("Nel tuo borsellino ci sono " + i + " monete");
+                InventoryLabel1.setVisible(true);
+                InventoryLabel1.setIcon(image);
+                InventoryLabel2.setVisible(false);
+                InventoryLabel3.setVisible(false);
+            } else if (i == 2) {
+                InventoryLabel1.setVisible(true);
+                InventoryLabel2.setVisible(true);
+                InventoryLabel1.setIcon(image);
+                InventoryLabel2.setIcon(image);
+                InventoryLabel3.setVisible(false);
+            } else if (i == 3) {
+                InventoryLabel1.setVisible(true);
+                InventoryLabel2.setVisible(true);
+                InventoryLabel3.setVisible(true);
+                InventoryLabel1.setIcon(image);
+                InventoryLabel2.setIcon(image);
+                InventoryLabel3.setIcon(image);
             }
         } else {
-            InventoryTextArea.setText("");
-            InventoryTextArea.append("Sei un poveraccio, non hai monete!");
+            InventoryLabel1.setVisible(false);
+            InventoryLabel2.setVisible(false);
+            InventoryLabel3.setVisible(false);
         }
     }
 
@@ -177,12 +199,14 @@ public class EngineFrame extends javax.swing.JFrame {
         Up = new javax.swing.JButton();
         Down = new javax.swing.JButton();
         Read = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ObjectsTextArea = new javax.swing.JTextArea();
         ProfessorsName = new javax.swing.JTextField();
         Insert = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        InventoryTextArea = new javax.swing.JTextArea();
+        InventoryLabel1 = new javax.swing.JLabel();
+        InventoryLabel2 = new javax.swing.JLabel();
+        InventoryLabel3 = new javax.swing.JLabel();
+        ObjectsLabel1 = new javax.swing.JLabel();
+        ObjectsLabel2 = new javax.swing.JLabel();
+        ObjectsLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -282,10 +306,6 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
-        ObjectsTextArea.setColumns(20);
-        ObjectsTextArea.setRows(5);
-        jScrollPane1.setViewportView(ObjectsTextArea);
-
         Insert.setText("Inserisci");
         Insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,9 +313,12 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
-        InventoryTextArea.setColumns(20);
-        InventoryTextArea.setRows(5);
-        jScrollPane3.setViewportView(InventoryTextArea);
+        ObjectsLabel1.setText("1");
+        ObjectsLabel1.setToolTipText("");
+
+        ObjectsLabel2.setText("2");
+
+        ObjectsLabel3.setText("3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -303,97 +326,130 @@ public class EngineFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NewGame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1029, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2)
+                            .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(Read)))
-                        .addGap(33, 33, 33)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(93, 93, 93)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ObjectsLabel2)
+                                    .addComponent(ObjectsLabel1)
+                                    .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(253, 253, 253))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(137, 137, 137)
+                                .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(48, 48, 48)
+                                        .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)))
+                                .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(229, 229, 229)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(39, 39, 39)
+                                        .addComponent(Insert))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(75, 75, 75)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(165, 165, 165)
-                .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(Insert)))
-                .addGap(18, 18, 18))
+                .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Talk)
-                            .addComponent(Push))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Use)
-                            .addComponent(Read)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Up)
-                            .addComponent(PickUp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Down)
-                            .addComponent(Open))))
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(North)
+                                .addGap(77, 77, 77)
+                                .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Insert))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(Up)
+                                    .addComponent(PickUp))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(South))
-                            .addComponent(West, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addComponent(East, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(Down)
+                                    .addComponent(Open))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Insert))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(Talk)
+                                    .addComponent(Push)
+                                    .addComponent(ObjectsLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(Use)
+                                    .addComponent(Read)
+                                    .addComponent(ObjectsLabel3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(ObjectsLabel2)))
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(East)
+                                            .addComponent(West))
+                                        .addGap(2, 2, 2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(North)
+                                        .addGap(28, 28, 28)))
+                                .addComponent(South))
+                            .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        InventoryLabel2.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -431,11 +487,25 @@ public class EngineFrame extends javax.swing.JFrame {
                 + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”\n");
         GameTextArea.append("\n-----[" + game.getCurrentRoom().getuniverse() + "]-----\n");
         GameTextArea.append(game.getCurrentRoom().getDescription());
-        NewGame.setVisible(false);
+        PickUp.setVisible(true);
         North.setVisible(true);
         South.setVisible(true);
         East.setVisible(true);
         West.setVisible(true);
+        Push.setVisible(true);
+        Open.setVisible(true);
+        Talk.setVisible(true);
+        Up.setVisible(true);
+        Use.setVisible(true);
+        Down.setVisible(true);
+        Read.setVisible(true);
+        Insert.setVisible(false);
+        ProfessorsName.setVisible(false);
+        NewGame.setText("UNIPERFIDA");
+        NewGame.setEnabled(false);
+        ObjectsLabel1.setVisible(true);
+        ObjectsLabel2.setVisible(true);
+        ObjectsLabel3.setVisible(true);
         control();
     }//GEN-LAST:event_NewGameActionPerformed
 
@@ -804,7 +874,7 @@ public class EngineFrame extends javax.swing.JFrame {
             chooseVote = chooseVote.toLowerCase();
             switch (chooseVote) {
                 case "si":
-                    GameTextArea.append("\nOttima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.s");
+                    GameTextArea.append("\nOttima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.");
                     game.getRooms().get(26).getObjects().get(1).setAvailable(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -816,6 +886,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
             }
         }
+        ProfessorsName.setText("");
         control();
     }//GEN-LAST:event_InsertActionPerformed
 
@@ -898,7 +969,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 noroom = false;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
-            if (!game.getCurrentRoom().getObjects().get(0).isAvailable()) {
+            if (game.getCurrentRoom().getObjects().get(1).isAvailable()) {
                 GameTextArea.append("\nprintPhone\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
@@ -906,7 +977,6 @@ public class EngineFrame extends javax.swing.JFrame {
                 noroom = false;
             } else {
                 GameTextArea.append("Per poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico");
-                GameTextArea.append("\n");
                 move = true;
                 noroom = false;
             }
@@ -919,7 +989,6 @@ public class EngineFrame extends javax.swing.JFrame {
                 noroom = false;
             } else {
                 GameTextArea.append("Non hai monete! Procurati una moneta");
-                GameTextArea.append("\n");
                 move = true;
                 noroom = false;
             }
@@ -938,7 +1007,6 @@ public class EngineFrame extends javax.swing.JFrame {
             game.getCurrentRoom().getObjects().remove(0);
             move = true;
             noroom = false;
-            PickUp.setVisible(false);
             controlInventory();
             controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(12)) {
@@ -950,7 +1018,6 @@ public class EngineFrame extends javax.swing.JFrame {
             game.getCurrentRoom().getObjects().remove(0);
             move = true;
             noroom = false;
-            PickUp.setVisible(false);
             controlInventory();
             controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(2)) {
@@ -962,7 +1029,6 @@ public class EngineFrame extends javax.swing.JFrame {
             game.getCurrentRoom().getObjects().remove(1);
             move = true;
             noroom = false;
-            PickUp.setVisible(false);
             controlInventory();
             controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(4)) {
@@ -1055,6 +1121,9 @@ public class EngineFrame extends javax.swing.JFrame {
             Read.setVisible(false);
             Insert.setVisible(false);
             ProfessorsName.setVisible(false);
+            ObjectsLabel1.setVisible(false);
+            ObjectsLabel2.setVisible(false);
+            ObjectsLabel3.setVisible(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
@@ -1103,10 +1172,14 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton East;
     private javax.swing.JTextArea GameTextArea;
     private javax.swing.JButton Insert;
-    private javax.swing.JTextArea InventoryTextArea;
+    private javax.swing.JLabel InventoryLabel1;
+    private javax.swing.JLabel InventoryLabel2;
+    private javax.swing.JLabel InventoryLabel3;
     private javax.swing.JButton NewGame;
     private javax.swing.JButton North;
-    private javax.swing.JTextArea ObjectsTextArea;
+    private javax.swing.JLabel ObjectsLabel1;
+    private javax.swing.JLabel ObjectsLabel2;
+    private javax.swing.JLabel ObjectsLabel3;
     private javax.swing.JButton Open;
     private javax.swing.JButton PickUp;
     private javax.swing.JTextField ProfessorsName;
@@ -1117,8 +1190,6 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Up;
     private javax.swing.JButton Use;
     private javax.swing.JButton West;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }
