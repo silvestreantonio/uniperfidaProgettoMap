@@ -320,6 +320,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        GameTextArea.setEditable(false);
         GameTextArea.setColumns(20);
         GameTextArea.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         GameTextArea.setRows(5);
