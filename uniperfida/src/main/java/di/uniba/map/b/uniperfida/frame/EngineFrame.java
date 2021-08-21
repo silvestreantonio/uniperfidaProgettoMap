@@ -12,6 +12,7 @@ import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -43,7 +44,7 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void control() {
         if (noroom) { // se noroom = true
-            GameTextArea.append("\nVerso questa direzione non puoi andare");
+            GameTextArea.append("\nVerso questa direzione non puoi andare\n");
         } else if (move) { // se move = true
             // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
             UniverseLabel1.setVisible(true);
@@ -201,10 +202,15 @@ public class EngineFrame extends javax.swing.JFrame {
         }
     }
 
-    public void NewGameFunction() {
+    public void enterToPlay() {
+        GameTextArea.append("\n\nPerfetto! Premi invio per iniziare.\n");
+        Insert.setVisible(true);
+        Insert.setText("Invio");
+    }
 
+    public void NewGameFunction() {
         GameTextArea.setText("");
-        GameTextArea.append("\n\nUniverso T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedì, 4 Maggio 2021."
+        GameTextArea.append("Universo T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedì, 4 Maggio 2021."
                 + "\nIl professor Silvestre ha finalmente ultimato il suo progetto: una macchina che permette di viaggiare tra gli universi."
                 + "\n“Assistente Olivieri, venga qui e mi dica cosa vede.” "
                 + "\n“Vedo una macchina interdimensionale?” "
@@ -306,6 +312,11 @@ public class EngineFrame extends javax.swing.JFrame {
         NewGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NewGameActionPerformed(evt);
+            }
+        });
+        NewGame.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NewGameKeyPressed(evt);
             }
         });
 
@@ -658,7 +669,6 @@ public class EngineFrame extends javax.swing.JFrame {
             GameTextArea.append("...");
         } else if (game.getCurrentRoom() == game.getRooms().get(8) || game.getCurrentRoom() == game.getRooms().get(15)) {
             GameTextArea.append("\nL'ascensore non è disponibile.");
-            GameTextArea.append("\n");
             move = true;
             noroom = false;
         }
@@ -927,20 +937,24 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("\nDevi accettare per forza! Non ti laureerai mai altrimenti.\n");
                     break;
             }
-        } else if ("Nuova Partita".equals(NewGame.getText())) {
+        } else if ("Nuova Partita".equals(NewGame.getText()) && !"Invio".equals(Insert.getText())) {
             String antonio = ProfessorsName.getText();
             antonio = antonio.toLowerCase();
             switch (antonio) {
                 case "antonio":
-                    GameTextArea.append("\nPerfetto! Premi invio per iniziare.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
-                    NewGameFunction();
+                    enterToPlay();
                     break;
+
                 default:
                     GameTextArea.append("\nIl nome utente è stato già utilizzato. \nInserisci di nuovo il nome:");
                     break;
             }
+        } else if("Invio".equals(Insert.getText())) {
+            Insert.setText("Inserisci");
+            Insert.setVisible(false);
+            NewGameFunction();
         }
         ProfessorsName.setText("");
         control();
@@ -1162,6 +1176,11 @@ public class EngineFrame extends javax.swing.JFrame {
         ProfessorsName.setVisible(true);
         NewGame.setEnabled(false);
     }//GEN-LAST:event_NewGameActionPerformed
+
+    private void NewGameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NewGameKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_NewGameKeyPressed
 
     /**
      * @param args the command line arguments
