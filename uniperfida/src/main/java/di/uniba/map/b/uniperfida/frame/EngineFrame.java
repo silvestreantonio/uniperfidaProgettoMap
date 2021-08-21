@@ -88,18 +88,30 @@ public class EngineFrame extends javax.swing.JFrame {
     private void controlButton() {
         if (game.getCurrentRoom() == game.getRooms().get(1) || game.getCurrentRoom() == game.getRooms().get(27) || game.getCurrentRoom() == game.getRooms().get(8) || game.getCurrentRoom() == game.getRooms().get(15)) {
             Push.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
         } else {
             Push.setEnabled(false);
 
         }
         if (game.getCurrentRoom() == game.getRooms().get(2) || game.getCurrentRoom() == game.getRooms().get(3) || game.getCurrentRoom() == game.getRooms().get(7) || game.getCurrentRoom() == game.getRooms().get(10) || game.getCurrentRoom() == game.getRooms().get(26)) {
             Read.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
         } else {
             Read.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(9) || game.getCurrentRoom() == game.getRooms().get(13) || game.getCurrentRoom() == game.getRooms().get(11) || game.getCurrentRoom() == game.getRooms().get(26)) {
             Up.setEnabled(true);
             Down.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
         } else {
             Up.setEnabled(false);
             Down.setEnabled(false);
@@ -107,6 +119,10 @@ public class EngineFrame extends javax.swing.JFrame {
         if (game.getCurrentRoom() == game.getRooms().get(24) || game.getCurrentRoom() == game.getRooms().get(12) || game.getCurrentRoom() == game.getRooms().get(2) || game.getCurrentRoom() == game.getRooms().get(4)) {
             if (game.getCurrentRoom().isCoin()) {
                 PickUp.setEnabled(true);
+                North.setEnabled(true);
+                South.setEnabled(true);
+                East.setEnabled(true);
+                West.setEnabled(true);
             } else {
                 PickUp.setEnabled(false);
             }
@@ -115,18 +131,44 @@ public class EngineFrame extends javax.swing.JFrame {
         }
         if (game.getCurrentRoom() == game.getRooms().get(18) || game.getCurrentRoom() == game.getRooms().get(19) || game.getCurrentRoom() == game.getRooms().get(21) || game.getCurrentRoom() == game.getRooms().get(22) || game.getCurrentRoom() == game.getRooms().get(3) || game.getCurrentRoom() == game.getRooms().get(26)) {
             Use.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
         } else {
             Use.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(25) && !game.getRooms().get(28).isVisible()) {
             Open.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
         } else {
             Open.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(4) || game.getCurrentRoom() == game.getRooms().get(28)) {
             Talk.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
         } else {
             Talk.setEnabled(false);
+        }
+        if (ProfessorsName.isVisible()) {
+            PickUp.setEnabled(false);
+            North.setEnabled(false);
+            South.setEnabled(false);
+            East.setEnabled(false);
+            West.setEnabled(false);
+            Push.setEnabled(false);
+            Open.setEnabled(false);
+            Talk.setEnabled(false);
+            Up.setEnabled(false);
+            Use.setEnabled(false);
+            Down.setEnabled(false);
+            Read.setEnabled(false);
         }
     }
 
@@ -314,16 +356,14 @@ public class EngineFrame extends javax.swing.JFrame {
                 NewGameActionPerformed(evt);
             }
         });
-        NewGame.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                NewGameKeyPressed(evt);
-            }
-        });
 
         GameTextArea.setEditable(false);
         GameTextArea.setColumns(20);
         GameTextArea.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        GameTextArea.setLineWrap(true);
         GameTextArea.setRows(5);
+        GameTextArea.setAlignmentX(2.0F);
+        GameTextArea.setAlignmentY(2.0F);
         jScrollPane2.setViewportView(GameTextArea);
 
         North.setText("N");
@@ -449,9 +489,7 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
-                                        .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(UniverseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -474,33 +512,36 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ProfessorsName, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(Insert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)
                             .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Read, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(118, 118, 118)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(Read, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(118, 118, 118)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 2, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -527,14 +568,6 @@ public class EngineFrame extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Up)
-                            .addComponent(PickUp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Down)
-                            .addComponent(Open)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Talk)
                             .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -550,7 +583,15 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(West)
-                            .addComponent(East))))
+                            .addComponent(East)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Up)
+                            .addComponent(PickUp))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Down)
+                            .addComponent(Open))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -742,7 +783,7 @@ public class EngineFrame extends javax.swing.JFrame {
             rossetto = rossetto.toLowerCase();
             switch (rossetto) {
                 case "rossetto":
-                    GameTextArea.append("\nSoluzione corretta, autenticazione #1 riuscita.\n");
+                    GameTextArea.append("\nSoluzione corretta, autenticazione #1 riuscita.");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -766,7 +807,7 @@ public class EngineFrame extends javax.swing.JFrame {
             impavido = impavido.toLowerCase();
             switch (impavido) {
                 case "impavido":
-                    GameTextArea.append("\nSoluzione corretta, autenticazione #2 riuscita.\n");
+                    GameTextArea.append("\nSoluzione corretta, autenticazione #2 riuscita.");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -790,7 +831,7 @@ public class EngineFrame extends javax.swing.JFrame {
             gatto = gatto.toLowerCase();
             switch (gatto) {
                 case "gatto":
-                    GameTextArea.append("\nSoluzione corretta, autenticazione #3 riuscita.\n");
+                    GameTextArea.append("\nSoluzione corretta, autenticazione #3 riuscita.");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -814,7 +855,7 @@ public class EngineFrame extends javax.swing.JFrame {
             cinquanta = cinquanta.toLowerCase();
             switch (cinquanta) {
                 case "cinquanta":
-                    GameTextArea.append("\nSoluzione corretta, autenticazione #4 riuscita.\n");
+                    GameTextArea.append("\nSoluzione corretta, autenticazione #4 riuscita.");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -952,7 +993,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("\nIl nome utente è stato già utilizzato. \nInserisci di nuovo il nome:");
                     break;
             }
-        } else if("Invio".equals(Insert.getText())) {
+        } else if ("Invio".equals(Insert.getText())) {
             Insert.setText("Inserisci");
             Insert.setVisible(false);
             NewGameFunction();
@@ -965,13 +1006,13 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(18)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\n#1 Benvenuto nel menu di accettazione."
+                GameTextArea.append("\n#1 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- a volte in delle situazioni sono fuori luogo;"
                         + "\n- non lascio le tue labbra;"
                         + "\n- resisto all’acqua;"
                         + "\n- non sono rosso per forza."
-                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
+                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
@@ -984,58 +1025,55 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(19)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\n#2 Benvenuto nel menu di accettazione."
+                GameTextArea.append("\n#2 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- sono un aggettivo;"
                         + "\n- sono coraggioso;"
                         + "\n- sono razionale di fronte ad una minaccia;"
                         + "\n- letteralmente qualcosa in più di avido."
-                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
+                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Qui ti sei già autenticato!");
-                GameTextArea.append("\n");
+                GameTextArea.append("\nQui ti sei già autenticato!");
                 move = true;
                 noroom = false;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(21)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\n#3 Benvenuto nel menu di accettazione."
+                GameTextArea.append("\n#3 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- notoriamente domestico;"
                         + "\n- i miei video sono divertenti;"
                         + "\n- duro a morire;"
                         + "\n- spesso in compagnia di una volpe."
-                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
+                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Qui ti sei già autenticato!");
-                GameTextArea.append("\n");
+                GameTextArea.append("\nQui ti sei già autenticato!");
                 move = true;
                 noroom = false;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(22)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
-                GameTextArea.append("\n#4 Benvenuto nel menu di accettazione."
+                GameTextArea.append("\n#4 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- a questa età si va in crisi;"
                         + "\n- a napoli sono il pane;"
                         + "\n- arancione per le banche;"
                         + "\n- sono un numero."
-                        + "\nInserisci la soluzione oppure premi 0 per uscire.");
+                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Qui ti sei già autenticato!");
-                GameTextArea.append("\n");
+                GameTextArea.append("\nQui ti sei già autenticato!");
                 move = true;
                 noroom = false;
             }
@@ -1059,7 +1097,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Non hai monete! Procurati una moneta");
+                GameTextArea.append("\nNon hai monete! Procurati una moneta");
                 move = true;
                 noroom = false;
             }
@@ -1116,11 +1154,11 @@ public class EngineFrame extends javax.swing.JFrame {
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(25)) {
-            GameTextArea.append("\nFatto! Porta aperta.\n");
+            GameTextArea.append("\nFatto! Porta aperta.");
             move = true;
             noroom = false;
             game.getCurrentRoom().setDescription("Ti trovi nella sala d'attesa del prof. Basilico. La porta è aperta.");
-            Open.setVisible(false);
+            Open.setEnabled(false);
             game.getCurrentRoom().getObjects().remove(0);
             controlObjects();
             game.getRooms().get(28).setVisible(true);
@@ -1157,14 +1195,13 @@ public class EngineFrame extends javax.swing.JFrame {
                         + "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”");
                 GameTextArea.append("\nAccetti?\n");
                 game.getCurrentRoom().getPeople().get(0).setTalkable(false);
-                Talk.setVisible(false);
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 move = false;
                 noroom = false;
             }
         } else {
-            GameTextArea.append("\nNon disturbare!\n");
+            GameTextArea.append("\nNon disturbare!");
             move = true;
             noroom = false;
         }
@@ -1177,11 +1214,6 @@ public class EngineFrame extends javax.swing.JFrame {
         ProfessorsName.setVisible(true);
         NewGame.setEnabled(false);
     }//GEN-LAST:event_NewGameActionPerformed
-
-    private void NewGameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NewGameKeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_NewGameKeyPressed
 
     /**
      * @param args the command line arguments
