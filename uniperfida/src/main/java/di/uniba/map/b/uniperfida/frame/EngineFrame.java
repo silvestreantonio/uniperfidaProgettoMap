@@ -245,7 +245,7 @@ public class EngineFrame extends javax.swing.JFrame {
     }
 
     public void enterToPlay() {
-        GameTextArea.append("\n\nPerfetto! Premi invio per iniziare.\n");
+        GameTextArea.append("Perfetto! Premi invio per iniziare.\n");
         Insert.setVisible(true);
         Insert.setText("Invio");
     }
@@ -279,7 +279,8 @@ public class EngineFrame extends javax.swing.JFrame {
                 + "\n“No”."
                 + "\n..."
                 + "\n..."
-                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”\n");
+                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene"
+                + "\nil concetto di integrazione, in bocca al lupo!”");
         UniverseLabel1.setVisible(true);
         UniverseLabel2.setVisible(true);
         UniverseLabel2.setText(game.getCurrentRoom().getuniverse());
@@ -357,7 +358,6 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
-        GameTextArea.setEditable(false);
         GameTextArea.setColumns(20);
         GameTextArea.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         GameTextArea.setLineWrap(true);
@@ -1210,6 +1210,8 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
         // TODO add your handling code here:
+        GameTextArea.setText("");
+        GameTextArea.append("Benvenuto! \nInserisci il tuo nome.\n");
         Insert.setVisible(true);
         ProfessorsName.setVisible(true);
         NewGame.setEnabled(false);
@@ -1253,10 +1255,9 @@ public class EngineFrame extends javax.swing.JFrame {
         }
         GameTextArea.setText("");
         GameTextArea.append("\n"
-                + "\n==================================="
-                + "\n * Uniperfida v. 1.1 - 2020-2021 *"
-                + "\n==================================="
-                + "\nBENVENUTO");
+                + "\n==========================================================================="
+                + "\n---------------------------------------* Uniperfida v. 1.1 - 2020-2021 *---------------------------------------"
+                + "\n===========================================================================");
     }
 
     public static void main(String args[]) {
