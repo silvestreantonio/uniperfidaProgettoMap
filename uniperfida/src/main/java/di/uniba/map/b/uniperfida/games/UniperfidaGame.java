@@ -172,99 +172,99 @@ public class UniperfidaGame extends GameDescription {
 
         // definizione delle stanze
         Room laboratory = new Room(1);
-        laboratory.setuniverse("Universo T-237");
+        laboratory.setuniverse("T-237");
 
         Room firstMachine = new Room(2);
-        firstMachine.setuniverse("Universo T-237");
+        firstMachine.setuniverse("T-237");
 
         Room courtyard = new Room(3);
-        courtyard.setuniverse("Universo J-371");
+        courtyard.setuniverse("J-371");
         courtyard.setTwoObjects(true);
 
         Room hall = new Room(4);
         hall.setCount(0);
-        hall.setuniverse("Universo J-371");
+        hall.setuniverse("J-371");
         hall.setTwoObjects(true);
 
         Room reception = new Room(5);
-        reception.setuniverse("Universo J-371");
+        reception.setuniverse("J-371");
 
         Room firstBathroom = new Room(6);
-        firstBathroom.setuniverse("Universo J-371");
+        firstBathroom.setuniverse("J-371");
 
         Room corridor = new Room(7);
-        corridor.setuniverse("Universo J-371");
+        corridor.setuniverse("J-371");
 
         Room infoPoint = new Room(8);
-        infoPoint.setuniverse("Universo J-371");
+        infoPoint.setuniverse("J-371");
 
         Room firstElevator = new Room(9);
-        firstElevator.setuniverse("Universo J-371");
+        firstElevator.setuniverse("J-371");
 
         Room stairs = new Room(10);
-        stairs.setuniverse("Universo J-371");
+        stairs.setuniverse("J-371");
 
         Room waitingRoom = new Room(11);
-        waitingRoom.setuniverse("Universo J-371");
+        waitingRoom.setuniverse("J-371");
 
         Room roomA = new Room(12);
-        roomA.setuniverse("Universo J-371");
+        roomA.setuniverse("J-371");
 
         Room roomB = new Room(13);
-        roomB.setuniverse("Universo J-371");
+        roomB.setuniverse("J-371");
 
         Room upStairs = new Room(14);
-        upStairs.setuniverse("Universo J-371");
+        upStairs.setuniverse("J-371");
 
         Room upStairsHall = new Room(15);
-        upStairsHall.setuniverse("Universo J-371");
+        upStairsHall.setuniverse("J-371");
 
         Room secondElevator = new Room(16);
-        secondElevator.setuniverse("Universo J-371");
+        secondElevator.setuniverse("J-371");
 
         Room secondBathroom = new Room(17);
-        secondBathroom.setuniverse("Universo J-371");
+        secondBathroom.setuniverse("J-371");
 
         Room firstSector = new Room(18);
-        firstSector.setuniverse("Universo J-371");
+        firstSector.setuniverse("J-371");
 
         Room waitingRoomRossetto = new Room(19);
-        waitingRoomRossetto.setuniverse("Universo J-371");
+        waitingRoomRossetto.setuniverse("J-371");
 
         Room waitingRoomImpavido = new Room(20);
-        waitingRoomImpavido.setuniverse("Universo J-371");
+        waitingRoomImpavido.setuniverse("J-371");
 
         Room secondSector = new Room(21);
-        secondSector.setuniverse("Universo J-371");
+        secondSector.setuniverse("J-371");
 
         Room waitingRoomGatto = new Room(22);
-        waitingRoomGatto.setuniverse("Universo J-371");
+        waitingRoomGatto.setuniverse("J-371");
 
         Room waitingRoomCinquanta = new Room(23);
-        waitingRoomCinquanta.setuniverse("Universo J-371");
+        waitingRoomCinquanta.setuniverse("J-371");
 
         Room thirdSector = new Room(24);
-        thirdSector.setuniverse("Universo J-371");
+        thirdSector.setuniverse("J-371");
 
         Room thirdBathroom = new Room(25);
-        thirdBathroom.setuniverse("Universo J-371");
+        thirdBathroom.setuniverse("J-371");
 
         Room waitingRoomBasilico = new Room(26);
-        waitingRoomBasilico.setuniverse("Universo J-371");
+        waitingRoomBasilico.setuniverse("J-371");
         waitingRoomBasilico.setCount(0);
         waitingRoomBasilico.setVisible(false);
 
         Room secretary = new Room(27);
-        secretary.setuniverse("Universo J-371");
+        secretary.setuniverse("J-371");
         secretary.setVisible(false);
         secretary.setTwoObjects(true);
 
         Room secondMachine = new Room(28);
-        secondMachine.setuniverse("Universo J-371");
+        secondMachine.setuniverse("J-371");
         secondMachine.setPrint(false);
 
         Room basilicoOffice = new Room(29);
-        basilicoOffice.setuniverse("Universo J-371");
+        basilicoOffice.setuniverse("J-371");
         basilicoOffice.setVisible(false);
 
         // definizione della mappa (collegamenti tra le stanze)

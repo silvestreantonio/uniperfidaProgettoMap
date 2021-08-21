@@ -12,6 +12,7 @@ import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
 import java.awt.Font;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -45,10 +46,10 @@ public class EngineFrame extends javax.swing.JFrame {
             GameTextArea.append("\nVerso questa direzione non puoi andare");
         } else if (move) { // se move = true
             // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
-            GameTextArea.append("\n");
-            GameTextArea.append("\n-----[" + game.getCurrentRoom().getuniverse() + "]-----\n");
-            GameTextArea.append(game.getCurrentRoom().getDescription());
-            GameTextArea.append("\n");
+            UniverseLabel1.setVisible(true);
+            UniverseLabel2.setVisible(true);
+            UniverseLabel2.setText(game.getCurrentRoom().getuniverse());
+            GameTextArea.append("\n\n-----[" + game.getCurrentRoom().getDescription() + "]-----\n");
         }
         controlObjects();
         controlInventory();
@@ -72,6 +73,12 @@ public class EngineFrame extends javax.swing.JFrame {
             ObjectsLabel1.setVisible(false);
             ObjectsLabel2.setVisible(false);
             ObjectsLabel3.setVisible(false);
+            InventoryLabel.setVisible(false);
+            InventoryLabel1.setVisible(false);
+            InventoryLabel2.setVisible(false);
+            InventoryLabel3.setVisible(false);
+            UniverseLabel1.setVisible(false);
+            UniverseLabel2.setVisible(false);
             GameTextArea.setText("");
             GameTextArea.append("\nHai perso, 0 punti");
         }
@@ -145,22 +152,29 @@ public class EngineFrame extends javax.swing.JFrame {
     public void controlInventory() {
         int i = 0;
         ImageIcon image = new ImageIcon("resources/coin.png");
+        ImageIcon image2 = new ImageIcon("resources/no.png");
         if (!game.getInventory().isEmpty()) {
             for (AdvObject o : game.getInventory()) { // ciclo sugli elementi dell'inventario
                 i++;
             }
             if (i == 1) {
-                InventoryLabel1.setVisible(true);
-                InventoryLabel1.setIcon(image);
-                InventoryLabel2.setVisible(false);
-                InventoryLabel3.setVisible(false);
-            } else if (i == 2) {
-                InventoryLabel1.setVisible(true);
+                InventoryLabel.setVisible(true);
                 InventoryLabel2.setVisible(true);
-                InventoryLabel1.setIcon(image);
                 InventoryLabel2.setIcon(image);
-                InventoryLabel3.setVisible(false);
+                InventoryLabel1.setVisible(true);
+                InventoryLabel3.setVisible(true);
+                InventoryLabel1.setIcon(null);
+                InventoryLabel3.setIcon(null);
+            } else if (i == 2) {
+                InventoryLabel.setVisible(true);
+                InventoryLabel1.setVisible(true);
+                InventoryLabel3.setVisible(true);
+                InventoryLabel1.setIcon(image);
+                InventoryLabel3.setIcon(image);
+                InventoryLabel2.setVisible(true);
+                InventoryLabel2.setIcon(null);
             } else if (i == 3) {
+                InventoryLabel.setVisible(true);
                 InventoryLabel1.setVisible(true);
                 InventoryLabel2.setVisible(true);
                 InventoryLabel3.setVisible(true);
@@ -169,10 +183,83 @@ public class EngineFrame extends javax.swing.JFrame {
                 InventoryLabel3.setIcon(image);
             }
         } else {
-            InventoryLabel1.setVisible(false);
-            InventoryLabel2.setVisible(false);
-            InventoryLabel3.setVisible(false);
+            if (!"Nuova Partita".equals(NewGame.getText())) {
+                InventoryLabel1.setVisible(true);
+                InventoryLabel2.setVisible(true);
+                InventoryLabel3.setVisible(true);
+                InventoryLabel1.setIcon(null);
+                InventoryLabel2.setIcon(image2);
+                InventoryLabel3.setIcon(null);
+            } else {
+                InventoryLabel1.setVisible(true);
+                InventoryLabel2.setVisible(true);
+                InventoryLabel3.setVisible(true);
+                InventoryLabel1.setIcon(null);
+                InventoryLabel2.setIcon(null);
+                InventoryLabel3.setIcon(null);
+            }
         }
+    }
+
+    public void NewGameFunction() {
+
+        GameTextArea.setText("");
+        GameTextArea.append("\n\nUniverso T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedì, 4 Maggio 2021."
+                + "\nIl professor Silvestre ha finalmente ultimato il suo progetto: una macchina che permette di viaggiare tra gli universi."
+                + "\n“Assistente Olivieri, venga qui e mi dica cosa vede.” "
+                + "\n“Vedo una macchina interdimensionale?” "
+                + "\n“No, è la nostra possibilità per sbagliare, il nostro mondo è talmente perfetto che non ci permette di capire cosa sia giusto o sbagliato”"
+                + "\n“Non capisco”"
+                + "\n“C’è un universo, conosciuto come J-371, in cui ci sono le stesse persone."
+                + "\nPensa: la loro libertà, senza alcun vincolo morale, ha reso quel mondo invivibile. Viviamo due situazioni diametralmente opposte ma desideriamo la stessa cosa: evadere."
+                + "\nOra ci serve solo una cavia."
+                + "\nSecondo la legge dei Multiversi, se una persona effettua un viaggio interdimensionale si ritroverà nello stesso nostro anno, a vivere una vita che è sua solo in quell’universo,"
+                + "\nquindi io lì potrei essere un delinquente!”"
+                + "\n“Ce l’ho, ce l’ho, conosco un tipo di nome Edoardo abbastanza sconsiderato da affrontare un viaggio da cui potrebbe non fare ritorno” "
+                + "\n“Okay, ci incontriamo qui giovedì alle 15”.");
+        GameTextArea.append("\n");
+        GameTextArea.append("\n...\n");
+        GameTextArea.append("...\n");
+        GameTextArea.append("\n**********DUE GIORNI DOPO**********");
+        GameTextArea.append("\n\n“Buongiorno professor Silvestre, io sono Edoardo.”"
+                + "\n“Ciao Edoardo. Sono molto felice di conoscerti, prima di partire lascia che ti spieghi un paio di cose. Iniziamo subito, sei pronto?”"
+                + "\n“Sissignore!”"
+                + "\n“Come vedi questa è una macchina interdimensionale e serve per viaggiare attraverso i Multiversi."
+                + "\nIl viaggio durerà qualche secondo e non ti accorgerai di nulla. Una volta dentro la macchina, premi il tasto rosso per partire. "
+                + "\nRicorda: hai a disposizione solamente sessanta minuti. Passata l’ora ritorna esattamente nel punto in cui hai approdato”"
+                + "\n“Ho capito, ci sono rischi?”"
+                + "\n“No”."
+                + "\n..."
+                + "\n..."
+                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”\n");
+        UniverseLabel1.setVisible(true);
+        UniverseLabel2.setVisible(true);
+        UniverseLabel2.setText(game.getCurrentRoom().getuniverse());
+        GameTextArea.append("\n\n-----[" + game.getCurrentRoom().getDescription() + "]-----\n");
+        PickUp.setVisible(true);
+        North.setVisible(true);
+        South.setVisible(true);
+        East.setVisible(true);
+        West.setVisible(true);
+        Push.setVisible(true);
+        Open.setVisible(true);
+        Talk.setVisible(true);
+        Up.setVisible(true);
+        Use.setVisible(true);
+        Down.setVisible(true);
+        Read.setVisible(true);
+        Insert.setVisible(false);
+        ProfessorsName.setVisible(false);
+        NewGame.setText("UNIPERFIDA");
+        NewGame.setEnabled(false);
+        ObjectsLabel1.setVisible(true);
+        ObjectsLabel2.setVisible(true);
+        ObjectsLabel3.setVisible(true);
+        InventoryLabel.setVisible(true);
+        InventoryLabel1.setVisible(true);
+        InventoryLabel2.setVisible(true);
+        InventoryLabel3.setVisible(true);
+        control();
     }
 
     /**
@@ -207,8 +294,13 @@ public class EngineFrame extends javax.swing.JFrame {
         ObjectsLabel1 = new javax.swing.JLabel();
         ObjectsLabel2 = new javax.swing.JLabel();
         ObjectsLabel3 = new javax.swing.JLabel();
+        InventoryLabel = new javax.swing.JLabel();
+        UniverseLabel1 = new javax.swing.JLabel();
+        UniverseLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("UNIPERFIDA");
+        setResizable(false);
 
         NewGame.setText("Nuova Partita");
         NewGame.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +349,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
-        PickUp.setText("Prendi");
+        PickUp.setText("Raccogli");
         PickUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PickUpActionPerformed(evt);
@@ -306,6 +398,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        ProfessorsName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         Insert.setText("Inserisci");
         Insert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,12 +407,24 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        ObjectsLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel1.setText("1");
         ObjectsLabel1.setToolTipText("");
 
+        ObjectsLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel2.setText("2");
 
+        ObjectsLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel3.setText("3");
+
+        InventoryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        InventoryLabel.setText("Borsellino");
+
+        UniverseLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        UniverseLabel1.setText("Universo");
+
+        UniverseLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        UniverseLabel2.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,187 +433,123 @@ public class EngineFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(93, 93, 93)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                                        .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(UniverseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ObjectsLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(89, 89, 89)
+                                .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(UniverseLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ObjectsLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(89, 89, 89)
+                                .addComponent(InventoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(45, 45, 45))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ProfessorsName, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Insert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
+                            .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Read, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ObjectsLabel2)
-                                    .addComponent(ObjectsLabel1)
-                                    .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(253, 253, 253))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(137, 137, 137)
-                                .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(118, 118, 118)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(3, 3, 3)))
+                                        .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(229, 229, 229)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(39, 39, 39)
-                                        .addComponent(Insert))))
-                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(75, 75, 75)))
+                                    .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addGap(75, 75, 75)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(InventoryLabel)
+                    .addComponent(ObjectsLabel1)
+                    .addComponent(UniverseLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ObjectsLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UniverseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(77, 77, 77)
-                                .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Insert))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Up)
-                                    .addComponent(PickUp))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Down)
-                                    .addComponent(Open))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54))
+                            .addComponent(Up)
+                            .addComponent(PickUp))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Down)
+                            .addComponent(Open)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Talk)
-                                    .addComponent(Push)
-                                    .addComponent(ObjectsLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Use)
-                                    .addComponent(Read)
-                                    .addComponent(ObjectsLabel3)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(ObjectsLabel2)))
-                        .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(East)
-                                            .addComponent(West))
-                                        .addGap(2, 2, 2))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(North)
-                                        .addGap(28, 28, 28)))
-                                .addComponent(South))
-                            .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(Talk)
+                            .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Use)
+                            .addComponent(Read)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(North)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(South))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(West)
+                            .addComponent(East))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Insert)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        InventoryLabel2.getAccessibleContext().setAccessibleName("");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
-        // TODO add your handling code here:
-        GameTextArea.setText("");
-        GameTextArea.append("\n\nUniverso T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedì, 4 Maggio 2021."
-                + "\nIl professor Silvestre ha finalmente ultimato il suo progetto: una macchina che permette di viaggiare tra gli universi."
-                + "\n“Assistente Olivieri, venga qui e mi dica cosa vede.” "
-                + "\n“Vedo una macchina interdimensionale?” "
-                + "\n“No, è la nostra possibilità per sbagliare, il nostro mondo è talmente perfetto che non ci permette di capire cosa sia giusto o sbagliato”"
-                + "\n“Non capisco”"
-                + "\n“C’è un universo, conosciuto come J-371, in cui ci sono le stesse persone."
-                + "\nPensa: la loro libertà, senza alcun vincolo morale, ha reso quel mondo invivibile. Viviamo due situazioni diametralmente opposte ma desideriamo la stessa cosa: evadere."
-                + "\nOra ci serve solo una cavia."
-                + "\nSecondo la legge dei Multiversi, se una persona effettua un viaggio interdimensionale si ritroverà nello stesso nostro anno, a vivere una vita che è sua solo in quell’universo,"
-                + "\nquindi io lì potrei essere un delinquente!”"
-                + "\n“Ce l’ho, ce l’ho, conosco un tipo di nome Edoardo abbastanza sconsiderato da affrontare un viaggio da cui potrebbe non fare ritorno” "
-                + "\n“Okay, ci incontriamo qui giovedì alle 15”.");
-        GameTextArea.append("\n");
-        GameTextArea.append("\n...\n");
-        GameTextArea.append("...\n");
-        GameTextArea.append("\n**********DUE GIORNI DOPO**********");
-        GameTextArea.append("\n\n“Buongiorno professor Silvestre, io sono Edoardo.”"
-                + "\n“Ciao Edoardo. Sono molto felice di conoscerti, prima di partire lascia che ti spieghi un paio di cose. Iniziamo subito, sei pronto?”"
-                + "\n“Sissignore!”"
-                + "\n“Come vedi questa è una macchina interdimensionale e serve per viaggiare attraverso i Multiversi."
-                + "\nIl viaggio durerà qualche secondo e non ti accorgerai di nulla. Una volta dentro la macchina, premi il tasto rosso per partire. "
-                + "\nRicorda: hai a disposizione solamente sessanta minuti. Passata l’ora ritorna esattamente nel punto in cui hai approdato”"
-                + "\n“Ho capito, ci sono rischi?”"
-                + "\n“No”."
-                + "\n..."
-                + "\n..."
-                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene il concetto di integrazione, in bocca al lupo!”\n");
-        GameTextArea.append("\n-----[" + game.getCurrentRoom().getuniverse() + "]-----\n");
-        GameTextArea.append(game.getCurrentRoom().getDescription());
-        PickUp.setVisible(true);
-        North.setVisible(true);
-        South.setVisible(true);
-        East.setVisible(true);
-        West.setVisible(true);
-        Push.setVisible(true);
-        Open.setVisible(true);
-        Talk.setVisible(true);
-        Up.setVisible(true);
-        Use.setVisible(true);
-        Down.setVisible(true);
-        Read.setVisible(true);
-        Insert.setVisible(false);
-        ProfessorsName.setVisible(false);
-        NewGame.setText("UNIPERFIDA");
-        NewGame.setEnabled(false);
-        ObjectsLabel1.setVisible(true);
-        ObjectsLabel2.setVisible(true);
-        ObjectsLabel3.setVisible(true);
-        control();
-    }//GEN-LAST:event_NewGameActionPerformed
 
     private void EastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EastActionPerformed
         // TODO add your handling code here:
@@ -673,7 +715,7 @@ public class EngineFrame extends javax.swing.JFrame {
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
-            GameTextArea.append("\nIl foglio recita:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
+            GameTextArea.append("\nNel foglio c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
             move = true;
             noroom = false;
         }
@@ -885,6 +927,20 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("\nDevi accettare per forza! Non ti laureerai mai altrimenti.\n");
                     break;
             }
+        } else if ("Nuova Partita".equals(NewGame.getText())) {
+            String antonio = ProfessorsName.getText();
+            antonio = antonio.toLowerCase();
+            switch (antonio) {
+                case "antonio":
+                    GameTextArea.append("\nPerfetto! Premi invio per iniziare.");
+                    Insert.setVisible(false);
+                    ProfessorsName.setVisible(false);
+                    NewGameFunction();
+                    break;
+                default:
+                    GameTextArea.append("\nIl nome utente è stato già utilizzato. \nInserisci di nuovo il nome:");
+                    break;
+            }
         }
         ProfessorsName.setText("");
         control();
@@ -1003,6 +1059,7 @@ public class EngineFrame extends javax.swing.JFrame {
             game.getCurrentRoom().getObjects().get(0).setPickupable(false);
             game.getCurrentRoom().getObjects().get(0).setDroppable(true);
             game.getCurrentRoom().setCoin(false);
+            game.getCurrentRoom().setTwoObjects(false);
             game.getInventory().add(game.getCurrentRoom().getObjects().get(0));
             game.getCurrentRoom().getObjects().remove(0);
             move = true;
@@ -1014,6 +1071,7 @@ public class EngineFrame extends javax.swing.JFrame {
             game.getCurrentRoom().getObjects().get(0).setPickupable(false);
             game.getCurrentRoom().getObjects().get(0).setDroppable(true);
             game.getCurrentRoom().setCoin(false);
+            game.getCurrentRoom().setTwoObjects(false);
             game.getInventory().add(game.getCurrentRoom().getObjects().get(0));
             game.getCurrentRoom().getObjects().remove(0);
             move = true;
@@ -1025,6 +1083,7 @@ public class EngineFrame extends javax.swing.JFrame {
             game.getCurrentRoom().getObjects().get(1).setPickupable(false);
             game.getCurrentRoom().getObjects().get(1).setDroppable(true);
             game.getCurrentRoom().setCoin(false);
+            game.getCurrentRoom().setTwoObjects(false);
             game.getInventory().add(game.getCurrentRoom().getObjects().get(1));
             game.getCurrentRoom().getObjects().remove(1);
             move = true;
@@ -1097,6 +1156,13 @@ public class EngineFrame extends javax.swing.JFrame {
         control();
     }//GEN-LAST:event_TalkActionPerformed
 
+    private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
+        // TODO add your handling code here:
+        Insert.setVisible(true);
+        ProfessorsName.setVisible(true);
+        NewGame.setEnabled(false);
+    }//GEN-LAST:event_NewGameActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1124,6 +1190,12 @@ public class EngineFrame extends javax.swing.JFrame {
             ObjectsLabel1.setVisible(false);
             ObjectsLabel2.setVisible(false);
             ObjectsLabel3.setVisible(false);
+            InventoryLabel.setVisible(false);
+            InventoryLabel1.setVisible(false);
+            InventoryLabel2.setVisible(false);
+            InventoryLabel3.setVisible(false);
+            UniverseLabel1.setVisible(false);
+            UniverseLabel2.setVisible(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
@@ -1172,6 +1244,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton East;
     private javax.swing.JTextArea GameTextArea;
     private javax.swing.JButton Insert;
+    private javax.swing.JLabel InventoryLabel;
     private javax.swing.JLabel InventoryLabel1;
     private javax.swing.JLabel InventoryLabel2;
     private javax.swing.JLabel InventoryLabel3;
@@ -1187,6 +1260,8 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Read;
     private javax.swing.JButton South;
     private javax.swing.JButton Talk;
+    private javax.swing.JLabel UniverseLabel1;
+    private javax.swing.JLabel UniverseLabel2;
     private javax.swing.JButton Up;
     private javax.swing.JButton Use;
     private javax.swing.JButton West;
