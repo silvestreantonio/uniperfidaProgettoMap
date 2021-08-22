@@ -170,6 +170,12 @@ public class EngineFrame extends javax.swing.JFrame {
             Down.setEnabled(false);
             Read.setEnabled(false);
         }
+        if (game.getCurrentRoom() == game.getRooms().get(0)) {
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
+        }
     }
 
     public void controlObjects() {
@@ -349,6 +355,7 @@ public class EngineFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIPERFIDA");
+        setPreferredSize(new java.awt.Dimension(784, 900));
         setResizable(false);
 
         NewGame.setText("Nuova Partita");
@@ -358,6 +365,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        GameTextArea.setEditable(false);
         GameTextArea.setColumns(20);
         GameTextArea.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         GameTextArea.setLineWrap(true);
@@ -532,7 +540,7 @@ public class EngineFrame extends javax.swing.JFrame {
                                                 .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -565,7 +573,7 @@ public class EngineFrame extends javax.swing.JFrame {
                             .addComponent(UniverseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -592,7 +600,7 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Down)
                             .addComponent(Open))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Insert)
@@ -988,14 +996,14 @@ public class EngineFrame extends javax.swing.JFrame {
                     ProfessorsName.setVisible(false);
                     enterToPlay();
                     break;
-
                 default:
-                    GameTextArea.append("\nIl nome utente è stato già utilizzato. \nInserisci di nuovo il nome:");
+                    GameTextArea.append("\nIl nome utente è stato già utilizzato. \nInserisci di nuovo il nome:\n");
                     break;
             }
         } else if ("Invio".equals(Insert.getText())) {
             Insert.setText("Inserisci");
             Insert.setVisible(false);
+            ProfessorsName.setVisible(false);
             NewGameFunction();
         }
         ProfessorsName.setText("");
