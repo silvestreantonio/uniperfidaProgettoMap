@@ -1,29 +1,29 @@
-Laboratorio del professor Silvestre.
-Navicella Space-Voyager. Ti trovi nel tuo universo.
-Cortile.
-Atrio principale.
-Ufficio del collaboratore.
-Bagno del piano terra.
-Corridoio del piano terra.
-Zona delle bacheche.
-Ascensore.
-Scale piano terra.
-Sala d'attesa aule.
-Aula A.
-Aula B.
-Scale primo piano.
-Atrio del primo piano.
-Ascensore.
-Bagno del primo piano.
-Primo settore del corridoio.
-Sala d'attesa della prof.ssa Rossetto.
-Sala d'attesa del prof. Impavido.
-Secondo settore del corridoio.
-Sala d'attesa del prof. Gatto.
-Sala d'attesa del prof. Cinquanta.
-Terzo settore del corridoio.
-Bagno dei professori.
-Sala d'attesa del prof. Basilico.
-Segreteria.
-Navicella Space-Voyager.
-Ufficio del prof. Basilico.
+Laboratorio
+Navicella
+Cortile
+Atrio
+Ufficio
+Bagno
+Corridoio
+Zona delle bacheche
+Ascensore
+Pianerottolo
+Sala d'attesa aule
+Aula A
+Aula B
+Pianerottolo
+Atrio
+Ascensore
+Bagno
+Corridoio
+Sala d'attesa
+Sala d'attesa
+Corridoio
+Sala d'attesa
+Sala d'attesa
+Corridoio
+Bagno
+Sala d'attesa
+Segreteria
+Navicella
+Ufficio

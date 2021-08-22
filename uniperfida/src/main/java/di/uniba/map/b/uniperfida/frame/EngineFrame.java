@@ -12,13 +12,20 @@ import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,6 +40,10 @@ public class EngineFrame extends javax.swing.JFrame {
     private Parser parser;
     boolean noroom = false;
     boolean move = false;
+    private AudioInputStream ais;
+    private Clip clip;
+    private boolean music = true;
+    private boolean map = false;
 
     /**
      * Creates new form EngineFrame
@@ -40,6 +51,24 @@ public class EngineFrame extends javax.swing.JFrame {
     public EngineFrame() {
         initComponents();
         init();
+        playMusic();
+
+    }
+
+    private void playMusic() {
+        try {
+            ais = AudioSystem.getAudioInputStream(new File("resources/Payday 2 Official Soundtrack - AndNowWeWait.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            startMusic();
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(this, "Errore nella riproduzione della musica", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void startMusic() {
+        clip.start();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     private void control() {
@@ -51,6 +80,7 @@ public class EngineFrame extends javax.swing.JFrame {
             UniverseLabel2.setVisible(true);
             UniverseLabel2.setText(game.getCurrentRoom().getuniverse());
             GameTextArea.append("\n\n-----[" + game.getCurrentRoom().getDescription() + "]-----\n");
+            controlMap();
         }
         controlObjects();
         controlInventory();
@@ -250,6 +280,30 @@ public class EngineFrame extends javax.swing.JFrame {
         }
     }
 
+    public void controlMap() {
+        NowLabel.setText(game.getCurrentRoom().getName());
+        if (game.getCurrentRoom().getNorth() == null) {
+            NordLabel.setText("A nord non c'è nulla");
+        } else {
+            NordLabel.setText(game.getCurrentRoom().getNorth().getName());
+        }
+        if (game.getCurrentRoom().getSouth() == null) {
+            SudLabel.setText("A sud non c'è nulla");
+        } else {
+            SudLabel.setText(game.getCurrentRoom().getSouth().getName());
+        }
+        if (game.getCurrentRoom().getWest() == null) {
+            OvestLabel.setText("A ovest non c'è nulla");
+        } else {
+            OvestLabel.setText(game.getCurrentRoom().getWest().getName());
+        }
+        if (game.getCurrentRoom().getEast() == null) {
+            EstLabel.setText("A est non c'è nulla");
+        } else {
+            EstLabel.setText(game.getCurrentRoom().getEast().getName());
+        }
+    }
+
     public void enterToPlay() {
         GameTextArea.append("Perfetto! Premi invio per iniziare.\n");
         Insert.setVisible(true);
@@ -291,6 +345,7 @@ public class EngineFrame extends javax.swing.JFrame {
         UniverseLabel2.setVisible(true);
         UniverseLabel2.setText(game.getCurrentRoom().getuniverse());
         GameTextArea.append("\n\n-----[" + game.getCurrentRoom().getDescription() + "]-----\n");
+        controlMap();
         PickUp.setVisible(true);
         North.setVisible(true);
         South.setVisible(true);
@@ -314,6 +369,8 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel1.setVisible(true);
         InventoryLabel2.setVisible(true);
         InventoryLabel3.setVisible(true);
+        GameMenu.setEnabled(true);
+        AboutMenu.setEnabled(true);
         control();
     }
 
@@ -352,9 +409,21 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel = new javax.swing.JLabel();
         UniverseLabel1 = new javax.swing.JLabel();
         UniverseLabel2 = new javax.swing.JLabel();
+        NordLabel = new javax.swing.JLabel();
+        NowLabel = new javax.swing.JLabel();
+        SudLabel = new javax.swing.JLabel();
+        EstLabel = new javax.swing.JLabel();
+        OvestLabel = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        GameMenu = new javax.swing.JMenu();
+        Music = new javax.swing.JCheckBoxMenuItem();
+        Map = new javax.swing.JCheckBoxMenuItem();
+        AboutMenu = new javax.swing.JMenu();
+        Help = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIPERFIDA");
+        setForeground(java.awt.Color.yellow);
         setPreferredSize(new java.awt.Dimension(784, 900));
         setResizable(false);
 
@@ -486,6 +555,51 @@ public class EngineFrame extends javax.swing.JFrame {
         UniverseLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         UniverseLabel2.setText("1");
 
+        NordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NordLabel.setText("Nord");
+
+        NowLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        NowLabel.setText("Now");
+
+        SudLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SudLabel.setText("Sud");
+
+        EstLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        EstLabel.setText("Est");
+
+        OvestLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        OvestLabel.setText("Ovest");
+
+        GameMenu.setText("Game");
+
+        Music.setSelected(true);
+        Music.setText("Music");
+        Music.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MusicActionPerformed(evt);
+            }
+        });
+        GameMenu.add(Music);
+
+        Map.setText("Map");
+        Map.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MapActionPerformed(evt);
+            }
+        });
+        GameMenu.add(Map);
+
+        jMenuBar1.add(GameMenu);
+
+        AboutMenu.setText("About");
+
+        Help.setText("Help");
+        AboutMenu.add(Help);
+
+        jMenuBar1.add(AboutMenu);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -522,41 +636,60 @@ public class EngineFrame extends javax.swing.JFrame {
                             .addComponent(Insert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(Read, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(118, 118, 118)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(118, 118, 118)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addGap(65, 65, 65)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                            .addComponent(OvestLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(NowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(SudLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(218, 218, 218)
+                                                .addComponent(NordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(118, 118, 118)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(EstLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 2, Short.MAX_VALUE)))))
+                                            .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 1, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InventoryLabel)
@@ -600,7 +733,16 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Down)
                             .addComponent(Open))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(NordLabel)
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NowLabel)
+                    .addComponent(EstLabel)
+                    .addComponent(OvestLabel))
+                .addGap(38, 38, 38)
+                .addComponent(SudLabel)
+                .addGap(38, 38, 38)
                 .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Insert)
@@ -1225,6 +1367,34 @@ public class EngineFrame extends javax.swing.JFrame {
         NewGame.setEnabled(false);
     }//GEN-LAST:event_NewGameActionPerformed
 
+    private void MusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusicActionPerformed
+        // TODO add your handling code here:
+        music = !music;
+        if (!music) {
+            clip.stop();
+        } else {
+            startMusic();
+        }
+    }//GEN-LAST:event_MusicActionPerformed
+
+    private void MapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MapActionPerformed
+        // TODO add your handling code here:
+        map = !map;
+        if (!map) {
+            NordLabel.setVisible(false);
+            NowLabel.setVisible(false);
+            SudLabel.setVisible(false);
+            EstLabel.setVisible(false);
+            OvestLabel.setVisible(false);
+        } else {
+            NordLabel.setVisible(true);
+            NowLabel.setVisible(true);
+            SudLabel.setVisible(true);
+            EstLabel.setVisible(true);
+            OvestLabel.setVisible(true);
+        }
+    }//GEN-LAST:event_MapActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1258,6 +1428,13 @@ public class EngineFrame extends javax.swing.JFrame {
             InventoryLabel3.setVisible(false);
             UniverseLabel1.setVisible(false);
             UniverseLabel2.setVisible(false);
+            NordLabel.setVisible(false);
+            NowLabel.setVisible(false);
+            SudLabel.setVisible(false);
+            EstLabel.setVisible(false);
+            OvestLabel.setVisible(false);
+            GameMenu.setEnabled(false);
+            AboutMenu.setEnabled(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
@@ -1301,31 +1478,42 @@ public class EngineFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu AboutMenu;
     private javax.swing.JButton Down;
     private javax.swing.JButton East;
+    private javax.swing.JLabel EstLabel;
+    private javax.swing.JMenu GameMenu;
     private javax.swing.JTextArea GameTextArea;
+    private javax.swing.JMenuItem Help;
     private javax.swing.JButton Insert;
     private javax.swing.JLabel InventoryLabel;
     private javax.swing.JLabel InventoryLabel1;
     private javax.swing.JLabel InventoryLabel2;
     private javax.swing.JLabel InventoryLabel3;
+    private javax.swing.JCheckBoxMenuItem Map;
+    private javax.swing.JCheckBoxMenuItem Music;
     private javax.swing.JButton NewGame;
+    private javax.swing.JLabel NordLabel;
     private javax.swing.JButton North;
+    private javax.swing.JLabel NowLabel;
     private javax.swing.JLabel ObjectsLabel1;
     private javax.swing.JLabel ObjectsLabel2;
     private javax.swing.JLabel ObjectsLabel3;
     private javax.swing.JButton Open;
+    private javax.swing.JLabel OvestLabel;
     private javax.swing.JButton PickUp;
     private javax.swing.JTextField ProfessorsName;
     private javax.swing.JButton Push;
     private javax.swing.JButton Read;
     private javax.swing.JButton South;
+    private javax.swing.JLabel SudLabel;
     private javax.swing.JButton Talk;
     private javax.swing.JLabel UniverseLabel1;
     private javax.swing.JLabel UniverseLabel2;
     private javax.swing.JButton Up;
     private javax.swing.JButton Use;
     private javax.swing.JButton West;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
