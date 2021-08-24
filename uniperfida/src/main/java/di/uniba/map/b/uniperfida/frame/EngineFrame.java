@@ -91,32 +91,9 @@ public class EngineFrame extends javax.swing.JFrame {
         controlInventory();
         controlButton();
         if (game.getRooms().get(3).getCount() == 3) {
-            //end1(out);
-            PickUp.setVisible(false);
-            North.setVisible(false);
-            South.setVisible(false);
-            East.setVisible(false);
-            West.setVisible(false);
-            Push.setVisible(false);
-            Open.setVisible(false);
-            Talk.setVisible(false);
-            Up.setVisible(false);
-            Use.setVisible(false);
-            Down.setVisible(false);
-            Read.setVisible(false);
-            Insert.setVisible(false);
-            ProfessorsName.setVisible(false);
-            ObjectsLabel1.setVisible(false);
-            ObjectsLabel2.setVisible(false);
-            ObjectsLabel3.setVisible(false);
-            InventoryLabel.setVisible(false);
-            InventoryLabel1.setVisible(false);
-            InventoryLabel2.setVisible(false);
-            InventoryLabel3.setVisible(false);
-            UniverseLabel1.setVisible(false);
-            UniverseLabel2.setVisible(false);
+            exit();
             GameTextArea.setText("");
-            GameTextArea.append("\nHai perso, 0 punti");
+            GameTextArea.append("\nHai perso, 0 punti\nPremi il tasto esci per uscire.");
         }
     }
 
@@ -315,6 +292,34 @@ public class EngineFrame extends javax.swing.JFrame {
         Insert.setText("Invio");
     }
 
+    public void exit() {
+        PickUp.setVisible(false);
+        North.setVisible(false);
+        South.setVisible(false);
+        East.setVisible(false);
+        West.setVisible(false);
+        Push.setVisible(false);
+        Open.setVisible(false);
+        Talk.setVisible(false);
+        Up.setVisible(false);
+        Use.setVisible(false);
+        Down.setVisible(false);
+        Read.setVisible(false);
+        Insert.setVisible(false);
+        ProfessorsName.setVisible(false);
+        NewGame.setVisible(false);
+        Exit.setVisible(true);
+        ObjectsLabel1.setVisible(false);
+        ObjectsLabel2.setVisible(false);
+        ObjectsLabel3.setVisible(false);
+        InventoryLabel.setVisible(false);
+        InventoryLabel1.setVisible(false);
+        InventoryLabel2.setVisible(false);
+        InventoryLabel3.setVisible(false);
+        UniverseLabel1.setVisible(false);
+        UniverseLabel2.setVisible(false);
+    }
+
     public void NewGameFunction() {
         GameTextArea.setText("");
         GameTextArea.append("Universo T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedì, 4 Maggio 2021."
@@ -365,6 +370,7 @@ public class EngineFrame extends javax.swing.JFrame {
         Read.setVisible(true);
         Insert.setVisible(false);
         ProfessorsName.setVisible(false);
+        NewGame.setVisible(true);
         NewGame.setText("UNIPERFIDA");
         NewGame.setEnabled(false);
         ObjectsLabel1.setVisible(true);
@@ -374,8 +380,7 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel1.setVisible(true);
         InventoryLabel2.setVisible(true);
         InventoryLabel3.setVisible(true);
-        GameMenu.setEnabled(true);
-        AboutMenu.setEnabled(true);
+        Map.setEnabled(true);
         control();
     }
 
@@ -419,6 +424,7 @@ public class EngineFrame extends javax.swing.JFrame {
         SudLabel = new javax.swing.JLabel();
         EstLabel = new javax.swing.JLabel();
         OvestLabel = new javax.swing.JLabel();
+        Exit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         GameMenu = new javax.swing.JMenu();
         Music = new javax.swing.JCheckBoxMenuItem();
@@ -443,6 +449,8 @@ public class EngineFrame extends javax.swing.JFrame {
                 NewGameActionPerformed(evt);
             }
         });
+
+        jScrollPane2.setBorder(null);
 
         GameTextArea.setEditable(false);
         GameTextArea.setBackground(new java.awt.Color(0, 51, 102));
@@ -643,6 +651,13 @@ public class EngineFrame extends javax.swing.JFrame {
         OvestLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         OvestLabel.setText("Ovest");
 
+        Exit.setText("Esci");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+
         jMenuBar1.setBackground(new java.awt.Color(0, 0, 0));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".AppleSystemUIFont", 0, 14))); // NOI18N
         jMenuBar1.setToolTipText("");
@@ -707,60 +722,62 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addComponent(InventoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(312, 312, 312)
+                            .addComponent(SudLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(312, 312, 312)
-                                    .addComponent(SudLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(OvestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(NowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                                    .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(OvestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(NowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                                            .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addComponent(NordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(EstLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                                        .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(NordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ProfessorsName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(EstLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ProfessorsName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(jScrollPane2)
-                .addContainerGap())
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -823,7 +840,8 @@ public class EngineFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ProfessorsName))
+                    .addComponent(ProfessorsName)
+                    .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1013,6 +1031,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     game.getRooms().get(25).setCount(++j);
@@ -1021,6 +1040,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("Autenticazione #1 fallita.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1037,6 +1057,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     game.getRooms().get(25).setCount(++j);
@@ -1045,6 +1066,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("Autenticazione #2 fallita.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1061,6 +1083,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     game.getRooms().get(25).setCount(++j);
@@ -1069,6 +1092,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("Autenticazione #3 fallita.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1085,6 +1109,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     game.getRooms().get(25).setCount(++j);
@@ -1093,6 +1118,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("Autenticazione #4 fallita.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1109,15 +1135,18 @@ public class EngineFrame extends javax.swing.JFrame {
                     ProfessorsName.setVisible(false);
                     endTime = System.currentTimeMillis();
                     seconds = (endTime - startTime) / 1000;
+                    exit();
                     GameTextArea.setText("");
                     GameTextArea.append("\nprintEnd\n");
                     GameTextArea.append("Programma eseguito in " + seconds + " secondi\n");
                     GameTextArea.append("\nVedi come far finire il gioco");
+                    Exit.setVisible(true);
                     break;
                 case "0":
                     GameTextArea.append("Fatto! Telefono lasciato.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1137,6 +1166,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getRooms().get(3).setCount(++a);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1148,6 +1178,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("...");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     game.getRooms().get(26).setVisible(true);
                     game.getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
                     GameTextArea.append("Ma cos'è stato questo rumore? Proveniva dalla aula A.\n");
@@ -1163,6 +1194,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getRooms().get(3).setCount(++a);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1175,6 +1207,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getRooms().get(3).setCount(++a);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1182,6 +1215,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     GameTextArea.append("\nNessun caffè.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1198,6 +1232,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     game.getRooms().get(26).getObjects().get(1).setAvailable(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
+                    NewGame.setVisible(true);
                     move = true;
                     noroom = false;
                     break;
@@ -1241,6 +1276,7 @@ public class EngineFrame extends javax.swing.JFrame {
                         + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             } else {
@@ -1260,6 +1296,7 @@ public class EngineFrame extends javax.swing.JFrame {
                         + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             } else {
@@ -1278,6 +1315,7 @@ public class EngineFrame extends javax.swing.JFrame {
                         + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             } else {
@@ -1296,6 +1334,7 @@ public class EngineFrame extends javax.swing.JFrame {
                         + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             } else {
@@ -1308,6 +1347,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 GameTextArea.append("\nprintPhone\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             } else {
@@ -1320,6 +1360,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 GameTextArea.append("\nprintCoffeeMenu\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             } else {
@@ -1423,6 +1464,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 game.getCurrentRoom().getPeople().get(0).setTalkable(false);
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
+                NewGame.setVisible(false);
                 move = false;
                 noroom = false;
             }
@@ -1440,7 +1482,7 @@ public class EngineFrame extends javax.swing.JFrame {
         GameTextArea.append("Benvenuto! \nInserisci il tuo nome.\n");
         Insert.setVisible(true);
         ProfessorsName.setVisible(true);
-        NewGame.setEnabled(false);
+        NewGame.setVisible(false);
     }//GEN-LAST:event_NewGameActionPerformed
 
     private void MusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusicActionPerformed
@@ -1471,6 +1513,11 @@ public class EngineFrame extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_MapActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1510,8 +1557,10 @@ public class EngineFrame extends javax.swing.JFrame {
             SudLabel.setVisible(false);
             EstLabel.setVisible(false);
             OvestLabel.setVisible(false);
-            GameMenu.setEnabled(false);
-            AboutMenu.setEnabled(false);
+            GameMenu.setEnabled(true);
+            Map.setEnabled(false);
+            AboutMenu.setEnabled(true);
+            Exit.setVisible(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
@@ -1559,6 +1608,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Down;
     private javax.swing.JButton East;
     private javax.swing.JLabel EstLabel;
+    private javax.swing.JButton Exit;
     private javax.swing.JMenu GameMenu;
     private javax.swing.JTextArea GameTextArea;
     private javax.swing.JMenuItem Help;

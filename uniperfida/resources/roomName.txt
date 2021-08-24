@@ -5,7 +5,7 @@ Atrio
 Ufficio
 Bagno
 Corridoio
-Zona delle bacheche
+Zona bacheche
 Ascensore
 Pianerottolo
 Sala d'attesa aule
