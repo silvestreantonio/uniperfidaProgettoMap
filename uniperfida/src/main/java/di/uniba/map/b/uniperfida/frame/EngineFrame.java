@@ -445,14 +445,16 @@ public class EngineFrame extends javax.swing.JFrame {
         });
 
         GameTextArea.setEditable(false);
-        GameTextArea.setBackground(new java.awt.Color(102, 176, 205));
+        GameTextArea.setBackground(new java.awt.Color(0, 51, 102));
         GameTextArea.setColumns(20);
         GameTextArea.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        GameTextArea.setForeground(new java.awt.Color(255, 255, 255));
         GameTextArea.setLineWrap(true);
         GameTextArea.setRows(5);
         GameTextArea.setAlignmentX(2.0F);
         GameTextArea.setAlignmentY(2.0F);
         GameTextArea.setAutoscrolls(false);
+        GameTextArea.setOpaque(false);
         jScrollPane2.setViewportView(GameTextArea);
 
         North.setBackground(new java.awt.Color(255, 255, 255));
@@ -576,54 +578,68 @@ public class EngineFrame extends javax.swing.JFrame {
         });
 
         InventoryLabel1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        InventoryLabel1.setForeground(new java.awt.Color(255, 255, 255));
 
         InventoryLabel2.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        InventoryLabel2.setForeground(new java.awt.Color(255, 255, 255));
 
         InventoryLabel3.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        InventoryLabel3.setForeground(new java.awt.Color(255, 255, 255));
 
         ObjectsLabel1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        ObjectsLabel1.setForeground(new java.awt.Color(255, 255, 255));
         ObjectsLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel1.setText("1");
         ObjectsLabel1.setToolTipText("");
 
         ObjectsLabel2.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        ObjectsLabel2.setForeground(new java.awt.Color(255, 255, 255));
         ObjectsLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel2.setText("2");
 
         ObjectsLabel3.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        ObjectsLabel3.setForeground(new java.awt.Color(255, 255, 255));
         ObjectsLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel3.setText("3");
 
         InventoryLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        InventoryLabel.setForeground(new java.awt.Color(255, 255, 255));
         InventoryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         InventoryLabel.setText("Borsellino");
 
         UniverseLabel1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        UniverseLabel1.setForeground(new java.awt.Color(255, 255, 255));
         UniverseLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         UniverseLabel1.setText("Universo");
 
         UniverseLabel2.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        UniverseLabel2.setForeground(new java.awt.Color(255, 255, 255));
         UniverseLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         UniverseLabel2.setText("1");
 
         NordLabel.setBackground(new java.awt.Color(255, 255, 255));
         NordLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        NordLabel.setForeground(new java.awt.Color(255, 255, 255));
         NordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NordLabel.setText("Nord");
 
         NowLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        NowLabel.setForeground(new java.awt.Color(255, 255, 255));
         NowLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NowLabel.setText("Now");
 
         SudLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        SudLabel.setForeground(new java.awt.Color(255, 255, 255));
         SudLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         SudLabel.setText("Sud");
 
         EstLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        EstLabel.setForeground(new java.awt.Color(255, 255, 255));
         EstLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         EstLabel.setText("Est");
 
         OvestLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+        OvestLabel.setForeground(new java.awt.Color(255, 255, 255));
         OvestLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         OvestLabel.setText("Ovest");
 
