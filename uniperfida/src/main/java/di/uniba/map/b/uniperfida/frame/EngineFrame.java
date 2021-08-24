@@ -11,8 +11,10 @@ import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -52,7 +54,10 @@ public class EngineFrame extends javax.swing.JFrame {
         initComponents();
         init();
         playMusic();
-
+        Wallpaper wallpaper = new Wallpaper();
+        getContentPane().add(wallpaper);
+        wallpaper.setSize(799, 958);
+        wallpaper.setVisible(true);
     }
 
     private void playMusic() {
@@ -423,9 +428,11 @@ public class EngineFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIPERFIDA");
+        setBackground(new java.awt.Color(0, 0, 0));
         setForeground(java.awt.Color.yellow);
         setResizable(false);
 
+        NewGame.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         NewGame.setText("Nuova Partita");
         NewGame.setAutoscrolls(true);
         NewGame.setDefaultCapable(false);
@@ -438,8 +445,9 @@ public class EngineFrame extends javax.swing.JFrame {
         });
 
         GameTextArea.setEditable(false);
+        GameTextArea.setBackground(new java.awt.Color(102, 176, 205));
         GameTextArea.setColumns(20);
-        GameTextArea.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        GameTextArea.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         GameTextArea.setLineWrap(true);
         GameTextArea.setRows(5);
         GameTextArea.setAlignmentX(2.0F);
@@ -447,6 +455,8 @@ public class EngineFrame extends javax.swing.JFrame {
         GameTextArea.setAutoscrolls(false);
         jScrollPane2.setViewportView(GameTextArea);
 
+        North.setBackground(new java.awt.Color(255, 255, 255));
+        North.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         North.setText("N");
         North.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,6 +464,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        South.setBackground(new java.awt.Color(255, 255, 255));
+        South.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         South.setText("S");
         South.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,6 +473,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        East.setBackground(new java.awt.Color(255, 255, 255));
+        East.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         East.setText("E");
         East.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -468,6 +482,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        West.setBackground(new java.awt.Color(255, 255, 255));
+        West.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         West.setText("O");
         West.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -475,6 +491,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Push.setBackground(new java.awt.Color(255, 255, 255));
+        Push.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Push.setText("Premi");
         Push.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -482,6 +500,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        PickUp.setBackground(new java.awt.Color(255, 255, 255));
+        PickUp.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         PickUp.setText("Raccogli");
         PickUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -489,6 +509,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Open.setBackground(new java.awt.Color(255, 255, 255));
+        Open.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Open.setText("Apri");
         Open.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -496,6 +518,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Talk.setBackground(new java.awt.Color(255, 255, 255));
+        Talk.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Talk.setText("Parla");
         Talk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -503,6 +527,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Use.setBackground(new java.awt.Color(255, 255, 255));
+        Use.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Use.setText("Usa");
         Use.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -510,6 +536,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Up.setBackground(new java.awt.Color(255, 255, 255));
+        Up.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Up.setText("Sali");
         Up.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,6 +545,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Down.setBackground(new java.awt.Color(255, 255, 255));
+        Down.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Down.setText("Scendi");
         Down.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -524,6 +554,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        Read.setBackground(new java.awt.Color(255, 255, 255));
+        Read.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Read.setText("Leggi");
         Read.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -531,8 +563,10 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        ProfessorsName.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         ProfessorsName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        Insert.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Insert.setText("Inserisci");
         Insert.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Insert.addActionListener(new java.awt.event.ActionListener() {
@@ -541,39 +575,62 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
 
+        InventoryLabel1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+
+        InventoryLabel2.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+
+        InventoryLabel3.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
+
+        ObjectsLabel1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         ObjectsLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel1.setText("1");
         ObjectsLabel1.setToolTipText("");
 
+        ObjectsLabel2.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         ObjectsLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel2.setText("2");
 
+        ObjectsLabel3.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         ObjectsLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ObjectsLabel3.setText("3");
 
+        InventoryLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         InventoryLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         InventoryLabel.setText("Borsellino");
 
+        UniverseLabel1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         UniverseLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         UniverseLabel1.setText("Universo");
 
+        UniverseLabel2.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         UniverseLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         UniverseLabel2.setText("1");
 
+        NordLabel.setBackground(new java.awt.Color(255, 255, 255));
+        NordLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         NordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NordLabel.setText("Nord");
 
+        NowLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         NowLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         NowLabel.setText("Now");
 
+        SudLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         SudLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         SudLabel.setText("Sud");
 
+        EstLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         EstLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         EstLabel.setText("Est");
 
+        OvestLabel.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         OvestLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         OvestLabel.setText("Ovest");
+
+        jMenuBar1.setBackground(new java.awt.Color(0, 0, 0));
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".AppleSystemUIFont", 0, 14))); // NOI18N
+        jMenuBar1.setToolTipText("");
+        jMenuBar1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
 
         GameMenu.setText("Game");
 
@@ -596,6 +653,7 @@ public class EngineFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(GameMenu);
 
+        AboutMenu.setBackground(new java.awt.Color(153, 153, 153));
         AboutMenu.setText("About");
 
         Help.setText("Help");
@@ -617,9 +675,9 @@ public class EngineFrame extends javax.swing.JFrame {
                             .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(UniverseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ObjectsLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(89, 89, 89)
+                                .addGap(97, 97, 97)
+                                .addComponent(ObjectsLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(97, 97, 97)
                         .addComponent(InventoryLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(InventoryLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -627,60 +685,56 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addComponent(InventoryLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(UniverseLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ObjectsLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
+                        .addGap(97, 97, 97)
+                        .addComponent(ObjectsLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                        .addGap(97, 97, 97)
                         .addComponent(InventoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(312, 312, 312)
+                                    .addComponent(SudLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(112, 112, 112)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(159, 159, 159)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(OvestLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(OvestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(NowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(SudLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(312, 312, 312)
-                                .addComponent(NordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                                            .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(North, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(South, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(East, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(NordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(EstLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 159, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(Up, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))
+                                    .addComponent(Down, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(EstLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -697,7 +751,7 @@ public class EngineFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InventoryLabel)
                     .addComponent(ObjectsLabel1)
@@ -713,7 +767,7 @@ public class EngineFrame extends javax.swing.JFrame {
                             .addComponent(UniverseLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -741,19 +795,19 @@ public class EngineFrame extends javax.swing.JFrame {
                             .addComponent(Down)
                             .addComponent(Open))))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(NordLabel)
+                .addComponent(NordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NowLabel)
-                    .addComponent(EstLabel)
-                    .addComponent(OvestLabel))
+                    .addComponent(NowLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EstLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(OvestLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addComponent(SudLabel)
+                .addComponent(SudLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ProfessorsName))
                 .addContainerGap())
         );
 
@@ -1398,6 +1452,7 @@ public class EngineFrame extends javax.swing.JFrame {
             SudLabel.setVisible(true);
             EstLabel.setVisible(true);
             OvestLabel.setVisible(true);
+
         }
     }//GEN-LAST:event_MapActionPerformed
 
