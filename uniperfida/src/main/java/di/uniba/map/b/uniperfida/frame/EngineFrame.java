@@ -451,7 +451,6 @@ public class EngineFrame extends javax.swing.JFrame {
         setFocusTraversalPolicyProvider(true);
         setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         setForeground(java.awt.Color.yellow);
-        setResizable(false);
 
         NewGame.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         NewGame.setText("Nuova Partita");
