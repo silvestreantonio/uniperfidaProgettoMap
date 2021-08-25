@@ -466,7 +466,7 @@ public class UniperfidaGame extends GameDescription {
         door.setOpen(false);
         waitingRoomBasilico.getObjects().add(door);
 
-        AdvObject sign = new AdvObject(22, "cartello", "'Università di Bari Aldo Moro, Facoltà di Informatica'. Sei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato! Di fronte a te c'è una porta aperta, molto probabilmente è rotta.");
+        AdvObject sign = new AdvObject(22, "cartello", "'Università di Bari Aldo Moro, Facoltà di Informatica'.");
         sign.setAlias(new String[]{"cartellone"});
         sign.setReadable(true);
         courtyard.getObjects().add(sign);
