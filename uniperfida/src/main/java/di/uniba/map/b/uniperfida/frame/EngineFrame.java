@@ -12,6 +12,7 @@ import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -93,7 +94,9 @@ public class EngineFrame extends javax.swing.JFrame {
         if (game.getRooms().get(3).getCount() == 3) {
             exit();
             GameTextArea.setText("");
-            GameTextArea.append("\nHai perso, 0 punti\nPremi il tasto esci per uscire.");
+            GameTextArea.append("\nLe monete sono terminate e non puoi andare in segreteria.\nHai perso.\nHai totalizzato 0 punti quindi il tuo punteggio non verrà salvato nel databse.\nPremi il tasto esci per uscire.");
+        } else if (game.getRooms().get(3).getCount() == 4) {
+            exit();
         }
     }
 
@@ -117,16 +120,26 @@ public class EngineFrame extends javax.swing.JFrame {
         } else {
             Read.setEnabled(false);
         }
-        if (game.getCurrentRoom() == game.getRooms().get(9) || game.getCurrentRoom() == game.getRooms().get(13) || game.getCurrentRoom() == game.getRooms().get(11) || game.getCurrentRoom() == game.getRooms().get(26)) {
-            Up.setEnabled(true);
+        if (game.getCurrentRoom() == game.getRooms().get(13) || game.getCurrentRoom() == game.getRooms().get(11)) {
             Down.setEnabled(true);
+            North.setEnabled(true);
+            South.setEnabled(true);
+            East.setEnabled(true);
+            West.setEnabled(true);
+            if (!game.getRooms().get(26).isVisible() && game.getCurrentRoom() == game.getRooms().get(11)) {
+                Down.setEnabled(false);
+            }
+        } else {
+            Down.setEnabled(false);
+        }
+        if (game.getCurrentRoom() == game.getRooms().get(9) || game.getCurrentRoom() == game.getRooms().get(26)) {
+            Up.setEnabled(true);
             North.setEnabled(true);
             South.setEnabled(true);
             East.setEnabled(true);
             West.setEnabled(true);
         } else {
             Up.setEnabled(false);
-            Down.setEnabled(false);
         }
         if (game.getCurrentRoom() == game.getRooms().get(24) || game.getCurrentRoom() == game.getRooms().get(12) || game.getCurrentRoom() == game.getRooms().get(2) || game.getCurrentRoom() == game.getRooms().get(4)) {
             if (game.getCurrentRoom().isCoin()) {
@@ -435,6 +448,8 @@ public class EngineFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIPERFIDA");
         setBackground(new java.awt.Color(0, 0, 0));
+        setFocusTraversalPolicyProvider(true);
+        setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         setForeground(java.awt.Color.yellow);
         setResizable(false);
 
@@ -575,6 +590,8 @@ public class EngineFrame extends javax.swing.JFrame {
 
         ProfessorsName.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         ProfessorsName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ProfessorsName.setFocusTraversalPolicyProvider(true);
+        ProfessorsName.setHighlighter(null);
 
         Insert.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
         Insert.setText("Inserisci");
@@ -838,10 +855,10 @@ public class EngineFrame extends javax.swing.JFrame {
                 .addComponent(SudLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ProfessorsName)
-                    .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1130,16 +1147,33 @@ public class EngineFrame extends javax.swing.JFrame {
             String number = ProfessorsName.getText();
             switch (number) {
                 case "1":
-                    GameTextArea.append("\nprintPhone2\n");
+                    exit();
+                    GameTextArea.setText("");
+                    GameTextArea.append("\n...");
+                    GameTextArea.append("\n...");
+                    GameTextArea.append("“Benvenuto nella segreteria studenti dell'Università di Bari.“"
+                            + "\n..."
+                            + "\n..."
+                            + "\n“Spiacente, i nostri operatori sono tutti occupati. È inutile riprovare.“");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     endTime = System.currentTimeMillis();
                     seconds = (endTime - startTime) / 1000;
-                    exit();
-                    GameTextArea.setText("");
-                    GameTextArea.append("\nprintEnd\n");
+                    GameTextArea.append("\n...");
+                    GameTextArea.append("\n...");
+                    GameTextArea.append("\nA quanto pare verbalizzare i voti in questo universo è una cosa molto complessa.");
+                    GameTextArea.append("\n...");
+                    GameTextArea.append("\nOh no, è gia tempo di andare. I sessanta minuti scadono tra pochissimo!");
+                    GameTextArea.append("\n...");
+                    GameTextArea.append("\nCorri verso la navicella. Ti volti e noti un ragazzo molto simile all'assistente Olivieri che preso dall'ansia esclama “Uff, non riuscirò mai a verbalizzare il mio voto!“."
+                            + "\nSorridi. In cuor tuo sai che ha ragione."
+                            + "\n..."
+                            + "\n..."
+                            + "\nIntanto rientri nella tua dimensione."
+                            + "\n“Com'è stato? Com'erano le persone? C'erano guerre? Che lingua si parlava? La gente è davvero senza morale? E che mi dici delle...“"
+                            + "\n“Non ricordo nulla. So solo che non mi pento di non aver fatto l'università!“");
                     GameTextArea.append("Programma eseguito in " + seconds + " secondi\n");
-                    GameTextArea.append("\nVedi come far finire il gioco");
+                    game.getRooms().get(3).setCount(4);
                     Exit.setVisible(true);
                     break;
                 case "0":
@@ -1228,7 +1262,7 @@ public class EngineFrame extends javax.swing.JFrame {
             chooseVote = chooseVote.toLowerCase();
             switch (chooseVote) {
                 case "si":
-                    GameTextArea.append("\nOttima scelta! Ora non le resta che andare in segreteria per verbalizzare il suo voto.");
+                    GameTextArea.append("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il suo voto.");
                     game.getRooms().get(26).getObjects().get(1).setAvailable(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -1244,7 +1278,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String antonio = ProfessorsName.getText();
             antonio = antonio.toLowerCase();
             switch (antonio) {
-                case "antonio":
+                case "a":
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     enterToPlay();
@@ -1344,7 +1378,8 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
             if (game.getCurrentRoom().getObjects().get(1).isAvailable()) {
-                GameTextArea.append("\nprintPhone\n");
+                GameTextArea.append("\nDigita il numero che vuoi chiamare."
+                        + "\nDigita il numero oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1358,6 +1393,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
             if (!game.getInventory().isEmpty()) {
                 GameTextArea.append("\nprintCoffeeMenu\n");
+                GameTextArea.append("\nPremere: ");
+                GameTextArea.append("\n1) Caffè");
+                GameTextArea.append("\n2) Caffè lungo");
+                GameTextArea.append("\n3) Caffè macchiato");
+                GameTextArea.append("\n4) Caffè al cioccolato");
+                GameTextArea.append("\n0) Esci");
+                GameTextArea.append("\nInserisci il numero desiderato:\n");
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);

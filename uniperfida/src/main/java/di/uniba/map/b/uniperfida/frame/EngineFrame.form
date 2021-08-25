@@ -68,6 +68,10 @@
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="0" green="0" red="0" type="rgb"/>
     </Property>
+    <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
+    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+      <Font name=".AppleSystemUIFont" size="14" style="0"/>
+    </Property>
     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="0" green="ff" id="yellow" palette="1" red="ff" type="palette"/>
     </Property>
@@ -272,10 +276,10 @@
               <Component id="SudLabel" min="-2" pref="72" max="-2" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="NewGame" alignment="3" pref="39" max="32767" attributes="0"/>
-                  <Component id="Insert" alignment="3" max="32767" attributes="0"/>
-                  <Component id="ProfessorsName" alignment="3" max="32767" attributes="0"/>
-                  <Component id="Exit" alignment="3" max="32767" attributes="0"/>
+                  <Component id="NewGame" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="Insert" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="ProfessorsName" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="Exit" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -509,6 +513,10 @@
           <Font name=".AppleSystemUIFont" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
+        <Property name="highlighter" type="javax.swing.text.Highlighter" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="null"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="Insert">
