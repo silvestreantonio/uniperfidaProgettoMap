@@ -78,7 +78,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 supp = new StringBuilder();
             }
         };
-        int delay = 10;
+        int delay = 100;
         tm = new Timer(delay, taskPerformer);
         tm.start();
         init();
