@@ -78,7 +78,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 supp = new StringBuilder();
             }
         };
-        int delay = 100;
+        int delay = 50;
         tm = new Timer(delay, taskPerformer);
         tm.start();
         init();
@@ -351,13 +351,7 @@ public class EngineFrame extends javax.swing.JFrame {
     }
 
     public void enterToPlay() {
-        tm.start();
-        s = new StringBuilder("\n");
-        if (fast) {
-            GameTextArea.append(perfect.toString());
-        } else {
-            s.append(perfect);
-        }
+        GameTextArea.append("\nPerfetto!\nPremi invio per iniziare.\n");
         Insert.setVisible(true);
         Insert.setText("Invio");
     }
@@ -412,6 +406,8 @@ public class EngineFrame extends javax.swing.JFrame {
         Read.setEnabled(enable);
         Insert.setEnabled(enable);
         ProfessorsName.setEnabled(enable);
+        Speed1.setEnabled(enable);
+        Speed10.setEnabled(enable);
     }
 
     public void NewGameFunction() {
@@ -509,7 +505,8 @@ public class EngineFrame extends javax.swing.JFrame {
         GameMenu = new javax.swing.JMenu();
         Music = new javax.swing.JCheckBoxMenuItem();
         Map = new javax.swing.JCheckBoxMenuItem();
-        Speed = new javax.swing.JCheckBoxMenuItem();
+        Speed1 = new javax.swing.JCheckBoxMenuItem();
+        Speed10 = new javax.swing.JCheckBoxMenuItem();
         AboutMenu = new javax.swing.JMenu();
         Help = new javax.swing.JMenuItem();
 
@@ -782,14 +779,22 @@ public class EngineFrame extends javax.swing.JFrame {
         });
         GameMenu.add(Map);
 
-        Speed.setSelected(true);
-        Speed.setText("Velocità testo");
-        Speed.addActionListener(new java.awt.event.ActionListener() {
+        Speed1.setSelected(true);
+        Speed1.setText("Velocità 1x");
+        Speed1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SpeedActionPerformed(evt);
+                Speed1ActionPerformed(evt);
             }
         });
-        GameMenu.add(Speed);
+        GameMenu.add(Speed1);
+
+        Speed10.setText("Velocità 10x");
+        Speed10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Speed10ActionPerformed(evt);
+            }
+        });
+        GameMenu.add(Speed10);
 
         jMenuBar1.add(GameMenu);
 
@@ -1818,13 +1823,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
         // TODO add your handling code here:
         GameTextArea.setText("");
-        tm.start();
-        s = new StringBuilder("\n");
-        if (fast) {
-            GameTextArea.append(insertYourName.toString());
-        } else {
-            s.append(insertYourName);
-        }
+        GameTextArea.append("Inserisci il tuo nome.\n");
         Insert.setVisible(true);
         ProfessorsName.setVisible(true);
         NewGame.setVisible(false);
@@ -1888,10 +1887,19 @@ public class EngineFrame extends javax.swing.JFrame {
         Exit.setVisible(true);
     }//GEN-LAST:event_AvantiActionPerformed
 
-    private void SpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpeedActionPerformed
+    private void Speed1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Speed1ActionPerformed
         // TODO add your handling code here:                                       
-        fast = !fast;
-    }//GEN-LAST:event_SpeedActionPerformed
+        fast = false;
+        Speed1.setSelected(true);
+        Speed10.setSelected(false);
+    }//GEN-LAST:event_Speed1ActionPerformed
+
+    private void Speed10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Speed10ActionPerformed
+        // TODO add your handling code here:
+        fast = true;
+        Speed10.setSelected(true);
+        Speed1.setSelected(false);
+    }//GEN-LAST:event_Speed10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1943,13 +1951,7 @@ public class EngineFrame extends javax.swing.JFrame {
         }
         NameRoom.setText("");
         NameRoom.setText("Benvenuto!");
-        tm.start();
-        s = new StringBuilder("\n");
-        if (fast) {
-            GameTextArea.append(welcome.toString());
-        } else {
-            s.append(welcome);
-        }
+        GameTextArea.append("\nU N I P E R F I D A\n");
     }
 
     public static void main(String args[]) {
@@ -2021,7 +2023,8 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Push;
     private javax.swing.JButton Read;
     private javax.swing.JButton South;
-    private javax.swing.JCheckBoxMenuItem Speed;
+    private javax.swing.JCheckBoxMenuItem Speed1;
+    private javax.swing.JCheckBoxMenuItem Speed10;
     private javax.swing.JLabel SudLabel;
     private javax.swing.JButton Talk;
     private javax.swing.JLabel UniverseLabel1;

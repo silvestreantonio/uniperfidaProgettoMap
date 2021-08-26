@@ -153,7 +153,4 @@ public class Stringhe {
             + "\n“Per conoscere l’esito dell’ultimo esame”"
             + "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”"
             + "\nAccetti?\n");
-    public static StringBuilder insertYourName = new StringBuilder("Inserisci il tuo nome.\n");
-    public static StringBuilder welcome = new StringBuilder("\nU N I P E R F I D A\n");
-    public static StringBuilder perfect = new StringBuilder("Perfetto!\nPremi invio per iniziare.\n");
 }
