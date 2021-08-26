@@ -6,6 +6,7 @@
 package di.uniba.map.b.uniperfida.frame;
 
 import di.uniba.map.b.uniperfida.Engine;
+import static di.uniba.map.b.uniperfida.frame.Stringhe.*;
 import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
@@ -34,6 +35,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -49,15 +51,38 @@ public class EngineFrame extends javax.swing.JFrame {
     private boolean music = true;
     private boolean map = false;
     private boolean help = false;
+    private boolean fast = false;
+    private StringBuilder s = new StringBuilder();
+    private int counter = 0;
+    private Timer tm;
 
     /**
      * Creates new form EngineFrame
      */
     public EngineFrame() {
         initComponents();
-        init();
         playMusic();
         addWallpaper();
+        ActionListener taskPerformer = (ActionEvent evt) -> {
+            enableElements(false);
+            counter++;
+            if (counter >= s.length()) {
+                counter = 0;
+                tm.stop();
+                enableElements(true);
+                control();
+            } else {
+                StringBuilder supp = new StringBuilder();
+                supp.append(s.toString().charAt(counter));
+                GameTextArea.append(supp.toString());
+                supp = new StringBuilder();
+            }
+        };
+        int delay = 10;
+        tm = new Timer(delay, taskPerformer);
+        tm.start();
+        init();
+
     }
 
     private void addWallpaper() {
@@ -85,7 +110,14 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void control() {
         if (noroom) { // se noroom = true
-            GameTextArea.append("\nVerso questa direzione non puoi andare\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(noWay.toString());
+            } else {
+                s.append(noWay);
+            }
+            noroom = false;
         } else if (move) { // se move = true
             // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
             UniverseLabel1.setVisible(true);
@@ -319,7 +351,13 @@ public class EngineFrame extends javax.swing.JFrame {
     }
 
     public void enterToPlay() {
-        GameTextArea.append("Perfetto! Premi invio per iniziare.\n");
+        tm.start();
+        s = new StringBuilder("\n");
+        if (fast) {
+            GameTextArea.append(perfect.toString());
+        } else {
+            s.append(perfect);
+        }
         Insert.setVisible(true);
         Insert.setText("Invio");
     }
@@ -359,43 +397,40 @@ public class EngineFrame extends javax.swing.JFrame {
         OvestLabel.setVisible(false);
     }
 
+    private void enableElements(boolean enable) {
+        PickUp.setEnabled(enable);
+        North.setEnabled(enable);
+        South.setEnabled(enable);
+        East.setEnabled(enable);
+        West.setEnabled(enable);
+        Push.setEnabled(enable);
+        Open.setEnabled(enable);
+        Talk.setEnabled(enable);
+        Up.setEnabled(enable);
+        Use.setEnabled(enable);
+        Down.setEnabled(enable);
+        Read.setEnabled(enable);
+        Insert.setEnabled(enable);
+        ProfessorsName.setEnabled(enable);
+    }
+
     public void NewGameFunction() {
+        StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+        tm.start();
         GameTextArea.setText("");
-        GameTextArea.append("Universo T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedì, 4 Maggio 2021."
-                + "\nIl professor Silvestre ha finalmente ultimato il suo progetto: una macchina che permette di viaggiare tra gli universi."
-                + "\n“Assistente Olivieri, venga qui e mi dica cosa vede.” "
-                + "\n“Vedo una macchina interdimensionale?” "
-                + "\n“No, è la nostra possibilità per sbagliare, il nostro mondo è talmente perfetto che non ci permette di capire cosa sia giusto o sbagliato”"
-                + "\n“Non capisco”"
-                + "\n“C’è un universo, conosciuto come J-371, in cui ci sono le stesse persone."
-                + "\nPensa: la loro libertà, senza alcun vincolo morale, ha reso quel mondo invivibile. Viviamo due situazioni diametralmente opposte ma desideriamo la stessa cosa: evadere."
-                + "\nOra ci serve solo una cavia."
-                + "\nSecondo la legge dei Multiversi, se una persona effettua un viaggio interdimensionale si ritroverà nello stesso nostro anno, a vivere una vita che è sua solo in quell’universo,"
-                + "\nquindi io lì potrei essere un delinquente!”"
-                + "\n“Ce l’ho, ce l’ho, conosco un tipo di nome Edoardo abbastanza sconsiderato da affrontare un viaggio da cui potrebbe non fare ritorno” "
-                + "\n“Okay, ci incontriamo qui giovedì alle 15”.");
-        GameTextArea.append("\n");
-        GameTextArea.append("\n...\n");
-        GameTextArea.append("...\n");
-        GameTextArea.append("\n**********DUE GIORNI DOPO**********");
-        GameTextArea.append("\n\n“Buongiorno professor Silvestre, io sono Edoardo.”"
-                + "\n“Ciao Edoardo. Sono molto felice di conoscerti, prima di partire lascia che ti spieghi un paio di cose. Iniziamo subito, sei pronto?”"
-                + "\n“Sissignore!”"
-                + "\n“Come vedi questa è una macchina interdimensionale e serve per viaggiare attraverso i Multiversi."
-                + "\nIl viaggio durerà qualche secondo e non ti accorgerai di nulla. Una volta dentro la macchina, premi il tasto rosso per partire. "
-                + "\nRicorda: hai a disposizione solamente sessanta minuti. Passata l’ora ritorna esattamente nel punto in cui hai approdato”"
-                + "\n“Ho capito, ci sono rischi?”"
-                + "\n“No”."
-                + "\n..."
-                + "\n..."
-                + "\n“Ah dimenticavo, molto probabilmente ti ritroverai in un mondo diviso per nazioni e lingue. Ancora non conoscono bene"
-                + "\nil concetto di integrazione, in bocca al lupo!”\n");
+        s = new StringBuilder("\n");
+        if (fast) {
+            GameTextArea.append(incipit.toString());
+            GameTextArea.append(getLook.toString());
+        } else {
+            s.append(incipit);
+            s.append(getLook);
+        }
         UniverseLabel1.setVisible(true);
         UniverseLabel2.setVisible(true);
         UniverseLabel2.setText(game.getCurrentRoom().getuniverse());
         NameRoom.setVisible(true);
         NameRoom.setText(game.getCurrentRoom().getDescription());
-        GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
         controlMap();
         PickUp.setVisible(true);
         North.setVisible(true);
@@ -412,7 +447,7 @@ public class EngineFrame extends javax.swing.JFrame {
         Insert.setVisible(false);
         ProfessorsName.setVisible(false);
         NewGame.setVisible(true);
-        NewGame.setText("UNIPERFIDA");
+        NewGame.setText("UNIPERFIDA v.1.1 - 2020-2021");
         NewGame.setEnabled(false);
         ObjectsLabel1.setVisible(true);
         ObjectsLabel2.setVisible(true);
@@ -424,7 +459,6 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel3.setVisible(true);
         Map.setEnabled(true);
         Help.setEnabled(true);
-        control();
     }
 
     /**
@@ -475,6 +509,7 @@ public class EngineFrame extends javax.swing.JFrame {
         GameMenu = new javax.swing.JMenu();
         Music = new javax.swing.JCheckBoxMenuItem();
         Map = new javax.swing.JCheckBoxMenuItem();
+        Speed = new javax.swing.JCheckBoxMenuItem();
         AboutMenu = new javax.swing.JMenu();
         Help = new javax.swing.JMenuItem();
 
@@ -747,6 +782,15 @@ public class EngineFrame extends javax.swing.JFrame {
         });
         GameMenu.add(Map);
 
+        Speed.setSelected(true);
+        Speed.setText("Velocità 10x");
+        Speed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SpeedActionPerformed(evt);
+            }
+        });
+        GameMenu.add(Speed);
+
         jMenuBar1.add(GameMenu);
 
         AboutMenu.setBackground(new java.awt.Color(153, 153, 153));
@@ -775,20 +819,6 @@ public class EngineFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addGap(5, 5, 5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ProfessorsName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Avanti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                        .addGap(5, 5, 5))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -852,7 +882,21 @@ public class EngineFrame extends javax.swing.JFrame {
                                     .addComponent(PickUp, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(InventoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 5, Short.MAX_VALUE))))
+                        .addGap(0, 5, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(NewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ProfessorsName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Avanti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                        .addGap(5, 5, 5))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -929,7 +973,14 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom().getEast() != null) {
             game.setCurrentRoom(game.getCurrentRoom().getEast());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else {
@@ -943,24 +994,46 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom().getNorth() != null && game.getCurrentRoom() != game.getRooms().get(27)) {
             game.setCurrentRoom(game.getCurrentRoom().getNorth());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(27) && !game.getRooms().get(27).isPrint()) {
             game.setCurrentRoom(game.getCurrentRoom().getNorth());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
-            GameTextArea.append("\nAll'improvviso, a causa del vento, ti capita tra le mani un fogliettino che recita:"
-                    + "\nMessaggio per l'Edoardo Pomarico del futuro: aiutami a verbalizzare il voto, non riesco a prenotare il ricevimento con il prof. Basilico perchè l'app MyUni fa schifo!"
-                    + "\nChe coincidenza! Nel tuo primo passo sul nuovo universo hai scoperto due cose: il tuo obiettivo e il fatto che il tuo alter ego sia uno svitato!"
-                    + "\nSei nel posto giusto al momento giusto, aiutiamo Edoardo lo svitato!"
-                    + "\nDi fronte a te c'è una porta aperta, molto probabilmente è rotta."
-                    + "\nNel frattempo butti a terra il foglietto, che con il vento vola via, perchè è risaputo che a Bari ci si comporta così.\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(edoPaper.toString());
+            } else {
+                s.append(edoPaper);
+            }
             game.getRooms().get(27).setPrint(true);
         } else if (game.getCurrentRoom() == game.getRooms().get(27) && game.getRooms().get(27).isPrint()) {
             game.setCurrentRoom(game.getCurrentRoom().getNorth());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else {
@@ -974,7 +1047,14 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom().getSouth() != null) {
             game.setCurrentRoom(game.getCurrentRoom().getSouth());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else {
@@ -988,27 +1068,58 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom().getWest() != null && game.getCurrentRoom() != game.getRooms().get(23) && game.getCurrentRoom() != game.getRooms().get(25)) {
             game.setCurrentRoom(game.getCurrentRoom().getWest());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(23) && game.getRooms().get(25).isVisible()) {
             game.setCurrentRoom(game.getCurrentRoom().getWest());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(23) && !game.getRooms().get(25).isVisible()) {
-            GameTextArea.append("\nPer entrare dal prof. Basilico devi prima risolvere gli indovinelli.");
-            GameTextArea.append("\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(noEnter.toString());
+            } else {
+                s.append(noEnter);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(25) && !game.getRooms().get(28).isVisible()) {
-            GameTextArea.append("\nDevi aprire la porta per entrare!");
-            GameTextArea.append("\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(noEnter2.toString());
+            } else {
+                s.append(noEnter2);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(25) && game.getRooms().get(28).isVisible()) {
             game.setCurrentRoom(game.getCurrentRoom().getWest());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else {
@@ -1024,27 +1135,38 @@ public class EngineFrame extends javax.swing.JFrame {
             game.setCurrentRoom(game.getRooms().get(27));
             move = true;
             noroom = false;
-            // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
-            GameTextArea.append("\nFatto! Hai premuto il bottone\n");
-            GameTextArea.append("\n");
-            GameTextArea.append("...");
-            GameTextArea.append("\nSei in viaggio verso il nuovo universo\n");
-            GameTextArea.append("...\n");
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(toNewUniverse.toString());
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(toNewUniverse);
+                s.append(getLook);
+            }
         } else if (game.getCurrentRoom() == game.getRooms().get(27)) {
             game.setCurrentRoom(game.getRooms().get(1));
-            GameTextArea.append("\n" + "Vuoi già tornare?" + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(toNewUniverse.toString());
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(toNewUniverse);
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
-            // out.println("*** " + getCurrentRoom().getName() + " ***"); // ti dice il nome della stanza
-            GameTextArea.append("\nFatto! Hai premuto il bottone\n");
-            GameTextArea.append("\n");
-            GameTextArea.append("...");
-            GameTextArea.append("\nSei in viaggio verso il tuo universo\n");
-            GameTextArea.append("...\n");
-            GameTextArea.append("\n" + "Il professore ti guarda basito. ”Perchè sei già qui?”" + "\n");
         } else if (game.getCurrentRoom() == game.getRooms().get(8) || game.getCurrentRoom() == game.getRooms().get(15)) {
-            GameTextArea.append("\nL'ascensore non è disponibile.");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(noElevator.toString());
+            } else {
+                s.append(noElevator);
+            }
             move = true;
             noroom = false;
         }
@@ -1055,7 +1177,14 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom().getUp() != null) {
             game.setCurrentRoom(game.getCurrentRoom().getUp());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else {
@@ -1066,20 +1195,22 @@ public class EngineFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_UpActionPerformed
 
     private void DownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownActionPerformed
-        // TODO add your handling code here:
-        if (game.getCurrentRoom().getDown() != null && game.getCurrentRoom() != game.getRooms().get(11)) {
+        // TODO add your handling code here:ù
+        if (game.getCurrentRoom().getDown() != null) {
             game.setCurrentRoom(game.getCurrentRoom().getDown());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
-            move = true;
-            noroom = false;
-        } else if (game.getCurrentRoom() == game.getRooms().get(11) && game.getRooms().get(26).isVisible()) {
-            game.setCurrentRoom(game.getCurrentRoom().getDown());
-            GameTextArea.append("\n" + game.getCurrentRoom().getLook() + "\n");
+            StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(getLook.toString());
+            } else {
+                s.append(getLook);
+            }
             move = true;
             noroom = false;
         } else {
             noroom = true;
-            move = true;
+            move = false;
         }
         control();
     }//GEN-LAST:event_DownActionPerformed
@@ -1087,23 +1218,68 @@ public class EngineFrame extends javax.swing.JFrame {
     private void ReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReadActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(2)) { //cartello in cortile
-            GameTextArea.append("\nIl cartello recita:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
+            StringBuilder getDescription = new StringBuilder("\n" + game.getCurrentRoom().getObjects().get(0).getDescription() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(signWrite.toString());
+                GameTextArea.append(getDescription.toString());
+            } else {
+                s.append(signWrite);
+                s.append(getDescription);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) { //bacheca in hall
-            GameTextArea.append("\nNella bacheca c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
+            StringBuilder getDescription = new StringBuilder("\n" + game.getCurrentRoom().getObjects().get(0).getDescription() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(boardWrite.toString());
+                GameTextArea.append(getDescription.toString());
+            } else {
+                s.append(boardWrite);
+                s.append(getDescription);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(7)) {
-            GameTextArea.append("\nNella bacheca c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
+            StringBuilder getDescription = new StringBuilder("\n" + game.getCurrentRoom().getObjects().get(0).getDescription() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(boardWrite.toString());
+                GameTextArea.append(getDescription.toString());
+            } else {
+                s.append(boardWrite);
+                s.append(getDescription);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(10)) {
-            GameTextArea.append("\nNella bacheca c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
+            StringBuilder getDescription = new StringBuilder("\n\n" + game.getCurrentRoom().getObjects().get(0).getDescription() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(boardWrite.toString());
+                GameTextArea.append(getDescription.toString());
+            } else {
+                s.append(boardWrite);
+                s.append(getDescription);
+            }
             move = true;
             noroom = false;
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
-            GameTextArea.append("\nNel foglio c'è scritto:\n" + game.getCurrentRoom().getObjects().get(0).getDescription());
+            StringBuilder getDescription = new StringBuilder("\n" + game.getCurrentRoom().getObjects().get(0).getDescription() + "\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(paperWrite.toString());
+                GameTextArea.append(getDescription.toString());
+            } else {
+                s.append(paperWrite);
+                s.append(getDescription);
+            }
             move = true;
             noroom = false;
         }
@@ -1223,30 +1399,17 @@ public class EngineFrame extends javax.swing.JFrame {
             switch (number) {
                 case "1":
                     exit();
-                    GameTextArea.setText("");
-                    GameTextArea.append("\n...");
-                    GameTextArea.append("\n...");
-                    GameTextArea.append("“Benvenuto nella segreteria studenti dell'Università di Bari.“"
-                            + "\n..."
-                            + "\n..."
-                            + "\n“Spiacente, i nostri operatori sono tutti occupati. È inutile riprovare.“");
+                    tm.start();
+                    s = new StringBuilder("\n");
+                    if (fast) {
+                        GameTextArea.append(endPrint.toString());
+                    } else {
+                        s.append(endPrint);
+                    }
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     endTime = System.currentTimeMillis();
                     seconds = (endTime - startTime) / 1000;
-                    GameTextArea.append("\n...");
-                    GameTextArea.append("\n...");
-                    GameTextArea.append("\nA quanto pare verbalizzare i voti in questo universo è una cosa molto complessa.");
-                    GameTextArea.append("\n...");
-                    GameTextArea.append("\nOh no, è gia tempo di andare. I sessanta minuti scadono tra pochissimo!");
-                    GameTextArea.append("\n...");
-                    GameTextArea.append("\nCorri verso la navicella. Ti volti e noti un ragazzo molto simile all'assistente Olivieri che preso dall'ansia esclama “Uff, non riuscirò mai a verbalizzare il mio voto!“."
-                            + "\nSorridi. In cuor tuo sai che ha ragione."
-                            + "\n..."
-                            + "\n..."
-                            + "\nIntanto rientri nella tua dimensione."
-                            + "\n“Com'è stato? Com'erano le persone? C'erano guerre? Che lingua si parlava? La gente è davvero senza morale? E che mi dici delle...“"
-                            + "\n“Non ricordo nulla. So solo che non mi pento di non aver fatto l'università!“");
                     game.getRooms().get(3).setCount(4);
                     break;
                 case "0":
@@ -1258,7 +1421,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     noroom = false;
                     break;
                 default:
-                    GameTextArea.append("Inserisci un valore valido. \n");
+                    GameTextArea.append("Inserisci un valore valido.\n");
                     break;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
@@ -1266,10 +1429,13 @@ public class EngineFrame extends javax.swing.JFrame {
             switch (chooseCoffee) {
                 case "1":
                     game.getInventory().remove(game.getInventory().get(0));
-                    GameTextArea.append("\nFatto! Hai preso un caffè.\n");
-                    GameTextArea.append("...\n");
-                    GameTextArea.append("Mmh, buono questo caffè\n");
-                    GameTextArea.append("...");
+                    tm.start();
+                    s = new StringBuilder("\n");
+                    if (fast) {
+                        GameTextArea.append(coffee1.toString());
+                    } else {
+                        s.append(coffee1);
+                    }
                     game.getRooms().get(3).setCount(++a);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -1279,17 +1445,26 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "2":
                     game.getInventory().remove(game.getInventory().get(0));
-                    GameTextArea.append("\nFatto! Hai preso un caffè lungo.\n");
-                    GameTextArea.append("...\n");
-                    GameTextArea.append("Mmh, buono questo caffè lungo\n");
-                    GameTextArea.append("...");
+                    tm.start();
+                    s = new StringBuilder("\n");
+                    if (fast) {
+                        GameTextArea.append(coffee2.toString());
+                    } else {
+                        s.append(coffee2);
+                    }
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     NewGame.setVisible(true);
                     game.getRooms().get(26).setVisible(true);
                     if (game.getRooms().get(3).getCount() != 5) {
                         game.getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
-                        GameTextArea.append("Ma cos'è stato questo rumore? Proveniva dalla aula A.\n");
+                        tm.start();
+                        s = new StringBuilder("\n");
+                        if (fast) {
+                            GameTextArea.append(whatHappened.toString());
+                        } else {
+                            s.append(whatHappened);
+                        }
                     }
                     game.getRooms().get(3).setCount(5);
                     move = true;
@@ -1297,10 +1472,13 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "3":
                     game.getInventory().remove(game.getInventory().get(0));
-                    GameTextArea.append("\nFatto! Hai preso un caffè macchiato.\n");
-                    GameTextArea.append("...\n");
-                    GameTextArea.append("Mmh, buono questo caffè macchiato\n");
-                    GameTextArea.append("...");
+                    tm.start();
+                    s = new StringBuilder("\n");
+                    if (fast) {
+                        GameTextArea.append(coffee3.toString());
+                    } else {
+                        s.append(coffee3);
+                    }
                     game.getRooms().get(3).setCount(++a);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -1310,10 +1488,13 @@ public class EngineFrame extends javax.swing.JFrame {
                     break;
                 case "4":
                     game.getInventory().remove(game.getInventory().get(0));
-                    GameTextArea.append("\nFatto! Hai preso un caffè al cioccolato.\n");
-                    GameTextArea.append("...\n");
-                    GameTextArea.append("Mmh, buono questo caffè al cioccolato\n");
-                    GameTextArea.append("...");
+                    tm.start();
+                    s = new StringBuilder("\n");
+                    if (fast) {
+                        GameTextArea.append(coffee4.toString());
+                    } else {
+                        s.append(coffee4);
+                    }
                     game.getRooms().get(3).setCount(++a);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -1338,7 +1519,13 @@ public class EngineFrame extends javax.swing.JFrame {
             chooseVote = chooseVote.toLowerCase();
             switch (chooseVote) {
                 case "si":
-                    GameTextArea.append("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il suo voto.\n");
+                    tm.start();
+                    s = new StringBuilder("\n");
+                    if (fast) {
+                        GameTextArea.append(okPrint.toString());
+                    } else {
+                        s.append(okPrint);
+                    }
                     game.getRooms().get(26).getObjects().get(1).setAvailable(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -1378,13 +1565,13 @@ public class EngineFrame extends javax.swing.JFrame {
         if (game.getCurrentRoom() == game.getRooms().get(18)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
                 NameRoom.setText("Tablet #1");
-                GameTextArea.append("\n#1 Benvenuto nel menu di accettazione.\n"
-                        + "\nRisolvi l’indovinello per autenticarti:"
-                        + "\n- a volte in delle situazioni sono fuori luogo;"
-                        + "\n- non lascio le tue labbra;"
-                        + "\n- resisto all’acqua;"
-                        + "\n- non sono rosso per forza."
-                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(printRossetto.toString());
+                } else {
+                    s.append(printRossetto);
+                }
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1399,13 +1586,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(19)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
                 NameRoom.setText("Tablet #2");
-                GameTextArea.append("\n#2 Benvenuto nel menu di accettazione.\n"
-                        + "\nRisolvi l’indovinello per autenticarti:"
-                        + "\n- sono un aggettivo;"
-                        + "\n- sono coraggioso;"
-                        + "\n- sono razionale di fronte ad una minaccia;"
-                        + "\n- letteralmente qualcosa in più di avido."
-                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(printImpavido.toString());
+                } else {
+                    s.append(printImpavido);
+                }
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1419,13 +1606,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(21)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
                 NameRoom.setText("Tablet #3");
-                GameTextArea.append("\n#3 Benvenuto nel menu di accettazione.\n"
-                        + "\nRisolvi l’indovinello per autenticarti:"
-                        + "\n- notoriamente domestico;"
-                        + "\n- i miei video sono divertenti;"
-                        + "\n- duro a morire;"
-                        + "\n- spesso in compagnia di una volpe."
-                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(printGatto.toString());
+                } else {
+                    s.append(printGatto);
+                }
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1439,13 +1626,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(22)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
                 NameRoom.setText("Tablet #4");
-                GameTextArea.append("\n#4 Benvenuto nel menu di accettazione.\n"
-                        + "\nRisolvi l’indovinello per autenticarti:"
-                        + "\n- a questa età si va in crisi;"
-                        + "\n- a napoli sono il pane;"
-                        + "\n- arancione per le banche;"
-                        + "\n- sono un numero."
-                        + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(printCinquanta.toString());
+                } else {
+                    s.append(printCinquanta);
+                }
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1459,8 +1646,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
             if (game.getCurrentRoom().getObjects().get(1).isAvailable()) {
                 NameRoom.setText("Telefono");
-                GameTextArea.append("\nDigita il numero che vuoi chiamare."
-                        + "\nDigita il numero oppure premi 0 per uscire.\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(secretaryPhone.toString());
+                } else {
+                    s.append(secretaryPhone);
+                }
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1474,13 +1666,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
             if (!game.getInventory().isEmpty()) {
                 NameRoom.setText("Macchinetta del caffè");
-                GameTextArea.append("\nPremere: ");
-                GameTextArea.append("\n1) Caffè");
-                GameTextArea.append("\n2) Caffè lungo");
-                GameTextArea.append("\n3) Caffè macchiato");
-                GameTextArea.append("\n4) Caffè al cioccolato");
-                GameTextArea.append("\n0) Esci");
-                GameTextArea.append("\nInserisci il numero desiderato:\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(coffeeMenu.toString());
+                } else {
+                    s.append(coffeeMenu);
+                }
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
                 NewGame.setVisible(false);
@@ -1498,7 +1690,13 @@ public class EngineFrame extends javax.swing.JFrame {
     private void PickUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PickUpActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(24)) {
-            GameTextArea.append("\nFatto, hai preso la moneta!\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(okCoin.toString());
+            } else {
+                s.append(okCoin);
+            }
             game.getCurrentRoom().getObjects().get(0).setPickupable(false);
             game.getCurrentRoom().getObjects().get(0).setDroppable(true);
             game.getCurrentRoom().setCoin(false);
@@ -1510,7 +1708,13 @@ public class EngineFrame extends javax.swing.JFrame {
             controlInventory();
             controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(12)) {
-            GameTextArea.append("\nFatto, hai preso la moneta!\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(okCoin.toString());
+            } else {
+                s.append(okCoin);
+            }
             game.getCurrentRoom().getObjects().get(0).setPickupable(false);
             game.getCurrentRoom().getObjects().get(0).setDroppable(true);
             game.getCurrentRoom().setCoin(false);
@@ -1522,7 +1726,13 @@ public class EngineFrame extends javax.swing.JFrame {
             controlInventory();
             controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(2)) {
-            GameTextArea.append("\nFatto, hai preso la moneta!\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(okCoin.toString());
+            } else {
+                s.append(okCoin);
+            }
             game.getCurrentRoom().getObjects().get(1).setPickupable(false);
             game.getCurrentRoom().getObjects().get(1).setDroppable(true);
             game.getCurrentRoom().setCoin(false);
@@ -1534,7 +1744,13 @@ public class EngineFrame extends javax.swing.JFrame {
             controlInventory();
             controlObjects();
         } else if (game.getCurrentRoom() == game.getRooms().get(4)) {
-            GameTextArea.append("\nNon si ruba!\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(noCoin.toString());
+            } else {
+                s.append(noCoin);
+            }
             move = true;
             noroom = false;
         }
@@ -1544,7 +1760,13 @@ public class EngineFrame extends javax.swing.JFrame {
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(25)) {
-            GameTextArea.append("\nFatto! Porta aperta.\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(okDoor.toString());
+            } else {
+                s.append(okDoor);
+            }
             move = true;
             noroom = false;
             game.getCurrentRoom().setDescription("Ti trovi nella sala d'attesa del prof. Basilico. La porta è aperta.");
@@ -1560,30 +1782,24 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom().getPeople().get(0).isTalkable()) {
             if (game.getCurrentRoom() == game.getRooms().get(4)) {
-                GameTextArea.append("\n“Salve sono Pomarico Edoardo, sto cercando il professor Basilico.”"
-                        + "\n“Ciao Edoardo, il professor Basilico si trova al primo piano. Devi sapere, però, che il professor basilico recentemente è diventato il coordinatore di questo dipartimento."
-                        + "\nEssendo una personalità molto diligente, ha introdotto un nuovo sistema di ricevimento."
-                        + "\nPer evitare inutili perdite di tempo, si è deciso di introdurre degli indovinelli affinché solo gli studenti più motivati possano essere ricevuti."
-                        + "\nGli indovinelli riguardano alcuni tra i cognomi dei professori di questo dipartimento, in questo momento in smart-working."
-                        + "\nUna volta risolti, ti basterà recarti nell’ufficio del coordinatore che si trova in fondo al corridoio sulla est. Buona fortuna.”"
-                        + "\n“Questo mondo è strano”"
-                        + "\n“Cosa?”"
-                        + "\n“Niente, niente, grazie mille!”\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(collaboratorTalk.toString());
+                } else {
+                    s.append(collaboratorTalk);
+                }
                 game.getCurrentRoom().getPeople().get(0).setTalkable(false);
                 move = true;
                 noroom = false;
             } else if (game.getCurrentRoom() == game.getRooms().get(28)) {
-                GameTextArea.append("“Salve professore”"
-                        + "\n“Buona sera, chi è lei? Ho sentito dei rumori, come mai ci hai impiegato cosi tanto tempo?”"
-                        + "\n“Sono Edoardo Pomarico. Ho risolto gli indovinelli. Cosi mi ha spiegato il collaboratore”"
-                        + "\n“*risata*"
-                        + "\n“Vedi Edoardo, il vero problema della nostra società è la mancanza di dialogo. Ho introdotto gli indovinelli per mettere alla prova il nostro sistema interno e non gli studenti.“"
-                        + "\n“Non ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perché hanno paura della mia autorità!”"
-                        + "\n“Mh…”"
-                        + "\n“Tornando a noi, perché sei qui?”"
-                        + "\n“Per conoscere l’esito dell’ultimo esame”"
-                        + "\n“Dunque dunque, Pomarico, Pomarico…, matricola n. 697698, hai preso 19!”");
-                GameTextArea.append("\nAccetti?\n");
+                tm.start();
+                s = new StringBuilder("\n");
+                if (fast) {
+                    GameTextArea.append(professorTalk.toString());
+                } else {
+                    s.append(professorTalk);
+                }
                 game.getCurrentRoom().getPeople().get(0).setTalkable(false);
                 Insert.setVisible(true);
                 ProfessorsName.setVisible(true);
@@ -1602,7 +1818,13 @@ public class EngineFrame extends javax.swing.JFrame {
     private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
         // TODO add your handling code here:
         GameTextArea.setText("");
-        GameTextArea.append("Inserisci il tuo nome.\n");
+        tm.start();
+        s = new StringBuilder("\n");
+        if (fast) {
+            GameTextArea.append(insertYourName.toString());
+        } else {
+            s.append(insertYourName);
+        }
         Insert.setVisible(true);
         ProfessorsName.setVisible(true);
         NewGame.setVisible(false);
@@ -1654,10 +1876,22 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         NameRoom.setText("Complimenti!");
         GameTextArea.setText("");
-        GameTextArea.append("Programma eseguito in " + seconds + " secondi\n");
+        StringBuilder score = new StringBuilder("Il gioco è terminato. Il punteggio è : " + (int) seconds + "\nGrazie per aver giocato!\n");
+        tm.start();
+        s = new StringBuilder("\n");
+        if (fast) {
+            GameTextArea.append(score.toString());
+        } else {
+            s.append(score);
+        }
         Avanti.setVisible(false);
         Exit.setVisible(true);
     }//GEN-LAST:event_AvantiActionPerformed
+
+    private void SpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SpeedActionPerformed
+        // TODO add your handling code here:                                       
+        fast = !fast;
+    }//GEN-LAST:event_SpeedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1709,12 +1943,13 @@ public class EngineFrame extends javax.swing.JFrame {
         }
         NameRoom.setText("");
         NameRoom.setText("Benvenuto!");
-        GameTextArea.setText("");
-        GameTextArea.append("\n"
-                + "\n==========================================================================="
-                + "\n---------------------------------------* Uniperfida v. 1.1 - 2020-2021 *---------------------------------------"
-                + "\n===========================================================================");
-
+        tm.start();
+        s = new StringBuilder("\n");
+        if (fast) {
+            GameTextArea.append(welcome.toString());
+        } else {
+            s.append(welcome);
+        }
     }
 
     public static void main(String args[]) {
@@ -1786,6 +2021,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Push;
     private javax.swing.JButton Read;
     private javax.swing.JButton South;
+    private javax.swing.JCheckBoxMenuItem Speed;
     private javax.swing.JLabel SudLabel;
     private javax.swing.JButton Talk;
     private javax.swing.JLabel UniverseLabel1;
