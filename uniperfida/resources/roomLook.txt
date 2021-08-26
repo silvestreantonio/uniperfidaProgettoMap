@@ -24,6 +24,6 @@ Una semplice sala d'attesa. C'è qualcosa...
 Ai lati c'è l'ennesimo ufficio e l'ennesimo bagno. Avranno problemi d'incontinenza
 Questo bagno è molto meglio degli altri... Sapone, carta igienica e persino un asciugamani ad aria!
 Niente indovinelli questa volta
-C'è uno sportello con un foglio
-La macchina partirà tra un'ora
+C'è uno sportello
+La macchina ripartirà tra un'ora
 C'è il prof. Basilico davanti al suo computer

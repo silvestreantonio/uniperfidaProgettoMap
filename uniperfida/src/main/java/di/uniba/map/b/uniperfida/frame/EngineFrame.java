@@ -48,6 +48,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private Clip clip;
     private boolean music = true;
     private boolean map = false;
+    private boolean help = false;
 
     /**
      * Creates new form EngineFrame
@@ -98,10 +99,13 @@ public class EngineFrame extends javax.swing.JFrame {
         controlButton();
         if (game.getRooms().get(3).getCount() == 3) {
             exit();
+            NameRoom.setText("Hai perso!");
             GameTextArea.setText("");
-            GameTextArea.append("\nLe monete sono terminate e non puoi andare in segreteria.\nHai perso.\nHai totalizzato 0 punti quindi il tuo punteggio non verrà salvato nel database.\nPremi il tasto esci per uscire.");
+            GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti quindi il tuo punteggio non verrà salvato nel database.\nPremi il tasto esci per uscire.");
         } else if (game.getRooms().get(3).getCount() == 4) {
             exit();
+            Exit.setVisible(false);
+            Avanti.setVisible(true);
         }
     }
 
@@ -347,7 +351,12 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel3.setVisible(false);
         UniverseLabel1.setVisible(false);
         UniverseLabel2.setVisible(false);
-        NameRoom.setVisible(false);
+        Map.setVisible(false);
+        NordLabel.setVisible(false);
+        NowLabel.setVisible(false);
+        SudLabel.setVisible(false);
+        EstLabel.setVisible(false);
+        OvestLabel.setVisible(false);
     }
 
     public void NewGameFunction() {
@@ -414,6 +423,7 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel2.setVisible(true);
         InventoryLabel3.setVisible(true);
         Map.setEnabled(true);
+        Help.setEnabled(true);
         control();
     }
 
@@ -460,6 +470,7 @@ public class EngineFrame extends javax.swing.JFrame {
         Exit = new javax.swing.JButton();
         ObjectsLabel4 = new javax.swing.JLabel();
         NameRoom = new javax.swing.JTextField();
+        Avanti = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         GameMenu = new javax.swing.JMenu();
         Music = new javax.swing.JCheckBoxMenuItem();
@@ -705,15 +716,22 @@ public class EngineFrame extends javax.swing.JFrame {
         NameRoom.setForeground(new java.awt.Color(255, 255, 255));
         NameRoom.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        Avanti.setText("Avanti");
+        Avanti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AvantiActionPerformed(evt);
+            }
+        });
+
         jMenuBar1.setBackground(new java.awt.Color(0, 0, 0));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".AppleSystemUIFont", 0, 14))); // NOI18N
         jMenuBar1.setToolTipText("");
         jMenuBar1.setFont(new java.awt.Font(".AppleSystemUIFont", 0, 14)); // NOI18N
 
-        GameMenu.setText("Game");
+        GameMenu.setText("Gioco");
 
         Music.setSelected(true);
-        Music.setText("Music");
+        Music.setText("Musica");
         Music.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MusicActionPerformed(evt);
@@ -721,7 +739,7 @@ public class EngineFrame extends javax.swing.JFrame {
         });
         GameMenu.add(Music);
 
-        Map.setText("Map");
+        Map.setText("Mappa");
         Map.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MapActionPerformed(evt);
@@ -732,9 +750,14 @@ public class EngineFrame extends javax.swing.JFrame {
         jMenuBar1.add(GameMenu);
 
         AboutMenu.setBackground(new java.awt.Color(153, 153, 153));
-        AboutMenu.setText("About");
+        AboutMenu.setText("?");
 
-        Help.setText("Help");
+        Help.setText("Aiuto");
+        Help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HelpActionPerformed(evt);
+            }
+        });
         AboutMenu.add(Help);
 
         jMenuBar1.add(AboutMenu);
@@ -745,6 +768,10 @@ public class EngineFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(NameRoom)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,6 +784,8 @@ public class EngineFrame extends javax.swing.JFrame {
                         .addComponent(ProfessorsName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Insert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Avanti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                         .addGap(5, 5, 5))
@@ -774,8 +803,8 @@ public class EngineFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(EstLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(UniverseLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(UniverseLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
@@ -790,14 +819,16 @@ public class EngineFrame extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(ObjectsLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(12, 12, 12))))
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(Talk, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(Push, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(Read, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(Use, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(West, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -822,10 +853,6 @@ public class EngineFrame extends javax.swing.JFrame {
                                     .addComponent(Open, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(InventoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 5, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(NameRoom)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -890,7 +917,8 @@ public class EngineFrame extends javax.swing.JFrame {
                     .addComponent(NewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ProfessorsName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Avanti, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1219,12 +1247,10 @@ public class EngineFrame extends javax.swing.JFrame {
                             + "\nIntanto rientri nella tua dimensione."
                             + "\n“Com'è stato? Com'erano le persone? C'erano guerre? Che lingua si parlava? La gente è davvero senza morale? E che mi dici delle...“"
                             + "\n“Non ricordo nulla. So solo che non mi pento di non aver fatto l'università!“");
-                    GameTextArea.append("Programma eseguito in " + seconds + " secondi\n");
                     game.getRooms().get(3).setCount(4);
-                    Exit.setVisible(true);
                     break;
                 case "0":
-                    GameTextArea.append("Fatto! Telefono lasciato.");
+                    GameTextArea.append("\nFatto! Telefono lasciato.\n");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     NewGame.setVisible(true);
@@ -1261,8 +1287,11 @@ public class EngineFrame extends javax.swing.JFrame {
                     ProfessorsName.setVisible(false);
                     NewGame.setVisible(true);
                     game.getRooms().get(26).setVisible(true);
-                    game.getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
-                    GameTextArea.append("Ma cos'è stato questo rumore? Proveniva dalla aula A.\n");
+                    if (game.getRooms().get(3).getCount() != 5) {
+                        game.getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
+                        GameTextArea.append("Ma cos'è stato questo rumore? Proveniva dalla aula A.\n");
+                    }
+                    game.getRooms().get(3).setCount(5);
                     move = true;
                     noroom = false;
                     break;
@@ -1309,7 +1338,7 @@ public class EngineFrame extends javax.swing.JFrame {
             chooseVote = chooseVote.toLowerCase();
             switch (chooseVote) {
                 case "si":
-                    GameTextArea.append("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il suo voto.");
+                    GameTextArea.append("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il suo voto.\n");
                     game.getRooms().get(26).getObjects().get(1).setAvailable(true);
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
@@ -1348,6 +1377,7 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(18)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
+                NameRoom.setText("Tablet #1");
                 GameTextArea.append("\n#1 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- a volte in delle situazioni sono fuori luogo;"
@@ -1368,6 +1398,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(19)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
+                NameRoom.setText("Tablet #2");
                 GameTextArea.append("\n#2 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- sono un aggettivo;"
@@ -1387,6 +1418,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(21)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
+                NameRoom.setText("Tablet #3");
                 GameTextArea.append("\n#3 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- notoriamente domestico;"
@@ -1406,6 +1438,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(22)) {
             if (!game.getCurrentRoom().getObjects().get(0).isUsed()) {
+                NameRoom.setText("Tablet #4");
                 GameTextArea.append("\n#4 Benvenuto nel menu di accettazione.\n"
                         + "\nRisolvi l’indovinello per autenticarti:"
                         + "\n- a questa età si va in crisi;"
@@ -1425,6 +1458,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
             if (game.getCurrentRoom().getObjects().get(1).isAvailable()) {
+                NameRoom.setText("Telefono");
                 GameTextArea.append("\nDigita il numero che vuoi chiamare."
                         + "\nDigita il numero oppure premi 0 per uscire.\n");
                 Insert.setVisible(true);
@@ -1439,6 +1473,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
             if (!game.getInventory().isEmpty()) {
+                NameRoom.setText("Macchinetta del caffè");
                 GameTextArea.append("\nPremere: ");
                 GameTextArea.append("\n1) Caffè");
                 GameTextArea.append("\n2) Caffè lungo");
@@ -1509,7 +1544,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
         if (game.getCurrentRoom() == game.getRooms().get(25)) {
-            GameTextArea.append("\nFatto! Porta aperta.");
+            GameTextArea.append("\nFatto! Porta aperta.\n");
             move = true;
             noroom = false;
             game.getCurrentRoom().setDescription("Ti trovi nella sala d'attesa del prof. Basilico. La porta è aperta.");
@@ -1567,7 +1602,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
         // TODO add your handling code here:
         GameTextArea.setText("");
-        GameTextArea.append("Benvenuto! \nInserisci il tuo nome.\n");
+        GameTextArea.append("Inserisci il tuo nome.\n");
         Insert.setVisible(true);
         ProfessorsName.setVisible(true);
         NewGame.setVisible(false);
@@ -1598,7 +1633,6 @@ public class EngineFrame extends javax.swing.JFrame {
             SudLabel.setVisible(true);
             EstLabel.setVisible(true);
             OvestLabel.setVisible(true);
-
         }
     }//GEN-LAST:event_MapActionPerformed
 
@@ -1606,6 +1640,24 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
+
+    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
+        // TODO add your handling code here:
+        help = !help;
+        if (help) {
+            Help.setText("Nessun aiuto");
+            Help.setEnabled(false);
+        }
+    }//GEN-LAST:event_HelpActionPerformed
+
+    private void AvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AvantiActionPerformed
+        // TODO add your handling code here:
+        NameRoom.setText("Complimenti!");
+        GameTextArea.setText("");
+        GameTextArea.append("Programma eseguito in " + seconds + " secondi\n");
+        Avanti.setVisible(false);
+        Exit.setVisible(true);
+    }//GEN-LAST:event_AvantiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1649,11 +1701,14 @@ public class EngineFrame extends javax.swing.JFrame {
             GameMenu.setEnabled(true);
             Map.setEnabled(false);
             AboutMenu.setEnabled(true);
+            Help.setEnabled(false);
             Exit.setVisible(false);
-            NameRoom.setVisible(false);
+            Avanti.setVisible(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
+        NameRoom.setText("");
+        NameRoom.setText("Benvenuto!");
         GameTextArea.setText("");
         GameTextArea.append("\n"
                 + "\n==========================================================================="
@@ -1700,6 +1755,7 @@ public class EngineFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AboutMenu;
+    private javax.swing.JButton Avanti;
     private javax.swing.JButton Down;
     private javax.swing.JButton East;
     private javax.swing.JLabel EstLabel;
