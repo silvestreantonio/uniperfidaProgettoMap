@@ -45,7 +45,7 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="Speed">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Velocit&#xe0; 10x"/>
+                <Property name="text" type="java.lang.String" value="Velocit&#xe0; testo"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SpeedActionPerformed"/>

@@ -783,7 +783,7 @@ public class EngineFrame extends javax.swing.JFrame {
         GameMenu.add(Map);
 
         Speed.setSelected(true);
-        Speed.setText("Velocità 10x");
+        Speed.setText("Velocità testo");
         Speed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SpeedActionPerformed(evt);
