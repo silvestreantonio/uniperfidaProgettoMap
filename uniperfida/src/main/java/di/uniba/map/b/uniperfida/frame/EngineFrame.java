@@ -133,7 +133,7 @@ public class EngineFrame extends javax.swing.JFrame {
             exit();
             NameRoom.setText("Hai perso!");
             GameTextArea.setText("");
-            GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti quindi il tuo punteggio non verrà salvato nel database.\nPremi il tasto esci per uscire.");
+            GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti quindi il tuo punteggio non verra' salvato nel database.\nPremi il tasto esci per uscire.");
         } else if (game.getRooms().get(3).getCount() == 4) {
             exit();
             Exit.setVisible(false);
@@ -329,22 +329,22 @@ public class EngineFrame extends javax.swing.JFrame {
     public void controlMap() {
         NowLabel.setText(game.getCurrentRoom().getName());
         if (game.getCurrentRoom().getNorth() == null) {
-            NordLabel.setText("A nord non c'è nulla");
+            NordLabel.setText("A nord non c'e' nulla");
         } else {
             NordLabel.setText(game.getCurrentRoom().getNorth().getName());
         }
         if (game.getCurrentRoom().getSouth() == null) {
-            SudLabel.setText("A sud non c'è nulla");
+            SudLabel.setText("A sud non c'e' nulla");
         } else {
             SudLabel.setText(game.getCurrentRoom().getSouth().getName());
         }
         if (game.getCurrentRoom().getWest() == null) {
-            OvestLabel.setText("A ovest non c'è nulla");
+            OvestLabel.setText("A ovest non c'e' nulla");
         } else {
             OvestLabel.setText(game.getCurrentRoom().getWest().getName());
         }
         if (game.getCurrentRoom().getEast() == null) {
-            EstLabel.setText("A est non c'è nulla");
+            EstLabel.setText("A est non c'e' nulla");
         } else {
             EstLabel.setText(game.getCurrentRoom().getEast().getName());
         }
@@ -780,7 +780,7 @@ public class EngineFrame extends javax.swing.JFrame {
         GameMenu.add(Map);
 
         Speed1.setSelected(true);
-        Speed1.setText("Velocità 1x");
+        Speed1.setText("Velocita' 1x");
         Speed1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Speed1ActionPerformed(evt);
@@ -788,7 +788,7 @@ public class EngineFrame extends javax.swing.JFrame {
         });
         GameMenu.add(Speed1);
 
-        Speed10.setText("Velocità 10x");
+        Speed10.setText("Velocita' 10x");
         Speed10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Speed10ActionPerformed(evt);
@@ -1200,7 +1200,7 @@ public class EngineFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_UpActionPerformed
 
     private void DownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownActionPerformed
-        // TODO add your handling code here:ù
+        // TODO add your handling code here:
         if (game.getCurrentRoom().getDown() != null) {
             game.setCurrentRoom(game.getCurrentRoom().getDown());
             StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
@@ -1318,7 +1318,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     noroom = false;
                     break;
                 default:
-                    GameTextArea.append("Il nome non è corretto. \nInserisci di nuovo il nome:\n");
+                    GameTextArea.append("Il nome non e' corretto. \nInserisci di nuovo il nome:\n");
                     break;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(19)) {
@@ -1344,7 +1344,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     noroom = false;
                     break;
                 default:
-                    GameTextArea.append("Il nome non è corretto. \nInserisci di nuovo il nome:\n");
+                    GameTextArea.append("Il nome non e' corretto. \nInserisci di nuovo il nome:\n");
                     break;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(21)) {
@@ -1370,7 +1370,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     noroom = false;
                     break;
                 default:
-                    GameTextArea.append("Il nome non è corretto. \nInserisci di nuovo il nome:\n");
+                    GameTextArea.append("Il nome non e' corretto. \nInserisci di nuovo il nome:\n");
                     break;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(22)) {
@@ -1396,7 +1396,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     noroom = false;
                     break;
                 default:
-                    GameTextArea.append("Il nome non è corretto. \nInserisci di nuovo il nome:\n");
+                    GameTextArea.append("Il nome non e' corretto. \nInserisci di nuovo il nome:\n");
                     break;
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
@@ -1462,7 +1462,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     NewGame.setVisible(true);
                     game.getRooms().get(26).setVisible(true);
                     if (game.getRooms().get(3).getCount() != 5) {
-                        game.getRooms().get(11).setLook("Ci sono file di banchi. C'è una nuvola di polvere. Intravedi delle scale.");
+                        game.getRooms().get(11).setLook("Ci sono file di banchi. C'e' una nuvola di polvere. Intravedi delle scale.");
                         tm.start();
                         s = new StringBuilder("\n");
                         if (fast) {
@@ -1508,7 +1508,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     noroom = false;
                     break;
                 case "0":
-                    GameTextArea.append("\nNessun caffè.");
+                    GameTextArea.append("\nNessun caffe'.");
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     NewGame.setVisible(true);
@@ -1552,7 +1552,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     enterToPlay();
                     break;
                 default:
-                    GameTextArea.append("\nIl nome utente è stato già utilizzato. \nInserisci di nuovo il nome:\n");
+                    GameTextArea.append("\nIl nome utente e' stato gia' utilizzato. \nInserisci di nuovo il nome:\n");
                     break;
             }
         } else if ("Invio".equals(Insert.getText())) {
@@ -1583,7 +1583,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Qui ti sei già autenticato!");
+                GameTextArea.append("Qui ti sei gia' autenticato!");
                 GameTextArea.append("\n");
                 move = true;
                 noroom = false;
@@ -1604,7 +1604,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("\nQui ti sei già autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!");
                 move = true;
                 noroom = false;
             }
@@ -1624,7 +1624,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("\nQui ti sei già autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!");
                 move = true;
                 noroom = false;
             }
@@ -1644,7 +1644,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("\nQui ti sei già autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!");
                 move = true;
                 noroom = false;
             }
@@ -1670,7 +1670,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if (game.getCurrentRoom() == game.getRooms().get(3)) {
             if (!game.getInventory().isEmpty()) {
-                NameRoom.setText("Macchinetta del caffè");
+                NameRoom.setText("Macchinetta del caffe'");
                 tm.start();
                 s = new StringBuilder("\n");
                 if (fast) {
@@ -1774,7 +1774,7 @@ public class EngineFrame extends javax.swing.JFrame {
             }
             move = true;
             noroom = false;
-            game.getCurrentRoom().setDescription("Ti trovi nella sala d'attesa del prof. Basilico. La porta è aperta.");
+            game.getCurrentRoom().setDescription("Ti trovi nella sala d'attesa del prof. Basilico. La porta e' aperta.");
             Open.setEnabled(false);
             game.getCurrentRoom().getObjects().remove(0);
             controlObjects();
@@ -1875,7 +1875,7 @@ public class EngineFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         NameRoom.setText("Complimenti!");
         GameTextArea.setText("");
-        StringBuilder score = new StringBuilder("Il gioco è terminato. Il punteggio è : " + (int) seconds + "\nGrazie per aver giocato!\n");
+        StringBuilder score = new StringBuilder("Il gioco e' terminato. Il punteggio e' : " + (int) seconds + "\nGrazie per aver giocato!\n");
         tm.start();
         s = new StringBuilder("\n");
         if (fast) {
