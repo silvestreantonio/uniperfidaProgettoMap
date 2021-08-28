@@ -133,11 +133,12 @@ public class EngineFrame extends javax.swing.JFrame {
             exit();
             NameRoom.setText("Hai perso!");
             GameTextArea.setText("");
-            GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti quindi il tuo punteggio non verra' salvato nel database.\nPremi il tasto esci per uscire.");
+            GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti.\nIl tuo punteggio non verra' salvato nel database.");
         } else if (game.getRooms().get(3).getCount() == 4) {
             exit();
-            Exit.setVisible(false);
-            Avanti.setVisible(true);
+            game.getRooms().get(3).setCount(10);
+        } else if (game.getRooms().get(3).getCount() == 10 || game.getRooms().get(3).getCount() == 12) {
+            InventoryLabel2.setIcon(null);
         }
     }
 
@@ -372,7 +373,6 @@ public class EngineFrame extends javax.swing.JFrame {
         Insert.setVisible(false);
         ProfessorsName.setVisible(false);
         NewGame.setVisible(false);
-        Exit.setVisible(true);
         ObjectsLabel1.setVisible(false);
         ObjectsLabel2.setVisible(false);
         ObjectsLabel3.setVisible(false);
@@ -383,12 +383,15 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel3.setVisible(false);
         UniverseLabel1.setVisible(false);
         UniverseLabel2.setVisible(false);
-        Map.setVisible(false);
+        Map.setEnabled(false);
+        Speed1.setEnabled(false);
+        Speed10.setEnabled(false);
         NordLabel.setVisible(false);
         NowLabel.setVisible(false);
         SudLabel.setVisible(false);
         EstLabel.setVisible(false);
         OvestLabel.setVisible(false);
+        Avanti.setVisible(true);
     }
 
     private void enableElements(boolean enable) {
@@ -408,6 +411,8 @@ public class EngineFrame extends javax.swing.JFrame {
         ProfessorsName.setEnabled(enable);
         Speed1.setEnabled(enable);
         Speed10.setEnabled(enable);
+        Exit.setEnabled(enable);
+        Avanti.setEnabled(enable);
     }
 
     public void NewGameFunction() {
@@ -1299,7 +1304,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String rossetto = ProfessorsName.getText();
             rossetto = rossetto.toLowerCase();
             switch (rossetto) {
-                case "rossetto":
+                case "a":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #1 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1325,7 +1330,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String impavido = ProfessorsName.getText();
             impavido = impavido.toLowerCase();
             switch (impavido) {
-                case "impavido":
+                case "a":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #2 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1351,7 +1356,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String gatto = ProfessorsName.getText();
             gatto = gatto.toLowerCase();
             switch (gatto) {
-                case "gatto":
+                case "a":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #3 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1377,7 +1382,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String cinquanta = ProfessorsName.getText();
             cinquanta = cinquanta.toLowerCase();
             switch (cinquanta) {
-                case "cinquanta":
+                case "a":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #4 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1403,7 +1408,6 @@ public class EngineFrame extends javax.swing.JFrame {
             String number = ProfessorsName.getText();
             switch (number) {
                 case "1":
-                    exit();
                     tm.start();
                     s = new StringBuilder("\n");
                     if (fast) {
@@ -1873,18 +1877,28 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void AvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AvantiActionPerformed
         // TODO add your handling code here:
-        NameRoom.setText("Complimenti!");
-        GameTextArea.setText("");
-        StringBuilder score = new StringBuilder("Il gioco e' terminato. Il punteggio e' : " + (int) seconds + "\nGrazie per aver giocato!\n");
-        tm.start();
-        s = new StringBuilder("\n");
-        if (fast) {
-            GameTextArea.append(score.toString());
-        } else {
-            s.append(score);
-        }
         Avanti.setVisible(false);
         Exit.setVisible(true);
+        if (game.getRooms().get(3).getCount() == 3) {
+            GameTextArea.append("\n\nPremi il tasto esci per uscire.");
+        } else if (game.getRooms().get(3).getCount() == 10) {
+            NameRoom.setText("Complimenti!");
+            GameTextArea.setText("");
+            StringBuilder score = new StringBuilder("Il gioco e' terminato. Il punteggio e' : " + (int) seconds + "\nTroverai il tuo nome nella voce -Ranking-\nGrazie per aver giocato!\n");
+            tm.start();
+            s = new StringBuilder("\n");
+            if (fast) {
+                GameTextArea.append(score.toString());
+            } else {
+                s.append(score);
+            }
+            game.getRooms().get(3).setCount(12);
+            Exit.setVisible(false);
+            Avanti.setVisible(true);
+        } else if (game.getRooms().get(3).getCount() == 12) {
+            GameTextArea.append("\nPremi il tasto esci per uscire.");
+        }
+
     }//GEN-LAST:event_AvantiActionPerformed
 
     private void Speed1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Speed1ActionPerformed
