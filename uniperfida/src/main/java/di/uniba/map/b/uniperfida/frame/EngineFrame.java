@@ -1552,16 +1552,13 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if ("Nuova Partita".equals(NewGame.getText()) && !"Invio".equals(Insert.getText())) {
             String antonio = ProfessorsName.getText();
             antonio = antonio.toLowerCase();
-            switch (antonio) {
-                case "a":
+            if ("a".equals(antonio)) {
                     Insert.setVisible(false);
                     ProfessorsName.setVisible(false);
                     enterToPlay();
-                    break;
-                default:
+            }else {
                     GameTextArea.append("\nIl nome utente e' stato gia' utilizzato. \nInserisci di nuovo il nome:\n");
-                    break;
-            }
+                            }
         } else if ("Invio".equals(Insert.getText())) {
             Insert.setText("Inserisci");
             Insert.setVisible(false);
