@@ -20,7 +20,7 @@ public class Wallpaper extends JPanel {
   private final Image img;
 
   public Wallpaper() {
-    img = Toolkit.getDefaultToolkit().createImage("resources/sfondo3.png");
+    img = Toolkit.getDefaultToolkit().createImage("resources/wallpaper/sfondo3.png");
     loadImage(img);
   }
 

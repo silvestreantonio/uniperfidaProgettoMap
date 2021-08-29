@@ -94,7 +94,7 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void playMusic() {
         try {
-            ais = AudioSystem.getAudioInputStream(new File("resources/Payday 2 Official Soundtrack - AndNowWeWait.wav"));
+            ais = AudioSystem.getAudioInputStream(new File("resources/music/Payday 2 Official Soundtrack - AndNowWeWait.wav"));
             clip = AudioSystem.getClip();
             clip.open(ais);
             startMusic();
@@ -271,8 +271,8 @@ public class EngineFrame extends javax.swing.JFrame {
 
     public void controlInventory() {
         int i = 0;
-        ImageIcon image = new ImageIcon("resources/coin.png");
-        ImageIcon image2 = new ImageIcon("resources/no.png");
+        ImageIcon image = new ImageIcon("resources/images/coin.png");
+        ImageIcon image2 = new ImageIcon("resources/images/no.png");
         if (!game.getInventory().isEmpty()) {
             for (AdvObject o : game.getInventory()) { // ciclo sugli elementi dell'inventario
                 i++;

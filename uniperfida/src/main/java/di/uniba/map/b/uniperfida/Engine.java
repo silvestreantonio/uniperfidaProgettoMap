@@ -46,7 +46,7 @@ public class Engine {
             System.err.println(ex);
         }
         try {
-            Set<String> stopwords = Utils.loadFileListInSet(new File("./resources/stopwords"));  // per creare l'insieme delle stopwords vedi in Utils
+            Set<String> stopwords = Utils.loadFileListInSet(new File("./resources/files/stopwords"));  // per creare l'insieme delle stopwords vedi in Utils
             parser = new Parser(stopwords); // inizializza il parser a cui bisogna passare l'insieme delle stopwords
         } catch (IOException ex) {
             System.err.println(ex);

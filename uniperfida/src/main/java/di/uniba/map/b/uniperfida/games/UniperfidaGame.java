@@ -40,7 +40,7 @@ public class UniperfidaGame extends GameDescription {
     @Override
     public void useFileRoomsDescription() {
         try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomDescription.txt"));
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/files/roomDescription.txt"));
             String a;
             int i = 0;
             while ((a = inputStream.readLine()) != null) {
@@ -57,7 +57,7 @@ public class UniperfidaGame extends GameDescription {
     @Override
     public void useFileRoomsLook() {
         try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomLook.txt"));
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/files/roomLook.txt"));
             String a;
             int i = 0;
             while ((a = inputStream.readLine()) != null) {
@@ -74,7 +74,7 @@ public class UniperfidaGame extends GameDescription {
     @Override
     public void useFileRoomsName() {
         try {
-            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/roomName.txt"));
+            BufferedReader inputStream = new BufferedReader(new FileReader("./resources/files/roomName.txt"));
             String a;
             int i = 0;
             while ((a = inputStream.readLine()) != null) {
