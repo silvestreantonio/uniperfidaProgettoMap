@@ -9,7 +9,7 @@ package di.uniba.map.b.uniperfida.frame;
  *
  * @author antoniosilvestre
  */
-public class Stringhe {
+public class Strings {
 
     public static StringBuilder incipit = new StringBuilder("Universo T-237, Terra, laboratorio di ricerca “Pablo Escobar”, Martedi', 4 Maggio 2021."
             + "\nIl professor Silvestre ha finalmente ultimato il suo progetto: una macchina che permette di viaggiare tra gli universi."

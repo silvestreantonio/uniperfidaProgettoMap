@@ -6,7 +6,7 @@
 package di.uniba.map.b.uniperfida.frame;
 
 import di.uniba.map.b.uniperfida.Engine;
-import static di.uniba.map.b.uniperfida.frame.Stringhe.*;
+import static di.uniba.map.b.uniperfida.frame.Strings.*;
 import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
@@ -63,19 +63,22 @@ public class EngineFrame extends javax.swing.JFrame {
         initComponents();
         playMusic();
         addWallpaper();
-        ActionListener taskPerformer = (ActionEvent evt) -> {
-            enableElements(false);
-            counter++;
-            if (counter >= s.length()) {
-                counter = 0;
-                tm.stop();
-                enableElements(true);
-                control();
-            } else {
-                StringBuilder supp = new StringBuilder();
-                supp.append(s.toString().charAt(counter));
-                GameTextArea.append(supp.toString());
-                supp = new StringBuilder();
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                enableElements(false);
+                counter++;
+                if (counter >= s.length()) {
+                    counter = 0;
+                    tm.stop();
+                    enableElements(true);
+                    control();
+                } else {
+                    StringBuilder supp = new StringBuilder();
+                    supp.append(s.toString().charAt(counter));
+                    GameTextArea.append(supp.toString());
+                    supp = new StringBuilder();
+                }
             }
         };
         int delay = 50;
