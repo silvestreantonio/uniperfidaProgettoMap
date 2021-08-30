@@ -6,11 +6,10 @@
 package di.uniba.map.b.uniperfida.frame;
 
 import di.uniba.map.b.uniperfida.Engine;
-import static di.uniba.map.b.uniperfida.frame.Strings.*;
+import static di.uniba.map.b.uniperfida.print.Strings.*;
 import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
-import static di.uniba.map.b.uniperfida.print.Printings.*;
 import di.uniba.map.b.uniperfida.type.AdvObject;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -27,6 +26,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import static java.lang.System.out;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Properties;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -55,6 +65,12 @@ public class EngineFrame extends javax.swing.JFrame {
     private StringBuilder s = new StringBuilder();
     private int counter = 0;
     private Timer tm;
+    public static long startTime;
+    public static long endTime;
+    public static long seconds;
+    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS store(name VARCHAR(1024) PRIMARY KEY, score BIGINT, date VARCHAR(1024))";
+    private String playersName = "";
+    private long playersScore;
 
     /**
      * Creates new form EngineFrame
@@ -419,6 +435,7 @@ public class EngineFrame extends javax.swing.JFrame {
     }
 
     public void NewGameFunction() {
+        startTime = System.currentTimeMillis();
         StringBuilder getLook = new StringBuilder("\n" + game.getCurrentRoom().getLook() + "\n");
         tm.start();
         GameTextArea.setText("");
@@ -462,7 +479,7 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel2.setVisible(true);
         InventoryLabel3.setVisible(true);
         Map.setEnabled(true);
-        Help.setEnabled(true);
+        Ranking.setEnabled(false);
     }
 
     /**
@@ -516,7 +533,7 @@ public class EngineFrame extends javax.swing.JFrame {
         Speed1 = new javax.swing.JCheckBoxMenuItem();
         Speed10 = new javax.swing.JCheckBoxMenuItem();
         AboutMenu = new javax.swing.JMenu();
-        Help = new javax.swing.JMenuItem();
+        Ranking = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIPERFIDA");
@@ -809,13 +826,13 @@ public class EngineFrame extends javax.swing.JFrame {
         AboutMenu.setBackground(new java.awt.Color(153, 153, 153));
         AboutMenu.setText("?");
 
-        Help.setText("Aiuto");
-        Help.addActionListener(new java.awt.event.ActionListener() {
+        Ranking.setText("Ranking");
+        Ranking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HelpActionPerformed(evt);
+                RankingActionPerformed(evt);
             }
         });
-        AboutMenu.add(Help);
+        AboutMenu.add(Ranking);
 
         jMenuBar1.add(AboutMenu);
 
@@ -1422,6 +1439,7 @@ public class EngineFrame extends javax.swing.JFrame {
                     ProfessorsName.setVisible(false);
                     endTime = System.currentTimeMillis();
                     seconds = (endTime - startTime) / 1000;
+                    playersScore = 10000 - seconds;
                     game.getRooms().get(3).setCount(4);
                     break;
                 case "0":
@@ -1551,14 +1569,14 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if ("Nuova Partita".equals(NewGame.getText()) && !"Invio".equals(Insert.getText())) {
             String antonio = ProfessorsName.getText();
-            antonio = antonio.toLowerCase();
-            if ("a".equals(antonio)) {
-                    Insert.setVisible(false);
-                    ProfessorsName.setVisible(false);
-                    enterToPlay();
-            }else {
-                    GameTextArea.append("\nIl nome utente e' stato gia' utilizzato. \nInserisci di nuovo il nome:\n");
-                            }
+            if (!game.getName().contains(antonio)) {
+                playersName = antonio;
+                Insert.setVisible(false);
+                ProfessorsName.setVisible(false);
+                enterToPlay();
+            } else {
+                GameTextArea.append("\nIl nome utente e' stato gia' utilizzato. \nInserisci di nuovo il nome:\n");
+            }
         } else if ("Invio".equals(Insert.getText())) {
             Insert.setText("Inserisci");
             Insert.setVisible(false);
@@ -1826,11 +1844,13 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameActionPerformed
         // TODO add your handling code here:
+        NameRoom.setText("Benvenuto!");
         GameTextArea.setText("");
         GameTextArea.append("Inserisci il tuo nome.\n");
         Insert.setVisible(true);
         ProfessorsName.setVisible(true);
         NewGame.setVisible(false);
+        Ranking.setEnabled(false);
     }//GEN-LAST:event_NewGameActionPerformed
 
     private void MusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusicActionPerformed
@@ -1866,37 +1886,67 @@ public class EngineFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
-    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
+    private void RankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankingActionPerformed
         // TODO add your handling code here:
-        help = !help;
-        if (help) {
-            Help.setText("Nessun aiuto");
-            Help.setEnabled(false);
+        Ranking.setEnabled(false);
+        NameRoom.setText("Ranking");
+        GameTextArea.setText("");
+        try {
+            Properties dbprops = new Properties();
+            dbprops.setProperty("user", "user");
+            dbprops.setProperty("password", "1234");
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/store", dbprops);
+            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT name, score, date FROM store WHERE score > 0");
+            GameTextArea.append("Nome" + "\tPunteggio" + "\tData e ora\n\n");
+            while (rs.next()) {
+                GameTextArea.append(rs.getString(1) + "\t" + rs.getLong(2) + "\t" + rs.getString(3));
+                GameTextArea.append("\n");
+            }
+            rs.close();
+            stm.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getSQLState() + ": " + ex.getMessage());
         }
-    }//GEN-LAST:event_HelpActionPerformed
+        if (game.getRooms().get(3).getCount() == 3 || game.getRooms().get(3).getCount() == 12) {
+            GameTextArea.append("\nPremi il tasto esci per uscire.");
+        } else if (NewGame.isVisible()) {
+            GameTextArea.append("\nVuoi che sia anche il tuo nome? Inizia una nuova partita!");
+        }
+    }//GEN-LAST:event_RankingActionPerformed
 
     private void AvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AvantiActionPerformed
         // TODO add your handling code here:
+        Ranking.setEnabled(true);
         Avanti.setVisible(false);
         Exit.setVisible(true);
-        if (game.getRooms().get(3).getCount() == 3) {
-            GameTextArea.append("\n\nPremi il tasto esci per uscire.");
+        if (game.getRooms().get(3).getCount() == 3 || game.getRooms().get(3).getCount() == 12) {
+            GameTextArea.append("\nPremi il tasto esci per uscire\noppure\npremi ranking per visualizzare i risultati degli altri giocatori.");
         } else if (game.getRooms().get(3).getCount() == 10) {
+            try {
+                Properties dbprops = new Properties();
+                dbprops.setProperty("user", "user");
+                dbprops.setProperty("password", "1234");
+                Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/store", dbprops);
+                PreparedStatement pstm = conn.prepareStatement("INSERT INTO store VALUES (?,?,?)");
+                pstm.setString(1, playersName);
+                pstm.setLong(2, playersScore);
+                pstm.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
+                pstm.executeUpdate();
+                pstm.close();
+                conn.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getSQLState() + ": " + ex.getMessage());
+            }
             NameRoom.setText("Complimenti!");
             GameTextArea.setText("");
-            StringBuilder score = new StringBuilder("Il gioco e' terminato. Il punteggio e' : " + (int) seconds + "\nTroverai il tuo nome nella voce -Ranking-\nGrazie per aver giocato!\n");
-            tm.start();
-            s = new StringBuilder("\n");
-            if (fast) {
-                GameTextArea.append(score.toString());
-            } else {
-                s.append(score);
-            }
+            GameTextArea.append("Il gioco e' terminato. Il punteggio e' : " + playersScore + "\nTroverai il tuo nome nella voce -Ranking-\nGrazie per aver giocato!\n");
             game.getRooms().get(3).setCount(12);
             Exit.setVisible(false);
             Avanti.setVisible(true);
-        } else if (game.getRooms().get(3).getCount() == 12) {
-            GameTextArea.append("\nPremi il tasto esci per uscire.");
+            Ranking.setEnabled(false);
         }
 
     }//GEN-LAST:event_AvantiActionPerformed
@@ -1957,15 +2007,45 @@ public class EngineFrame extends javax.swing.JFrame {
             GameMenu.setEnabled(true);
             Map.setEnabled(false);
             AboutMenu.setEnabled(true);
-            Help.setEnabled(false);
+            Ranking.setEnabled(true);
             Exit.setVisible(false);
             Avanti.setVisible(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
+        try {
+            Properties dbprops = new Properties();
+            dbprops.setProperty("user", "user");
+            dbprops.setProperty("password", "1234");
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/store", dbprops);
+            Statement stm = conn.createStatement();
+            stm.executeUpdate(CREATE_TABLE);
+            stm.close();
+            /*stm = conn.createStatement();
+            stm.executeUpdate("TRUNCATE TABLE store");
+            stm.close(); */
+ /*PreparedStatement pstm1 = conn.prepareStatement("INSERT INTO store VALUES (?,?,?)");
+            pstm1.setString(1, "Antonio");
+            pstm1.setLong(2, 9999);
+            pstm1.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
+            pstm1.executeUpdate();
+            pstm1.close();*/
+            stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT name, score, date FROM store WHERE score > 0");
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + ": " + rs.getLong(2) + ": " + rs.getString(3));
+                game.getName().add(rs.getString(1));
+            }
+            rs.close();
+            stm.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getSQLState() + ": " + ex.getMessage());
+        }
         NameRoom.setText("");
         NameRoom.setText("Benvenuto!");
         GameTextArea.append("\nU N I P E R F I D A\n");
+        System.out.println(game.getName().get(0));
     }
 
     public static void main(String args[]) {
@@ -2013,7 +2093,6 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Exit;
     private javax.swing.JMenu GameMenu;
     private javax.swing.JTextArea GameTextArea;
-    private javax.swing.JMenuItem Help;
     private javax.swing.JButton Insert;
     private javax.swing.JLabel InventoryLabel;
     private javax.swing.JLabel InventoryLabel1;
@@ -2035,6 +2114,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton PickUp;
     private javax.swing.JTextField ProfessorsName;
     private javax.swing.JButton Push;
+    private javax.swing.JMenuItem Ranking;
     private javax.swing.JButton Read;
     private javax.swing.JButton South;
     private javax.swing.JCheckBoxMenuItem Speed1;

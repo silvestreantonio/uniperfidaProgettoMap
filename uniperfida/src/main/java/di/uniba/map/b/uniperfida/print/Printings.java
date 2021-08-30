@@ -1,10 +1,6 @@
 package di.uniba.map.b.uniperfida.print;
 
 public class Printings {
-
-    public static long startTime;
-    public static long endTime;
-    public static long seconds;
     public static void printIntro(){
         System.out.println("================================");
         System.out.println("* Uniperfida v. 1.1 - 2020-2021 *");

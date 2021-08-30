@@ -69,12 +69,12 @@
             <Property name="text" type="java.lang.String" value="?"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="Help">
+            <MenuItem class="javax.swing.JMenuItem" name="Ranking">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Aiuto"/>
+                <Property name="text" type="java.lang.String" value="Ranking"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="HelpActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RankingActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

@@ -17,7 +17,6 @@ import java.util.List;
  *
  * @author pierpaolo
  */
-
 // per fare in modo che la classe Engine possa essere utilizzata su piu giochi senza vincoli e' stata creata questa classe astratta GameDescription
 // questa classe e' una descrizione astratta di un gioco 
 public abstract class GameDescription {
@@ -27,9 +26,10 @@ public abstract class GameDescription {
     private final List<Command> commands = new ArrayList<>(); // contiene la lista dei comandi presenti nel gioco
 
     private final List<AdvObject> inventory = new ArrayList<>(); // contiene l'inventario
- 
-    private Room currentRoom; // contiene la stanza corrente
 
+    private final List<String> nameDB = new ArrayList<>();
+
+    private Room currentRoom; // contiene la stanza corrente
     // metodi set e get
     public List<Room> getRooms() {
         return rooms;
@@ -51,13 +51,17 @@ public abstract class GameDescription {
         return inventory;
     }
 
+    public List<String> getName() {
+        return nameDB;
+    }
+
     public abstract void init() throws Exception; // metodo astratto per inizializzare il gioco
 
     public abstract void nextMove(ParserOutput p, PrintStream out); // metodo astratto per interpretare la mossa
-    
+
     public abstract void useFileRoomsDescription();
-    
+
     public abstract void useFileRoomsLook();
-    
+
     public abstract void useFileRoomsName();
 }
