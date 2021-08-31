@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -68,7 +70,7 @@ public class EngineFrame extends javax.swing.JFrame {
     public static long startTime;
     public static long endTime;
     public static long seconds;
-    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS store(name VARCHAR(1024) PRIMARY KEY, score BIGINT, date VARCHAR(1024))";
+    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS uniperfidaDatabase(name VARCHAR(1024) PRIMARY KEY, score BIGINT, date VARCHAR(1024))";
     private String playersName = "";
     private long playersScore;
 
@@ -1569,7 +1571,18 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         } else if ("Nuova Partita".equals(NewGame.getText()) && !"Invio".equals(Insert.getText())) {
             String antonio = ProfessorsName.getText();
-            if (!game.getName().contains(antonio)) {
+            Pattern p = Pattern.compile("[^A-Za-z0-9]");
+            Matcher m = p.matcher(antonio);
+            boolean b = m.find();
+            if (antonio.length() == 0) {
+                GameTextArea.append("\nDevi inserire un nome.\nInserisci di nuovo il nome:\n");
+            } else if (antonio.length() > 10) {
+                GameTextArea.append("\nHai a disposizione 10 caratteri, tu ne hai usati " + antonio.length() + ".\nInserisci di nuovo il nome:\n");
+            } else if (antonio.contains(" ")) {
+                GameTextArea.append("\nNon sono ammessi spazi.\nInserisci di nuovo il nome:\n");
+            } else if (b) {
+                GameTextArea.append("\nNon sono ammessi caratteri speciali.\nInserisci di nuovo il nome:\n");
+            } else if (!game.getName().contains(antonio)) {
                 playersName = antonio;
                 Insert.setVisible(false);
                 ProfessorsName.setVisible(false);
@@ -1892,16 +1905,18 @@ public class EngineFrame extends javax.swing.JFrame {
         NameRoom.setText("Ranking");
         GameTextArea.setText("");
         try {
+            int i = 1;
             Properties dbprops = new Properties();
-            dbprops.setProperty("user", "user");
-            dbprops.setProperty("password", "1234");
-            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/store", dbprops);
+            dbprops.setProperty("user", "antonio1");
+            dbprops.setProperty("password", "edoardo1");
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/uniperfidaDatabase", dbprops);
             Statement stm = conn.createStatement();
             stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT name, score, date FROM store WHERE score > 0");
-            GameTextArea.append("Nome" + "\tPunteggio" + "\tData e ora\n\n");
+            ResultSet rs = stm.executeQuery("SELECT name, score, date FROM uniperfidaDatabase WHERE score > 0");
+            GameTextArea.append("Viene premiato chi gioca prima e non chi impiega meno tempo!\n(falso, non siamo riusciti ad ordinare la tabella in base al punteggio)\n");
+            GameTextArea.append("\n#" + "\tNome" + "\tPunteggio" + "\tData e ora\n\n");
             while (rs.next()) {
-                GameTextArea.append(rs.getString(1) + "\t" + rs.getLong(2) + "\t" + rs.getString(3));
+                GameTextArea.append(i++ + "\t" + rs.getString(1) + "\t" + rs.getLong(2) + "\t" + rs.getString(3));
                 GameTextArea.append("\n");
             }
             rs.close();
@@ -1913,7 +1928,7 @@ public class EngineFrame extends javax.swing.JFrame {
         if (game.getRooms().get(3).getCount() == 3 || game.getRooms().get(3).getCount() == 12) {
             GameTextArea.append("\nPremi il tasto esci per uscire.");
         } else if (NewGame.isVisible()) {
-            GameTextArea.append("\nVuoi che sia anche il tuo nome? Inizia una nuova partita!");
+            GameTextArea.append("\nVuoi che sia presente anche il tuo nome? Inizia una nuova partita!");
         }
     }//GEN-LAST:event_RankingActionPerformed
 
@@ -1923,14 +1938,14 @@ public class EngineFrame extends javax.swing.JFrame {
         Avanti.setVisible(false);
         Exit.setVisible(true);
         if (game.getRooms().get(3).getCount() == 3 || game.getRooms().get(3).getCount() == 12) {
-            GameTextArea.append("\nPremi il tasto esci per uscire\noppure\npremi ranking per visualizzare i risultati degli altri giocatori.");
+            GameTextArea.append("Premi il tasto esci per uscire oppure\npremi ranking per visualizzare i risultati degli altri giocatori.");
         } else if (game.getRooms().get(3).getCount() == 10) {
             try {
                 Properties dbprops = new Properties();
-                dbprops.setProperty("user", "user");
-                dbprops.setProperty("password", "1234");
-                Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/store", dbprops);
-                PreparedStatement pstm = conn.prepareStatement("INSERT INTO store VALUES (?,?,?)");
+                dbprops.setProperty("user", "antonio1");
+                dbprops.setProperty("password", "edoardo1");
+                Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/uniperfidaDatabase", dbprops);
+                PreparedStatement pstm = conn.prepareStatement("INSERT INTO uniperfidaDatabase VALUES (?,?,?)");
                 pstm.setString(1, playersName);
                 pstm.setLong(2, playersScore);
                 pstm.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
@@ -2015,25 +2030,28 @@ public class EngineFrame extends javax.swing.JFrame {
         }
         try {
             Properties dbprops = new Properties();
-            dbprops.setProperty("user", "user");
-            dbprops.setProperty("password", "1234");
-            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/store", dbprops);
+            dbprops.setProperty("user", "antonio1");
+            dbprops.setProperty("password", "edoardo1");
+            Connection conn = DriverManager.getConnection("jdbc:h2:./resources/db/uniperfidaDatabase", dbprops);
             Statement stm = conn.createStatement();
             stm.executeUpdate(CREATE_TABLE);
             stm.close();
-            /*stm = conn.createStatement();
-            stm.executeUpdate("TRUNCATE TABLE store");
-            stm.close(); */
- /*PreparedStatement pstm1 = conn.prepareStatement("INSERT INTO store VALUES (?,?,?)");
+            /*
+            stm = conn.createStatement();
+            stm.executeUpdate("TRUNCATE TABLE uniperfidaDatabase");
+            stm.close();
+             */
+ /*
+            PreparedStatement pstm1 = conn.prepareStatement("INSERT INTO uniperfidaDatabase VALUES (?,?,?)");
             pstm1.setString(1, "Antonio");
             pstm1.setLong(2, 9999);
             pstm1.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
             pstm1.executeUpdate();
-            pstm1.close();*/
+            pstm1.close();
+             */
             stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT name, score, date FROM store WHERE score > 0");
+            ResultSet rs = stm.executeQuery("SELECT name, score, date FROM uniperfidaDatabase WHERE score > 0");
             while (rs.next()) {
-                System.out.println(rs.getString(1) + ": " + rs.getLong(2) + ": " + rs.getString(3));
                 game.getName().add(rs.getString(1));
             }
             rs.close();
@@ -2043,9 +2061,8 @@ public class EngineFrame extends javax.swing.JFrame {
             System.out.println(ex.getSQLState() + ": " + ex.getMessage());
         }
         NameRoom.setText("");
-        NameRoom.setText("Benvenuto!");
-        GameTextArea.append("\nU N I P E R F I D A\n");
-        System.out.println(game.getName().get(0));
+        NameRoom.setText("Uniperfida");
+        GameTextArea.append("Benvenuto!");
     }
 
     public static void main(String args[]) {
