@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package di.uniba.map.b.uniperfida;
+package di.uniba.map.b.unused;
+//package di.uniba.map.b.uniperfida;
 
+// work in progress
+/*
 import di.uniba.map.b.uniperfida.games.UniperfidaGame;
 import di.uniba.map.b.uniperfida.parser.Parser;
 import di.uniba.map.b.uniperfida.parser.ParserOutput;
@@ -20,13 +23,6 @@ import java.io.IOException;
 
 import static di.uniba.map.b.uniperfida.print.Printings.*;
 
-/**
- * ATTENZIONE: l'Engine è molto spartano, in realtà demanda la logica alla
- * classe che implementa GameDescription e si occupa di gestire I/O sul
- * terminale.
- *
- * @author pierpaolo
- */
 // classe che rappresenta il motore del gioco
 public class Engine {
 
@@ -80,12 +76,10 @@ public class Engine {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         Engine engine = new Engine(new UniperfidaGame());// crea una istanza di Engine a cui passiamo un'istanza di GameDescription (in questo caso UniperfidaGame che estende GameDescription)
         engine.execute();
     }
 
 }
+*/

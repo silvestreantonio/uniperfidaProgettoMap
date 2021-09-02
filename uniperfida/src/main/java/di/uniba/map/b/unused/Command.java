@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package di.uniba.map.b.uniperfida.type;
+package di.uniba.map.b.unused;
+//package di.uniba.map.b.uniperfida.type;
 
+// work in progress
+/*
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- *
- * @author pierpaolo
- */
 
 // classe che modella il concetto di comando
 public class Command {
@@ -84,3 +83,4 @@ public class Command {
     }
 
 }
+*/

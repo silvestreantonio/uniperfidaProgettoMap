@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package di.uniba.map.b.uniperfida.parser;
 
-        import di.uniba.map.b.uniperfida.type.AdvObject;
-        import di.uniba.map.b.uniperfida.type.Command;
-        import di.uniba.map.b.uniperfida.type.Person;
+package di.uniba.map.b.unused;
+// package di.uniba.map.b.uniperfida.parser;
 
-/**
- *
- * @author pierpaolo
- */
+// work in progress
+/* 
+import di.uniba.map.b.uniperfida.type.AdvObject;
+import di.uniba.map.b.uniperfida.type.Command;
+import di.uniba.map.b.uniperfida.type.Person;
+
 public class ParserOutput {
 
     private Command command;
@@ -66,5 +61,6 @@ public class ParserOutput {
         this.person = person;
     }
 
-
 }
+
+*/

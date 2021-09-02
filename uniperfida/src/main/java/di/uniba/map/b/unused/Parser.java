@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package di.uniba.map.b.uniperfida.parser;
+package di.uniba.map.b.unused;
+//package di.uniba.map.b.uniperfida.parser;
 
-import di.uniba.map.b.uniperfida.Utils;
+// work in progress
+/*
+//import di.uniba.map.b.uniperfida.Utils;
 import di.uniba.map.b.uniperfida.type.AdvObject;
 import di.uniba.map.b.uniperfida.type.Command;
 import di.uniba.map.b.uniperfida.type.Person;
@@ -13,10 +16,7 @@ import di.uniba.map.b.uniperfida.type.Person;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author pierpaolo
- */
+
 public class Parser {
 
     private final Set<String> stopwords;
@@ -52,10 +52,6 @@ public class Parser {
         return -1;
     }
 
-    /* ATTENZIONE: il parser è implementato in modo abbastanza independete dalla lingua, ma riconosce solo
-     * frasi semplici del tipo <azione> <oggetto> <oggetto>. Eventuali articoli o preposizioni vengono semplicemente
-     * rimossi.
-     */
     public ParserOutput parse(String command, List<Command> commands, List<AdvObject> objects, List<AdvObject> inventory, List<Person> person) {
         List<String> tokens = Utils.parseString(command, stopwords);
         if (!tokens.isEmpty()) {
@@ -86,3 +82,4 @@ public class Parser {
     }
 }
 
+*/

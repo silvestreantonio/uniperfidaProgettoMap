@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package di.uniba.map.b.uniperfida;
-
+package di.uniba.map.b.unused;
+// package di.uniba.map.b.uniperfida;
+ // work in progress
+/*
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,10 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author pierpaolo
- */
+
 public class Utils {
 
     // questo metodo legge il file riga per riga e mette ogni riga del file all'interno dell'insieme di stringhe. In questo modo posso modificare il file senza utilizzare il codice
@@ -50,3 +49,5 @@ public class Utils {
     }
 
 }
+
+*/

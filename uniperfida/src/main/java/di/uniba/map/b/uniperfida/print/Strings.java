@@ -92,7 +92,7 @@ public class Strings {
             + "Mmh, buono questo caffe' cioccolato\n"
             + "...\n");
     public static StringBuilder whatHappened = new StringBuilder("\nMa cos'e' stato questo rumore? Proveniva dalla aula A.\n");
-    public static StringBuilder okPrint = new StringBuilder("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il suo voto.\n");
+    public static StringBuilder okPrint = new StringBuilder("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il tuo voto.\n                    ");
     public static StringBuilder printRossetto = new StringBuilder("\n#1 Benvenuto nel menu di accettazione.\n"
             + "\nRisolvi l’indovinello per autenticarti:"
             + "\n- a volte in delle situazioni sono fuori luogo;"
@@ -142,12 +142,12 @@ public class Strings {
             + "\n“Questo mondo e' strano”"
             + "\n“Cosa?”"
             + "\n“Niente, niente, grazie mille!”\n");
-    public static StringBuilder professorTalk = new StringBuilder("“Salve professore”"
+    public static StringBuilder professorTalk = new StringBuilder("\n“Salve professore”"
             + "\n“Buona sera, chi e' lei? Ho sentito dei rumori, come mai ci hai impiegato cosi tanto tempo?”          "
             + "\n“Sono Edoardo Pomarico. Ho risolto gli indovinelli. Cosi mi ha spiegato il collaboratore”          "
             + "\n“*risata*"
             + "\n“Vedi Edoardo, il vero problema della nostra societa' e' la mancanza di dialogo. Ho introdotto gli indovinelli per mettere alla prova il nostro sistema interno e non gli studenti.“          "
-            + "\n“Non ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perche' hanno paura della mia autorita'!”          "
+            + "\n“Non ne ho mai spiegato il senso eppure nessuno me l’ha mai chiesto perche' hanno paura della mia autorita'!”                "
             + "\n“Mh…”"
             + "\n“Tornando a noi, perche' sei qui?”"
             + "\n“Per conoscere l’esito dell’ultimo esame”"

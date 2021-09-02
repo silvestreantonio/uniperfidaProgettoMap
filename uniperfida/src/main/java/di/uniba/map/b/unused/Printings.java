@@ -1,5 +1,9 @@
-package di.uniba.map.b.uniperfida.print;
 
+package di.uniba.map.b.unused;
+// package di.uniba.map.b.uniperfida.print;
+
+// work in progress
+/*
 public class Printings {
     public static void printIntro(){
         System.out.println("================================");
@@ -144,3 +148,5 @@ public class Printings {
         System.out.println("Benvenuto!\nInserisci il tuo nome utente.");
     }
 }
+
+*/

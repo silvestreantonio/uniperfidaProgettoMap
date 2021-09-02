@@ -5,14 +5,12 @@
  */
 package di.uniba.map.b.uniperfida;
 
-import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import di.uniba.map.b.uniperfida.type.AdvObject;
-import di.uniba.map.b.uniperfida.type.Command;
 import di.uniba.map.b.uniperfida.type.Room;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
+//import di.uniba.map.b.uniperfida.parser.ParserOutput;
+//import di.uniba.map.b.uniperfida.type.Command;
 /**
  *
  * @author pierpaolo
@@ -23,7 +21,7 @@ public abstract class GameDescription {
 
     private final List<Room> rooms = new ArrayList<>(); // contiene la lista delle stanze presenti nel gioco
 
-    private final List<Command> commands = new ArrayList<>(); // contiene la lista dei comandi presenti nel gioco
+    //private final List<Command> commands = new ArrayList<>(); // contiene la lista dei comandi presenti nel gioco
 
     private final List<AdvObject> inventory = new ArrayList<>(); // contiene l'inventario
 
@@ -35,10 +33,11 @@ public abstract class GameDescription {
         return rooms;
     }
 
+    /*
     public List<Command> getCommands() {
         return commands;
     }
-
+    */
     public Room getCurrentRoom() {
         return currentRoom;
     }
@@ -57,7 +56,8 @@ public abstract class GameDescription {
 
     public abstract void init() throws Exception; // metodo astratto per inizializzare il gioco
 
-    public abstract void nextMove(ParserOutput p, PrintStream out); // metodo astratto per interpretare la mossa
+    //work in progress
+    //public abstract void nextMove(ParserOutput p, PrintStream out); // metodo astratto per interpretare la mossa
 
     public abstract void useFileRoomsDescription();
 

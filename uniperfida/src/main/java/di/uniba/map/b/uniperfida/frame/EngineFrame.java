@@ -5,27 +5,13 @@
  */
 package di.uniba.map.b.uniperfida.frame;
 
-import di.uniba.map.b.uniperfida.Engine;
 import static di.uniba.map.b.uniperfida.print.Strings.*;
 import di.uniba.map.b.uniperfida.games.UniperfidaGame;
-import di.uniba.map.b.uniperfida.parser.Parser;
-import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import di.uniba.map.b.uniperfida.type.AdvObject;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -33,9 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +29,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -62,7 +45,6 @@ public class EngineFrame extends javax.swing.JFrame {
     private Clip clip;
     private boolean music = true;
     private boolean map = false;
-    private boolean help = false;
     private boolean fast = false;
     private StringBuilder s = new StringBuilder();
     private int counter = 0;
@@ -150,16 +132,23 @@ public class EngineFrame extends javax.swing.JFrame {
         controlObjects();
         controlInventory();
         controlButton();
-        if (game.getRooms().get(3).getCount() == 3) {
-            exit();
-            NameRoom.setText("Hai perso!");
-            GameTextArea.setText("");
-            GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti.\nIl tuo punteggio non verra' salvato nel database.");
-        } else if (game.getRooms().get(3).getCount() == 4) {
-            exit();
-            game.getRooms().get(3).setCount(10);
-        } else if (game.getRooms().get(3).getCount() == 10 || game.getRooms().get(3).getCount() == 12) {
-            InventoryLabel2.setIcon(null);
+        switch (game.getRooms().get(3).getCount()) {
+            case 3:
+                exit();
+                NameRoom.setText("Hai perso!");
+                GameTextArea.setText("");
+                GameTextArea.append("Le monete sono terminate e non puoi andare in segreteria.\nHai totalizzato 0 punti.\nIl tuo punteggio non verra' salvato nel database.");
+                break;
+            case 4:
+                exit();
+                game.getRooms().get(3).setCount(10);
+                break;
+            case 10:
+            case 12:
+                InventoryLabel2.setIcon(null);
+                break;
+            default:
+                break;
         }
     }
 
@@ -482,6 +471,7 @@ public class EngineFrame extends javax.swing.JFrame {
         InventoryLabel3.setVisible(true);
         Map.setEnabled(true);
         Ranking.setEnabled(false);
+        Help.setEnabled(false);
     }
 
     /**
@@ -536,6 +526,7 @@ public class EngineFrame extends javax.swing.JFrame {
         Speed10 = new javax.swing.JCheckBoxMenuItem();
         AboutMenu = new javax.swing.JMenu();
         Ranking = new javax.swing.JMenuItem();
+        Help = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UNIPERFIDA");
@@ -807,7 +798,7 @@ public class EngineFrame extends javax.swing.JFrame {
         GameMenu.add(Map);
 
         Speed1.setSelected(true);
-        Speed1.setText("Velocita' 1x");
+        Speed1.setText("1x");
         Speed1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Speed1ActionPerformed(evt);
@@ -815,7 +806,7 @@ public class EngineFrame extends javax.swing.JFrame {
         });
         GameMenu.add(Speed1);
 
-        Speed10.setText("Velocita' 10x");
+        Speed10.setText("10x");
         Speed10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Speed10ActionPerformed(evt);
@@ -835,6 +826,14 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
         AboutMenu.add(Ranking);
+
+        Help.setText("Aiuto");
+        Help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HelpActionPerformed(evt);
+            }
+        });
+        AboutMenu.add(Help);
 
         jMenuBar1.add(AboutMenu);
 
@@ -1326,7 +1325,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String rossetto = ProfessorsName.getText();
             rossetto = rossetto.toLowerCase();
             switch (rossetto) {
-                case "a":
+                case "rossetto":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #1 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1352,7 +1351,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String impavido = ProfessorsName.getText();
             impavido = impavido.toLowerCase();
             switch (impavido) {
-                case "a":
+                case "impavido":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #2 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1378,7 +1377,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String gatto = ProfessorsName.getText();
             gatto = gatto.toLowerCase();
             switch (gatto) {
-                case "a":
+                case "gatto":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #3 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1404,7 +1403,7 @@ public class EngineFrame extends javax.swing.JFrame {
             String cinquanta = ProfessorsName.getText();
             cinquanta = cinquanta.toLowerCase();
             switch (cinquanta) {
-                case "a":
+                case "cinquanta":
                     GameTextArea.append("\nSoluzione corretta, autenticazione #4 riuscita.\n");
                     game.getCurrentRoom().getObjects().get(0).setUsed(true);
                     Insert.setVisible(false);
@@ -1429,7 +1428,7 @@ public class EngineFrame extends javax.swing.JFrame {
         } else if (game.getCurrentRoom() == game.getRooms().get(26)) {
             String number = ProfessorsName.getText();
             switch (number) {
-                case "1":
+                case "3774480028":
                     tm.start();
                     s = new StringBuilder("\n");
                     if (fast) {
@@ -1578,10 +1577,8 @@ public class EngineFrame extends javax.swing.JFrame {
                 GameTextArea.append("\nDevi inserire un nome.\nInserisci di nuovo il nome:\n");
             } else if (antonio.length() > 10) {
                 GameTextArea.append("\nHai a disposizione 10 caratteri, tu ne hai usati " + antonio.length() + ".\nInserisci di nuovo il nome:\n");
-            } else if (antonio.contains(" ")) {
-                GameTextArea.append("\nNon sono ammessi spazi.\nInserisci di nuovo il nome:\n");
             } else if (b) {
-                GameTextArea.append("\nNon sono ammessi caratteri speciali.\nInserisci di nuovo il nome:\n");
+                GameTextArea.append("\nNon sono ammessi caratteri speciali o spazi.\nInserisci di nuovo il nome:\n");
             } else if (!game.getName().contains(antonio)) {
                 playersName = antonio;
                 Insert.setVisible(false);
@@ -1699,7 +1696,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Per poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico");
+                GameTextArea.append("\nPer poter utilizzare il telefono devi accettare il voto! Recati dal prof. Basilico\n");
                 move = true;
                 noroom = false;
             }
@@ -1864,6 +1861,7 @@ public class EngineFrame extends javax.swing.JFrame {
         ProfessorsName.setVisible(true);
         NewGame.setVisible(false);
         Ranking.setEnabled(false);
+        Help.setEnabled(false);
     }//GEN-LAST:event_NewGameActionPerformed
 
     private void MusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MusicActionPerformed
@@ -1980,6 +1978,17 @@ public class EngineFrame extends javax.swing.JFrame {
         Speed1.setSelected(false);
     }//GEN-LAST:event_Speed10ActionPerformed
 
+    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
+        // TODO add your handling code here:
+        Help.setEnabled(false);
+        NameRoom.setText("Consigli");
+        GameTextArea.setText("");
+        GameTextArea.append("1) Parla con il collaboratore;\n"
+                + "2) Leggi sempre cio' che c'e' scritto nelle bacheche;\n"
+                + "3) Non esagerare con i caffe'\n\n"
+                + "Non ti resta che iniziare una nuova partita, buona fortuna!");
+    }//GEN-LAST:event_HelpActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2023,6 +2032,7 @@ public class EngineFrame extends javax.swing.JFrame {
             Map.setEnabled(false);
             AboutMenu.setEnabled(true);
             Ranking.setEnabled(true);
+            Help.setEnabled(true);
             Exit.setVisible(false);
             Avanti.setVisible(false);
         } catch (Exception ex) {
@@ -2040,15 +2050,28 @@ public class EngineFrame extends javax.swing.JFrame {
             stm = conn.createStatement();
             stm.executeUpdate("TRUNCATE TABLE uniperfidaDatabase");
             stm.close();
-             */
- /*
+            
+            PreparedStatement pstm = conn.prepareStatement("INSERT INTO uniperfidaDatabase VALUES (?,?,?)");
+            pstm.setString(1, "Antonio");
+            pstm.setLong(2, 9999);
+            pstm.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
+            pstm.executeUpdate();
+            pstm.close();
+
             PreparedStatement pstm1 = conn.prepareStatement("INSERT INTO uniperfidaDatabase VALUES (?,?,?)");
-            pstm1.setString(1, "Antonio");
-            pstm1.setLong(2, 9999);
+            pstm1.setString(1, "Edoardo");
+            pstm1.setLong(2, 9998);
             pstm1.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
             pstm1.executeUpdate();
             pstm1.close();
-             */
+
+            PreparedStatement pstm2 = conn.prepareStatement("INSERT INTO uniperfidaDatabase VALUES (?,?,?)");
+            pstm2.setString(1, "Alessandro");
+            pstm2.setLong(2, 9997);
+            pstm2.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
+            pstm2.executeUpdate();
+            pstm2.close();
+            */
             stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT name, score, date FROM uniperfidaDatabase WHERE score > 0");
             while (rs.next()) {
@@ -2110,6 +2133,7 @@ public class EngineFrame extends javax.swing.JFrame {
     private javax.swing.JButton Exit;
     private javax.swing.JMenu GameMenu;
     private javax.swing.JTextArea GameTextArea;
+    private javax.swing.JMenuItem Help;
     private javax.swing.JButton Insert;
     private javax.swing.JLabel InventoryLabel;
     private javax.swing.JLabel InventoryLabel1;

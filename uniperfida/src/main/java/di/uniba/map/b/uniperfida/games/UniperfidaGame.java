@@ -5,21 +5,15 @@
  */
 package di.uniba.map.b.uniperfida.games;
 
-import di.uniba.map.b.uniperfida.Engine;
 import di.uniba.map.b.uniperfida.GameDescription;
-import di.uniba.map.b.uniperfida.parser.ParserOutput;
 import di.uniba.map.b.uniperfida.type.*;
-
-import java.io.PrintStream;
-import java.util.Iterator;
-import java.util.Scanner;
-
-import static di.uniba.map.b.uniperfida.print.Printings.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+// import di.uniba.map.b.uniperfida.Engine;
+// import static di.uniba.map.b.uniperfida.print.Printings.*;
+//import di.uniba.map.b.uniperfida.parser.ParserOutput;
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
  * debba estendere la classe GameDescription. L'Engine è fatto in modo che posso
@@ -91,6 +85,7 @@ public class UniperfidaGame extends GameDescription {
     public void init() { // questo è il metodo chiamato da Engine, qui dentro dobbiamo inizializzare tutta la struttura del gioco
         // definizione dei comandi compresi anche i sinonimi e poi li aggiungo alla lista presente in GameDescription
 
+        /*
         Command nord = new Command(CommandType.NORTH, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
         getCommands().add(nord);
@@ -167,6 +162,8 @@ public class UniperfidaGame extends GameDescription {
         mappa.setAlias(new String[]{"map", "cartina", "m"});
         getCommands().add(mappa);
 
+        */
+        
         // definizione delle stanze
         Room laboratory = new Room(1);
         laboratory.setuniverse("T-237");
@@ -411,6 +408,9 @@ public class UniperfidaGame extends GameDescription {
         coffeeDispenser.setUseable(true);
         hall.getObjects().add(coffeeDispenser);
 
+        // work in progress
+        /*
+        
         AdvObject coffee = new AdvObject(12, "caffè", "Un caffè caldo"); //costruttore da aggiungere
         coffee.setAlias(new String[]{"marocchino"});
         coffeeDispenser.add(coffee);
@@ -427,6 +427,8 @@ public class UniperfidaGame extends GameDescription {
         longCoffee.setAlias(new String[]{"lungo"});
         coffeeDispenser.add(longCoffee);
 
+        */
+        
         AdvObject secretaryPhone = new AdvObject(16, "telefono", "Un semplice telefono da usare");
         secretaryPhone.setAlias(new String[]{"cellulare", "telefonino", "smartphone"});
         secretaryPhone.setUseable(true);
@@ -487,7 +489,9 @@ public class UniperfidaGame extends GameDescription {
         // definizione della stanza corrente
         setCurrentRoom(laboratory);
     }
+    // work in progress
     // questo metodo in base alla stanza in cui mi trovo deve interpretare un comando 
+    /*
     @Override
     public void nextMove(ParserOutput p, PrintStream out) {
         if (p.getCommand() == null) {
@@ -1143,6 +1147,7 @@ public class UniperfidaGame extends GameDescription {
 
         }
     }
+    */
 /*
     private void end(PrintStream out) {
         out.println();
@@ -1154,9 +1159,11 @@ public class UniperfidaGame extends GameDescription {
         System.exit(0);
     }
 */
+   /*
     private void end1(PrintStream out) {
         out.println("Hai perso!! Hai utilizzato tutte le monete senza riuscire a terminare il gioco.");
         out.println("Hai totalizzato 0 punti.");
         System.exit(0);
     }
+*/
 }
