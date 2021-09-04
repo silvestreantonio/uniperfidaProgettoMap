@@ -59,9 +59,4 @@ public abstract class GameDescription {
     //work in progress
     //public abstract void nextMove(ParserOutput p, PrintStream out); // metodo astratto per interpretare la mossa
 
-    public abstract void useFileRoomsDescription();
-
-    public abstract void useFileRoomsLook();
-
-    public abstract void useFileRoomsName();
 }

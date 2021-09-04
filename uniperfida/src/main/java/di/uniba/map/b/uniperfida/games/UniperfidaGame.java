@@ -30,7 +30,7 @@ import java.io.IOException;
  */
 // all'interno di questa classe deve andare tutta la logica del gioco possiamo mettere la logica del gioco ovvero tutta questa classe all'interno di un file o un DB e creare una classe che richiami il file o il DB
 public class UniperfidaGame extends GameDescription {
-    @Override
+    
     public void useFileRoomsDescription() {
         try {
             BufferedReader inputStream = new BufferedReader(new FileReader("./resources/files/roomDescription.txt"));
@@ -47,7 +47,6 @@ public class UniperfidaGame extends GameDescription {
         }
     }
 
-    @Override
     public void useFileRoomsLook() {
         try {
             BufferedReader inputStream = new BufferedReader(new FileReader("./resources/files/roomLook.txt"));
@@ -64,7 +63,6 @@ public class UniperfidaGame extends GameDescription {
         }
     }
 
-    @Override
     public void useFileRoomsName() {
         try {
             BufferedReader inputStream = new BufferedReader(new FileReader("./resources/files/roomName.txt"));
