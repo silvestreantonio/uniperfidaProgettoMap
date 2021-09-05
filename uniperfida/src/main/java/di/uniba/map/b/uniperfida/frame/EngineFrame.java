@@ -97,7 +97,7 @@ public class EngineFrame extends javax.swing.JFrame {
 
     private void playMusic() {
         try {
-            ais = AudioSystem.getAudioInputStream(new File("resources/music/Payday 2 Official Soundtrack - AndNowWeWait.wav"));
+            ais = AudioSystem.getAudioInputStream(new File("resources/music/instrumental.wav"));
             clip = AudioSystem.getClip();
             clip.open(ais);
             startMusic();
