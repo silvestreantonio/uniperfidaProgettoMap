@@ -1,0 +1,29 @@
+Laboratorio
+Navicella
+Cortile
+Atrio
+Ufficio
+Bagno
+Corridoio
+Zona bacheche
+Ascensore
+Pianerottolo
+Sala d'attesa aule
+Aula A
+Aula B
+Pianerottolo
+Atrio
+Ascensore
+Bagno
+Corridoio
+Sala d'attesa
+Sala d'attesa
+Corridoio
+Sala d'attesa
+Sala d'attesa
+Corridoio
+Bagno
+Sala d'attesa
+Segreteria
+Navicella
+Ufficio
