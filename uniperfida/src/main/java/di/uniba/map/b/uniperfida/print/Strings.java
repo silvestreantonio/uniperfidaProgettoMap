@@ -94,28 +94,28 @@ public class Strings {
     public static StringBuilder whatHappened = new StringBuilder("\nMa cos'e' stato questo rumore? Proveniva dalla aula A.\n");
     public static StringBuilder okPrint = new StringBuilder("\nOttima scelta! Ora non ti resta che andare in segreteria per verbalizzare il tuo voto.\n                    ");
     public static StringBuilder printRossetto = new StringBuilder("\n#1 Benvenuto nel menu di accettazione.\n"
-            + "\nRisolvi l’indovinello per autenticarti:"
+            + "\nRisolvi l’indovinello per autenticarti:\n"
             + "\n- a volte in delle situazioni sono fuori luogo;"
             + "\n- non lascio le tue labbra;"
             + "\n- resisto all’acqua;"
             + "\n- non sono rosso per forza."
             + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
     public static StringBuilder printImpavido = new StringBuilder("\n#2 Benvenuto nel menu di accettazione.\n"
-            + "\nRisolvi l’indovinello per autenticarti:"
+            + "\nRisolvi l’indovinello per autenticarti:\n"
             + "\n- sono un aggettivo;"
             + "\n- sono coraggioso;"
             + "\n- sono razionale di fronte ad una minaccia;"
             + "\n- letteralmente qualcosa in piu' di avido."
             + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
     public static StringBuilder printGatto = new StringBuilder("\n#3 Benvenuto nel menu di accettazione.\n"
-            + "\nRisolvi l’indovinello per autenticarti:"
+            + "\nRisolvi l’indovinello per autenticarti:\n"
             + "\n- notoriamente domestico;"
             + "\n- i miei video sono divertenti;"
             + "\n- duro a morire;"
             + "\n- spesso in compagnia di una volpe."
             + "\n\nInserisci la soluzione oppure premi 0 per uscire.\n");
     public static StringBuilder printCinquanta = new StringBuilder("\n#4 Benvenuto nel menu di accettazione.\n"
-            + "\nRisolvi l’indovinello per autenticarti:"
+            + "\nRisolvi l’indovinello per autenticarti:\n"
             + "\n- a questa eta' si va in crisi;"
             + "\n- a napoli sono il pane;"
             + "\n- arancione per le banche;"

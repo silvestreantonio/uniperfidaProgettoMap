@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -1615,7 +1617,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("Qui ti sei gia' autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!\n");
                 GameTextArea.append("\n");
                 move = true;
                 noroom = false;
@@ -1636,7 +1638,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("\nQui ti sei gia' autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!\n");
                 move = true;
                 noroom = false;
             }
@@ -1656,7 +1658,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("\nQui ti sei gia' autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!\n");
                 move = true;
                 noroom = false;
             }
@@ -1676,7 +1678,7 @@ public class EngineFrame extends javax.swing.JFrame {
                 move = false;
                 noroom = false;
             } else {
-                GameTextArea.append("\nQui ti sei gia' autenticato!");
+                GameTextArea.append("\nQui ti sei gia' autenticato!\n");
                 move = true;
                 noroom = false;
             }
@@ -1933,10 +1935,12 @@ public class EngineFrame extends javax.swing.JFrame {
     private void AvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AvantiActionPerformed
         // TODO add your handling code here:
         Ranking.setEnabled(true);
+        Speed1.setEnabled(false);
+        Speed10.setEnabled(false);
         Avanti.setVisible(false);
         Exit.setVisible(true);
         if (game.getRooms().get(3).getCount() == 3 || game.getRooms().get(3).getCount() == 12) {
-            GameTextArea.append("Premi il tasto esci per uscire oppure\npremi ranking per visualizzare i risultati degli altri giocatori.");
+            GameTextArea.append("\nPremi il tasto esci per uscire oppure\npremi ranking per visualizzare i risultati degli altri giocatori.");
         } else if (game.getRooms().get(3).getCount() == 10) {
             try {
                 Properties dbprops = new Properties();
@@ -2071,7 +2075,7 @@ public class EngineFrame extends javax.swing.JFrame {
             pstm2.setString(3, new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
             pstm2.executeUpdate();
             pstm2.close();
-            */
+             */
             stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT name, score, date FROM uniperfidaDatabase WHERE score > 0");
             while (rs.next()) {
@@ -2088,12 +2092,7 @@ public class EngineFrame extends javax.swing.JFrame {
         GameTextArea.append("Benvenuto!");
     }
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    public static void beginning() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -2123,6 +2122,27 @@ public class EngineFrame extends javax.swing.JFrame {
             }
         });
     }
+
+    public static void main(String args[]) throws IOException {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        ServerSocket s = new ServerSocket(6665);
+        System.out.println("In attesa di una connessione da parte di un client.");
+        try {
+            Socket socket = s.accept();
+            try {
+                System.out.println("Connessione effettuata!");
+            } finally {
+                socket.close();
+            }
+        } finally {
+            s.close();//ServerSocket
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AboutMenu;

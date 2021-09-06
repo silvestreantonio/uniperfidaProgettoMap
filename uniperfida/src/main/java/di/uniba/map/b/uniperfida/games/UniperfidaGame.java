@@ -395,7 +395,7 @@ public class UniperfidaGame extends GameDescription {
         firstElevator.getObjects().add(buttonElev);
         secondElevator.getObjects().add(buttonElev);
 
-        AdvObject secretarySheet = new AdvObject(10, "foglio", "Siamo al bar. Ci stiamo riposando."
+        AdvObject secretarySheet = new AdvObject(10, "foglio", "Siamo al bar. Ci stiamo riposando.\n"
                 + " La mole di lavoro è troppa. Chiamare il numero 3774480028");
         secretarySheet.setAlias(new String[]{"carta", "scartoffie", "messaggio"});
         secretarySheet.setReadable(true);
