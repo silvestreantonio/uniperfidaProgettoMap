@@ -1,7 +1,7 @@
-- Spostare la cartella “Appello15-09-21“ nel Desktop
+- Spostare la cartella “uniperfidaProgettoMap" nel Desktop
 - Aprire il cmd o PowerShell (oppure il terminale da Linux o MacOs)
 - Digitare "cd Desktop"
-- Digitare "cd Appello15-09-21"
+- Digitare "cd uniperfidaProgettoMap"
 - Digitare "cd uniperfida"
 - Digitare "cd target"
 - Digitare "java -cp Uniperfida-1.0-SNAPSHOT-jar-with-dependencies.jar di.uniba.map.b.uniperfida.frame.EngineFrame
